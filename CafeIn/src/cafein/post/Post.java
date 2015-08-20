@@ -1,13 +1,27 @@
 package cafein.post;
 
+import java.util.List;
+
+import cafein.reply.Reply;
+
 public class Post {
 	private int pid;
 	private String contents;
 	private String creattime;
+	private List<Reply> replyList;
 	
+	public Post(int pid, String contents) {
+		super();
+		this.pid = pid;
+		this.contents = contents;
+	}
 	public Post(String contents) {
 		super();
 		this.contents = contents;
+	}
+	public Post(int pid) {
+		super();
+		this.pid = pid;
 	}
 	
 	public int getPid() {
