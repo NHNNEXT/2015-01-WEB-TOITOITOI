@@ -5,7 +5,7 @@ import java.io.File;
 import org.apache.catalina.startup.Tomcat;
 
 public class WebServerLauncher {
-
+	
 	public static void main(String[] args) throws Exception {
 
         String webappDirLocation = "WebContent/";
@@ -19,5 +19,4 @@ public class WebServerLauncher {
         tomcat.start();
         tomcat.getServer().await();
     }
-
 }
