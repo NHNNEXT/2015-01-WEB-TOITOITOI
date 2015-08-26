@@ -22,7 +22,7 @@
 <body>
 	<button id="replyButton">Re</button>
 	<div>
-		<form action="/createpost" method="post">
+		<form action="/createPost" method="post">
 			<input name="contents" type="text" placeholder="이 카페 아메리카노 어때요?">		
 			<button>올리기</button>
 		</form>
