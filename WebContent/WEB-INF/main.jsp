@@ -44,6 +44,7 @@
 			<div class="replyBox">
 				<form action="/createReply" method="post">
 					<input name="reply" type="text" placeholder="댓글 달기...">		
+					<input name="pid" type="hidden" value= "${post.pid}"> 
 					<button>등록</button>
 				</form>
 			</div>

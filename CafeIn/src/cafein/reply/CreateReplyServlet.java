@@ -20,11 +20,10 @@ public class CreateReplyServlet extends HttpServlet {
 		String reply = request.getParameter("reply");
 		System.out.println("Re:"+reply);
 		Reply re = new Reply(reply);
-		Post post = new Post(Integer.parseInt(request.getParameter("pId")));
 		ReplyDAO replydao = new ReplyDAO();
 		
 		try {
-			replydao.addReply(re,post);
+			replydao.addReply(re,Integer.parseInt(request.getParameter("pid")));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

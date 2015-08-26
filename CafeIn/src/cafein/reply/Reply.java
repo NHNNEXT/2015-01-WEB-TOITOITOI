@@ -4,8 +4,16 @@ public class Reply {
 	private int reId;
 	private String replyContent;
 	private String replyTime; 
+	private int liked;
 	
-	
+	public Reply(int reId, String replyContent, String replyTime, int liked) {
+		super();
+		this.reId = reId;
+		this.replyContent = replyContent;
+		this.replyTime = replyTime;
+		this.liked = liked;
+	}
+
 	public Reply(String content) {
 		super();
 		replyContent = content;

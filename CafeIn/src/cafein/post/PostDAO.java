@@ -23,7 +23,7 @@ public class PostDAO {
 	}
 	
 	public void addPost(Post post) throws SQLException {
-		String sql = "INSERT INTO post (contents) VALUES(?)";
+		String sql = "INSERT INTO post (content) VALUES(?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -49,7 +49,7 @@ public class PostDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "SELECT * FROM post WHERE cid=? ORDER BY creattime";
+		String sql = "SELECT * FROM post WHERE cid=? ORDER BY postingtime";
 		ArrayList<Post> result = new ArrayList<Post>();
 		
 		try {
@@ -60,8 +60,8 @@ public class PostDAO {
 			
 			while(rs.next()) {
 				int pid = rs.getInt("pid");
-				String contents = rs.getString("contents");
-				String creattime = rs.getString("creattime");
+				String contents = rs.getString("content");
+				String creattime = rs.getString("postingtime");
 				int liked = rs.getInt("liked");
 				result.add(new Post(pid,contents,creattime,liked));
 			}

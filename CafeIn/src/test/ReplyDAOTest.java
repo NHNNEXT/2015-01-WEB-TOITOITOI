@@ -29,7 +29,7 @@ public class ReplyDAOTest {
 		Reply testingRe = TEST_REPLY;
 		assertNotNull(testingPost);
 		assertNotNull(testingRe);
-		replyDAO.addReply(testingRe, testingPost);
+		replyDAO.addReply(testingRe, testingPost.getPid());
 
 	}
 
