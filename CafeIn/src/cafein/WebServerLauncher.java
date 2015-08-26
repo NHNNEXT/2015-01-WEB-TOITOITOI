@@ -5,7 +5,7 @@ import java.io.File;
 import org.apache.catalina.startup.Tomcat;
 
 public class WebServerLauncher {
-
+	
 	public static void main(String[] args) throws Exception {
 
         String webappDirLocation = "WebContent/";
@@ -17,7 +17,6 @@ public class WebServerLauncher {
         System.out.println("configuring app with basedir: " + new File("./" + webappDirLocation).getAbsolutePath());
 
         tomcat.start();
-        tomcat.getServer().await();
+        tomcat.getServer().await(); 
     }
-
 }

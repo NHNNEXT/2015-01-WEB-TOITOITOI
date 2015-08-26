@@ -9,6 +9,8 @@ public class Post {
 	private String contents;
 	private String creattime;
 	private List<Reply> replyList;
+	private int cid;
+	private int liked;
 	
 	public Post(int pid, String contents) {
 		super();
@@ -18,12 +20,18 @@ public class Post {
 	public Post(String contents) {
 		super();
 		this.contents = contents;
-	}
-	public Post(int pid) {
+	}	
+	public Post(int pid, String contents, String creattime, int liked) {
 		super();
 		this.pid = pid;
+		this.contents = contents;
+		this.creattime = creattime;
+		this.liked = liked;
 	}
-	
+	public Post(int pid) {
+		this.pid = pid;
+	}
+
 	public int getPid() {
 		return pid;
 	}
@@ -41,6 +49,18 @@ public class Post {
 	}
 	public void setCreattime(String creattime) {
 		this.creattime = creattime;
+	}
+	public int getCid() {
+		return cid;
+	}
+	public void setCid(int cid) {
+		this.cid = cid;
+	}
+	public int getLiked() {
+		return liked;
+	}
+	public void setLiked(int liked) {
+		this.liked = liked;
 	}
 	
 }
