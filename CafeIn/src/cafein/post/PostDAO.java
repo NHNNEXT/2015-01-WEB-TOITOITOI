@@ -10,7 +10,7 @@ public class PostDAO {
 	public Connection getConnection() {
 		String url = "jdbc:mysql://localhost:3307/cafein";
 		String id = "root";
-		String pw = "3132";
+		String pw = "db1004";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			return DriverManager.getConnection(url,id,pw);
@@ -28,6 +28,7 @@ public class PostDAO {
 		try {
 			conn = getConnection();
 			System.out.println("connection:"+conn);
+			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, post.getContents());
 			pstmt.executeUpdate();

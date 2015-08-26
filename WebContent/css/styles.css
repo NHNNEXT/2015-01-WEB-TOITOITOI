@@ -1,0 +1,30 @@
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+li.post {
+	border: 1px dashed gray;
+	border-radius: 10px;
+	margin: 10px;
+	width: 80%;
+	padding : 10px;
+}
+li.post:nth-child(odd) {
+	float: left;
+	clear: left;	
+}
+li.post:nth-child(even) {
+	float: right;
+	clear: right;	
+}
+.like::before {
+	content: '\2665';
+	margin-right: 10px;
+	color: red;
+}
+.like {
+	float: left;
+}
+.time {
+	float: right;
+}
