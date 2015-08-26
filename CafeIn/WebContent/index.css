@@ -1,0 +1,9 @@
+#replyButton {
+	border-style: none;
+	color: #272822;
+
+}
+
+#replyBox {
+	display: none;
+}

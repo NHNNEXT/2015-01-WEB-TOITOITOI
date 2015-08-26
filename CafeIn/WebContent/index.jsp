@@ -11,7 +11,7 @@
 	<meta name="description" content="The HTML5 Herald">
 	<meta name="author" content="SitePoint">
 
-	<link rel="stylesheet" href="css/styles.css?v=1.0">
+	<link rel="stylesheet" type="text/css" href="index.css">
 
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,19 +20,20 @@
 </head>
 
 <body>
+	<button id="replyButton">Re</button>
 	<div>
-		<form action="/createPost" method="post">
-			<input type="hidden" value="${post.pid}" name="pId">
+		<form action="/createpost" method="post">
 			<input name="contents" type="text" placeholder="이 카페 아메리카노 어때요?">		
 			<button>올리기</button>
 		</form>
 	</div>
-	<div>
+	<div id="replyBox">
 		<form action="/createReply" method="post">
 			<input name="reply" type="text" placeholder="댓글 달기...">		
 			<button>등록</button>
 		</form>
 	</div>
-	<script src="js/scripts.js"></script>
+	
+	<script src="index.js"></script>
 </body>
 </html>
