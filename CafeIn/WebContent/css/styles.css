@@ -1,0 +1,130 @@
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin-top: calc(7vh + 80px);
+}
+li.post {
+	border: 1px dashed gray;
+	border-radius: 10px;
+	margin: 10px;
+	width: 80%;
+	padding : 10px;
+}
+li.post:nth-child(odd) {
+	float: left;
+	clear: left;	
+}
+li.post:nth-child(even) {
+	float: right;
+	clear: right;	
+}
+.like::before {
+	content: '\2665';
+	margin-right: 10px;
+	color: red;
+}
+.like {
+	float: left;
+}
+.time {
+	float: right;
+}
+
+
+.replyButton {
+	border-style: none;
+	color: #272822;
+
+}
+
+.replyBox {
+	display: none;
+}
+
+body{
+	overflow-x: hidden;
+	font-family: "AppleGothic", arial, sans-serif; 
+	margin: 0;
+}
+
+.top-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 7vh;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: rgb(80, 70, 52);
+    font-size: 12pt;
+    font-weight: bold;
+    color: white;
+    line-height: 7vh;
+    letter-spacing: 3px;
+    text-align: center;
+    z-index: 2;
+}
+
+.posting {
+    overflow: hidden;
+    position: fixed;
+    top: 7vh;
+    height: 80px;    
+    width: 100%;
+    min-width: 211px;
+    margin: 0;
+    padding: 4px 60px 4px 4px;
+    box-sizing: border-box;
+    /*box-shadow: 1px 1px 3px #777777;*/
+    background-color: rgb(247, 237, 174);
+    -webkit-transition-property: height, padding-right;
+    -webkit-transition-duration: 0.4s;
+    -webkit-transition-timing-function: ease;
+    transition-property: height, padding-right;
+    transition-duration: 0.4s;
+    transition-timing-function: ease;
+
+}
+
+.posting-textbox{
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 70px;
+	min-width: 150px;	
+	top: 0; left: 0; right: 0; bottom: 0;
+	font-size: 14pt;
+	border-radius: 4px;
+	border: 1px solid rgba(80, 70, 52, 0.15);
+	background-color: rgba(255, 255, 255, 0.7);
+	outline-style: none;
+	box-sizing: border-box;
+	-webkit-transition-property: height, font-size;
+	-webkit-transition-duration: 0.4s;
+	-webkit-transition-timing-function: ease;	
+	transition-property: height, font-size;
+	transition-duration: 0.4s;
+	transition-timing-function: ease;		
+}
+
+.posting-send {
+    position: fixed;
+    top: 8vh;
+    right: 5px;
+    width: 50px;
+    height: 69px;
+    padding: 0;
+    border-radius: 4px;
+    font-size: 10pt;
+    font-weight: bold;
+    border: 1px solid rgba(0, 0, 0, 0);
+    background-color: rgba(80, 70, 52, 0.59);
+    cursor: pointer;
+    color: white;
+    outline-style: none;
+    -webkit-transition-property: opacity, right;
+    -webkit-transition-duration: 0.4s;
+    -webkit-transition-timing-function: ease;	
+    transition-property: opacity, right;
+    transition-duration: 0.4s;
+    transition-timing-function: ease;
+}
