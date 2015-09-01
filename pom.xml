@@ -93,8 +93,8 @@
 	</dependencies>
 	<build>
 		<finalName>cafeIn</finalName>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test</testSourceDirectory>
+		<sourceDirectory>CafeIn/src</sourceDirectory>
+		<testSourceDirectory>CafeIn/test</testSourceDirectory>
 		<outputDirectory>WebContent/WEB-INF/classes</outputDirectory>
 		<testOutputDirectory>target/test-classes</testOutputDirectory>
 
