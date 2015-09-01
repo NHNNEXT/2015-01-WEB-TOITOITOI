@@ -1,3 +1,5 @@
+use cafein;
+
 DROP TABLE IF EXISTS `reply`;
 DROP TABLE IF EXISTS `cafe`;
 DROP TABLE IF EXISTS `post`;
