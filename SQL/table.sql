@@ -1,8 +1,8 @@
 use cafein;
 
 DROP TABLE IF EXISTS `reply`;
-DROP TABLE IF EXISTS `cafe`;
 DROP TABLE IF EXISTS `post`;
+DROP TABLE IF EXISTS `cafe`;
 
 CREATE TABLE `cafe` (
   `cid` int(11) NOT NULL AUTO_INCREMENT,
