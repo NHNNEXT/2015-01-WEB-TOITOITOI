@@ -26,6 +26,18 @@ li.post:nth-child(even) {
 .like {
 	float: left;
 }
+.like-reply {
+	float: right;
+	color: yellow;
+	outline: black line;
+}
+.like-reply::before {
+	content: '\2665';
+	margin-right: 10px;
+	color: yellow;
+}
+
+
 .time {
 	float: right;
 }

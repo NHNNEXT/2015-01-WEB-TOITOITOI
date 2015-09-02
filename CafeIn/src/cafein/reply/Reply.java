@@ -6,6 +6,14 @@ public class Reply {
 	private String replyTime; 
 	private int liked;
 	
+	public int getLiked() {
+		return liked;
+	}
+
+	public void setLiked(int liked) {
+		this.liked = liked;
+	}
+
 	public Reply(int reId, String replyContent, String replyTime, int liked) {
 		super();
 		this.reId = reId;

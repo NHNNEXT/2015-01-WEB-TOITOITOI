@@ -5,12 +5,12 @@
 	<artifactId>cafein</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	
+
 	<properties>
 		<tomcat.version>8.0.24</tomcat.version>
-	</properties>	
-	
-	<dependencies> 
+	</properties>
+
+	<dependencies>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-core</artifactId>
@@ -47,7 +47,7 @@
 			<version>${tomcat.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -106,7 +106,7 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-					<encoding>1.8</encoding>
+					<encoding>utf-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -116,6 +116,14 @@
 					<downloadSources>true</downloadSources>
 					<wtpversion>2.0</wtpversion>
 					<wtpContextName>/</wtpContextName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warSourceDirectory>WebContent</warSourceDirectory>
+					<webXml>WebContent/WEB-INF/web.xml</webXml>
 				</configuration>
 			</plugin>
 		</plugins>
