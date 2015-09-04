@@ -12,26 +12,16 @@ public class Post {
 	private int cid;
 	private int liked;
 	
-	public Post(int pid, String contents) {
-		super();
-		this.pid = pid;
-		this.contents = contents;
-	}
 	public Post(String contents) {
-		super();
 		this.contents = contents;
 	}	
 	public Post(int pid, String contents, String creattime, int liked) {
-		super();
 		this.pid = pid;
 		this.contents = contents;
 		this.creattime = creattime;
 		this.liked = liked;
 	}
-	public Post(int pid) {
-		this.pid = pid;
-	}
-	
+
 	public List<Reply> getReplyList() {
 		return replyList;
 	}
