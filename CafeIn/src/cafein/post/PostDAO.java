@@ -50,7 +50,7 @@ public class PostDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "SELECT * FROM post WHERE cid=? ORDER BY postingtime";
+		String sql = "SELECT * FROM post WHERE cid=? ORDER BY postingtime DESC";
 		ArrayList<Post> result = new ArrayList<Post>();
 		
 		try {
