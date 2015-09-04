@@ -27,6 +27,10 @@ public class Reply {
 		replyContent = content;
 	}
 	
+	public Reply(int replyId) {
+		reId = replyId;
+	}
+	
 	public int getReId() {
 		return reId;
 	}

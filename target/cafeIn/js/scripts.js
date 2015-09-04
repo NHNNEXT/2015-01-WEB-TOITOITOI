@@ -55,23 +55,3 @@ window.addEventListener ("scroll", function (event) {
     }
      
 }, false);
-
-$(".like-reply").click(function() {
-	var reid = $(this).eq(0).attr("value");             
-	var replyId = {"reid":reid};                       //json
-	var div = $(this).eq(0);
-	$.ajax({
-           type:"POST",
-           url:"/likedOnReply",
-           data: replyId,
-           likes: div,
-           success : function(data) {
-           		console.log("success");
-              this.likes.html(data);
-             },
-           error : function(xhr, status, error) {
-                 console.log(status);
-                 //console.log(error);
-           }
-     });
-});
