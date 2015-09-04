@@ -12,7 +12,8 @@ public class Post {
 	private int cid;
 	private int liked;
 	
-	public Post(String contents) {
+	public Post(int cid, String contents) {
+		this.cid = cid;
 		this.contents = contents;
 	}	
 	public Post(int pid, String contents, String creattime, int liked) {

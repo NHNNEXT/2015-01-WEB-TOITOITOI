@@ -23,7 +23,7 @@ public class PostDAO {
 	}
 	
 	public void addPost(Post post) throws SQLException {
-		String sql = "INSERT INTO post (content) VALUES(?)";
+		String sql = "INSERT INTO post (cid, content) VALUES(?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -32,7 +32,8 @@ public class PostDAO {
 			System.out.println("connection:"+conn);
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, post.getContents());
+			pstmt.setInt(1, post.getCid());
+			pstmt.setString(2, post.getContents());
 			pstmt.executeUpdate();
 		}  finally {
 			if(pstmt != null){

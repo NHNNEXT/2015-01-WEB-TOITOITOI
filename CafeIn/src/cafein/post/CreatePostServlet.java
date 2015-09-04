@@ -14,8 +14,9 @@ public class CreatePostServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String contents = req.getParameter("contents");
-		System.out.println("contents : "+contents);
-		Post post = new Post(contents);
+		int cid = Integer.parseInt(req.getParameter("cid"));
+		System.out.println("contents : "+contents+", cid : "+cid);
+		Post post = new Post(cid, contents);
 		PostDAO postdao = new PostDAO();
 		
 		try {
@@ -24,6 +25,6 @@ public class CreatePostServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		resp.sendRedirect("/");
+		resp.sendRedirect("/cafe?cid="+cid);
 	}
 }

@@ -30,6 +30,7 @@
 		<form action="/createpost" method="post">
 			<input class="posting-textbox" name="contents" type="text"
 				placeholder="  이 카페 아메리카노 어때요?">
+			<input type="hidden" name="cid" value="${param.cid}">
 			<button class="posting-send">게 시</button>
 		</form>
 	</div>
