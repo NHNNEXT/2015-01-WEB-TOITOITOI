@@ -113,10 +113,10 @@ public class ReplyDAO {
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1,replyId);
+			pstmt.setInt(1, replyId);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
-			liked = rs.getInt("reid");
+			while (rs.next()) {
+				liked = rs.getInt("liked");
 			}
 			pstmt.close();
 			conn.close();

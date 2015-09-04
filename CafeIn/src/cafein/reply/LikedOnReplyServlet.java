@@ -33,10 +33,10 @@ public class LikedOnReplyServlet extends HttpServlet {
 		}
 		ServletOutputStream out = response.getOutputStream();
 		//문제 코드 
-		//newliked = replydao.getLikedOnReply(replyId);
+		newliked = replydao.getLikedOnReply(replyId);
 		logger.debug("newliked:"+newliked);
 		//newliked값이 아니라 replyId값이 넘어옴. 
-		out.print("100");
+		out.print(newliked);
 		out.close();
 	}
 }
