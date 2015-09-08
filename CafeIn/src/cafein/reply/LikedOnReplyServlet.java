@@ -23,29 +23,24 @@ public class LikedOnReplyServlet extends HttpServlet {
 
 		int replyId = Integer.parseInt(request.getParameter("reid"));
 		String status = request.getParameter("status");
-		
-		int newliked;
-		
-		if(status == "plus") {
-			try {
-				replydao.likedOnReply(replyId);
-				response.setStatus(HttpServletResponse.SC_OK);
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
-		logger.debug("replyId:"+replyId);
-		//replydId는 정상적으로 잡음.
 
-		ServletOutputStream out = response.getOutputStream();
-		//문제 코드 
-		newliked = replydao.getLikedOnReply(replyId);
-		logger.debug("newliked:"+newliked);
-		//newliked값이 아니라 replyId값이 넘어옴. 
-		out.print(newliked);
-		out.close();
+		// plusLike 메소드랑 minusLike 메소드를 따로 만들면 중복이 심할 것 같은데, 이 둘을 하나로 합쳐서
+		// updateLike로 만드는 건 어떤지?
+		try {
+			if (status.equals("plus")) {
+				replydao.plusLike(replyId);
+			} else {
+				replydao.minusLike(replyId);
+			}
+			response.setStatus(HttpServletResponse.SC_OK);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		//서버와 디비에서 처리된 데이터를 클라이언트로 보내는 방식!
+//		ServletOutputStream out = response.getOutputStream();
+//		newliked = replydao.getLikedOnReply(replyId);
+//		logger.debug("newliked:" + newliked);
+//		out.print(newliked);
+//		out.close();
 	}
 }

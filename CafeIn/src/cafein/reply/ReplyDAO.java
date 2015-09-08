@@ -18,7 +18,7 @@ public class ReplyDAO {
 	public Connection getConnection() {
 		String url = "jdbc:mysql://localhost:3307/cafein";
 		String id = "root";
-		String pw = "db1004";
+		String pw = "1234";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			return DriverManager.getConnection(url, id, pw);
@@ -82,12 +82,33 @@ public class ReplyDAO {
 		return result;
 	}
 
-	public void likedOnReply(int replyId) throws SQLException {
+	public void plusLike(int replyId) throws SQLException {
 
 		String sql = "UPDATE reply SET liked = liked+1 WHERE reid = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
+		try {
+			conn = getConnection();
+			logger.debug("connection:" + conn);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyId);
+			pstmt.executeUpdate();
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+	
+	public void minusLike(int replyId) throws SQLException {
+		String sql = "UPDATE reply SET liked = liked-1 WHERE reid = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
 		try {
 			conn = getConnection();
 			logger.debug("connection:" + conn);
@@ -125,4 +146,5 @@ public class ReplyDAO {
 		}
 		return liked;
 	}
+
 }
