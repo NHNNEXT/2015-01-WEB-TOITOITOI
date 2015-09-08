@@ -35,13 +35,8 @@ li.post:nth-child(even) {
 	color: rgba(250,17,0,0.2);
 }
 
-.liked-reply {
-	float: right;
-}
-.liked-reply::before {
-	content: '\2665';
-	margin-right: 10px;
-	color: red;
+.like-reply.on::before {
+    color: red;
 }
 
 .time {

@@ -51,7 +51,7 @@
 				<ul>
 					<c:forEach items="${post.replyList}" var="reply">
 						<li class="reply">${reply.replyContent}</li>
-						<div class="like-reply" value = "${reply.reId}" name ="likesOnReply" action="/likedOnReply" method= "post" >${reply.liked}</div>
+						<div class="like-reply" value="${reply.reId}" name ="likesOnReply" action="/likedOnReply" method= "post" >${reply.liked}</div>
 					</c:forEach>
 				</ul>
 			</li>

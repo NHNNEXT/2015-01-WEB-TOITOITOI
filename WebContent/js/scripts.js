@@ -57,17 +57,33 @@ window.addEventListener ("scroll", function (event) {
 }, false);
 
 $(".like-reply").click(function() {
-	var reid = $(this).eq(0).attr("value");             
-	var replyId = {"reid":reid};                       //json
-	var div = $(this).eq(0);
+  // todo
+  // if(!on)
+    // +1 .addclass(on)
+    // ajax(like) (reid, status = like)
+  // else
+    // -1. removeclass(on)
+    // ajax(unlike) (reid, status = unlike)
+
+	var reid = $(this).attr("value");
+	var datas = {
+    'reid': reid, 
+    'status':'like'
+  };
+	var div = $(this);
+
+  if (!$(this).hasClass('on')) {
+    $(this).addClass('on');
+    var likes = $(this).text() + 1;
+    $(this).html(likes);
+  }
+
 	$.ajax({
            type:"POST",
            url:"/likedOnReply",
-           data: replyId,
-           likes: div,
+           data: datas,
            success : function(data) {
            		console.log("success");
-              this.likes.html(data);
              },
            error : function(xhr, status, error) {
                  console.log(status);

@@ -19,18 +19,27 @@ public class LikedOnReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int replyId = Integer.parseInt(request.getParameter("reid"));
 		ReplyDAO replydao = new ReplyDAO();
+
+		int replyId = Integer.parseInt(request.getParameter("reid"));
+		String status = request.getParameter("status");
+		
 		int newliked;
+		
+		if(status == "plus") {
+			try {
+				replydao.likedOnReply(replyId);
+				response.setStatus(HttpServletResponse.SC_OK);
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
 		logger.debug("replyId:"+replyId);
 		//replydId는 정상적으로 잡음.
-		try {
-			replydao.likedOnReply(replyId);
-			response.setStatus(HttpServletResponse.SC_OK);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
 		ServletOutputStream out = response.getOutputStream();
 		//문제 코드 
 		newliked = replydao.getLikedOnReply(replyId);
