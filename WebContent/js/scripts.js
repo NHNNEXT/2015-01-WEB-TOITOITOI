@@ -60,15 +60,15 @@ $(".like-reply").click(function() {
   // todo
   // if(!on)
     // +1 .addclass(on)
-    // ajax(like) (reid, status = like)
+    // ajax(like) (reid, status = plus)
   // else
     // -1. removeclass(on)
-    // ajax(unlike) (reid, status = unlike)
+    // ajax(unlike) (reid, status = minus)
 
 	var reid = $(this).attr("value");
 	var datas = {
     'reid': reid, 
-    'status':'like'
+    'status':'plus'
   };
 	var div = $(this);
 
