@@ -7,12 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import cafein.post.PostDAO;
+
 public class PostDAO {
+	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
 
 	public Connection getConnection() {
 		String url = "jdbc:mysql://localhost:3307/cafein";
 		String id = "root";
-		String pw = "1234";
+		String pw = "db1004";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			return DriverManager.getConnection(url,id,pw);
@@ -76,4 +82,48 @@ public class PostDAO {
 		}
 		return result;
 	}
+
+	public void plusLike(int pid) throws SQLException {
+		String sql = "UPDATE post SET liked = liked+1 WHERE pid = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getConnection();
+			logger.debug("connection:" + conn);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pid);
+			pstmt.executeUpdate();
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+
+	public void minusLike(int pid) throws SQLException {
+		String sql = "UPDATE post SET liked = liked-1 WHERE pid = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getConnection();
+			logger.debug("connection:" + conn);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pid);
+			pstmt.executeUpdate();
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+
+
 }
