@@ -11,7 +11,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>cafe In</title>
+<title>The HTML5 Herald</title>
 <meta name="viewport"
 	content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <!--meta name="description" content="The HTML5 Herald"-->
@@ -30,7 +30,6 @@
 		<form action="/createpost" method="post">
 			<input class="posting-textbox" name="contents" type="text"
 				placeholder="  이 카페 아메리카노 어때요?">
-			<input type="hidden" name="cid" value="${param.cid}">
 			<button class="posting-send">게 시</button>
 		</form>
 	</div>
@@ -52,7 +51,7 @@
 				<ul>
 					<c:forEach items="${post.replyList}" var="reply">
 						<li class="reply">${reply.replyContent}</li>
-						<div class="like-reply" value="${reply.reId}" name ="likesOnReply" action="/likedOnReply" method= "post" >${reply.liked}</div>
+						<div class="like-reply">${reply.liked}</div>
 					</c:forEach>
 				</ul>
 			</li>

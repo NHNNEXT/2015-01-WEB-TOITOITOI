@@ -12,7 +12,7 @@ public class PostDAO {
 	public Connection getConnection() {
 		String url = "jdbc:mysql://localhost:3307/cafein";
 		String id = "root";
-		String pw = "db1004";
+		String pw = "1234";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			return DriverManager.getConnection(url,id,pw);
@@ -29,6 +29,7 @@ public class PostDAO {
 		
 		try {
 			conn = getConnection();
+			//logging framework를 적용해서 
 			System.out.println("connection:"+conn);
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);

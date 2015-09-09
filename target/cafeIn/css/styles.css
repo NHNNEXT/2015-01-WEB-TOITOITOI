@@ -21,23 +21,22 @@ li.post:nth-child(even) {
 .like::before {
 	content: '\2665';
 	margin-right: 10px;
-	color: rgba(250,17,0,0.2);
+	color: red;
 }
 .like {
 	float: left;
 }
 .like-reply {
 	float: right;
+	color: yellow;
+	outline: black line;
 }
 .like-reply::before {
 	content: '\2665';
 	margin-right: 10px;
-	color: rgba(250,17,0,0.2);
+	color: yellow;
 }
 
-.like-reply.on::before {
-    color: red;
-}
 
 .time {
 	float: right;
