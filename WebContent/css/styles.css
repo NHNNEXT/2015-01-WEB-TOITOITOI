@@ -32,6 +32,7 @@ li.post:nth-child(even) {
 
 .like-reply {
 	float: right;
+	width: 47px;
 }
 .like-reply::before {
 	content: '\2665';
