@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cafein.reply.ReplyDAO;
+import cafein.post.PostDAO;
 
 public class PostDAO {
 	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
@@ -83,7 +83,7 @@ public class PostDAO {
 	}
 
 	public void plusLike(int pid) throws SQLException {
-		String sql = "UPDATE reply SET liked = liked+1 WHERE reid = ?";
+		String sql = "UPDATE post SET liked = liked+1 WHERE pid = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -104,7 +104,7 @@ public class PostDAO {
 	}
 
 	public void minusLike(int pid) throws SQLException {
-		String sql = "UPDATE reply SET liked = liked-1 WHERE reid = ?";
+		String sql = "UPDATE post SET liked = liked-1 WHERE pid = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 

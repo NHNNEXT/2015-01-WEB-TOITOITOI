@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@WebServlet("/likedOnReply")
+@WebServlet("/likedOnPost")
 public class LikedOnPostServlet extends HttpServlet {
 	private static final Logger logger = LoggerFactory.getLogger(LikedOnPostServlet.class);
 	private static final long serialVersionUID = 1L;
@@ -23,7 +23,6 @@ public class LikedOnPostServlet extends HttpServlet {
 
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		String status = request.getParameter("status");
-
 		// plusLike 메소드랑 minusLike 메소드를 따로 만들면 중복이 심할 것 같은데, 이 둘을 하나로 합쳐서
 		// updateLike로 만드는 건 어떤지?
 		try {

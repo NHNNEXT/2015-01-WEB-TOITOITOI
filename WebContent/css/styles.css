@@ -18,14 +18,18 @@ li.post:nth-child(even) {
 	float: right;
 	clear: right;	
 }
-.like::before {
+.like-post::before {
 	content: '\2665';
 	margin-right: 10px;
 	color: rgba(250,17,0,0.2);
 }
-.like {
+.like-post{
 	float: left;
 }
+.like-post.on::before {
+    color: red;
+}
+
 .like-reply {
 	float: right;
 }

@@ -106,9 +106,9 @@ $(".like-post").click(function() {
 	// -1. removeclass(on)
 	// ajax(unlike) (reid, status = minus)
 
-	var reid = $(this).attr("value");
+	var pid = $(this).attr("value");
 	var datas = {
-		'post' : post,
+		'pid' : pid,
 		'status' : 'plus'
 	};
 	var div = $(this);
