@@ -38,7 +38,7 @@
 		<c:forEach items="${posts}" var="post">
 			<li class="post">
 				<div class="contents">${post.contents}</div>
-				<div class="like">${post.liked}</div>
+				<div class="like-post" value="${post.pid}" name="likesOnPost" action="/likedOnPost">${post.liked}</div>
 				<div class="time">${post.creattime}</div>
 				<button class="replyButton">Re</button>
 				<div class="replyBox">

@@ -96,3 +96,46 @@ $(".like-reply").click(function() {
 		}
 	});
 });
+
+$(".like-post").click(function() {
+	// todo
+	// if(!on)
+	// +1 .addclass(on)
+	// ajax(like) (reid, status = plus)
+	// else
+	// -1. removeclass(on)
+	// ajax(unlike) (reid, status = minus)
+
+	var reid = $(this).attr("value");
+	var datas = {
+		'post' : post,
+		'status' : 'plus'
+	};
+	var div = $(this);
+
+	if (!$(this).hasClass('on')) {
+		$(this).addClass('on');
+		var likes = parseInt($(this).text()) + 1;
+		$(this).html(likes);
+	}
+	else {
+		$(this).removeClass('on');
+		var likes = parseInt($(this).text()) - 1;
+		$(this).html(likes);
+		datas.status = 'minus';
+	}
+	console.log(datas);
+	$.ajax({
+		type : "POST",
+		url : "/likedOnPost",
+		data : datas,
+		success : function(data) {
+			console.log("success");
+			// div.html(data);
+		},
+		error : function(xhr, status, error) {
+			console.log(status);
+			// console.log(error);
+		}
+	});
+});
