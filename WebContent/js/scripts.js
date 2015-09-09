@@ -1,7 +1,7 @@
 var replyButtons = $('.replyButton');
 replyButtons.on('click', function() {
-	var replyBox = $('.replyBox');
-	replyBox.show();
+	// debugger;
+	$(this).parent().children('.replyBox').toggle();
 });
 
 var posting_style = document.querySelector('.posting').style;
