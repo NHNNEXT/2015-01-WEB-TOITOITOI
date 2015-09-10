@@ -16,8 +16,7 @@
 	content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <!--meta name="description" content="The HTML5 Herald"-->
 <!--meta name="author" content="SitePoint"-->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/styles.css">
+<link rel="stylesheet" href="/css/styles.css">
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->

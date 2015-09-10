@@ -18,4 +18,15 @@
 		<filter-name>Set Character Encoding</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<servlet>
+		<description>
+		</description>
+		<display-name>CafeListServlet</display-name>
+		<servlet-name>CafeListServlet</servlet-name>
+		<servlet-class>cafein.CafeListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CafeListServlet</servlet-name>
+		<url-pattern>/CafeListServlet</url-pattern>
+	</servlet-mapping>
 </web-app>

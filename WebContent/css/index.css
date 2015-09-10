@@ -1,0 +1,34 @@
+.cafe-list {
+	list-style-type: none;
+	padding: 0;
+}
+
+.cafe-list li{
+	clear: left;
+	height: 80px;
+	padding: 5px;
+}
+
+.cafe-list div {
+	float: left;
+}
+
+.cafe-list img {	
+	float: left;
+}
+
+.cafe-list .name {
+	
+}
+
+.cafe-list .post-num {
+	
+}
+
+.cafe-list .address {
+	
+}
+
+.cafe-list .distance {
+	
+}
