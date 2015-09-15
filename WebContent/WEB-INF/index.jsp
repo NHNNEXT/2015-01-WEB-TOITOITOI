@@ -9,7 +9,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>The HTML5 Herald</title>
+	<title>cafe in</title>
 	<meta name="description" content="The HTML5 Herald">
 	<meta name="author" content="SitePoint">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">	
@@ -21,9 +21,12 @@
 
 </head>
 <body>
-	<a href="/cafe?cid=하이">gogogo</a>
+	<a href="/cafe?cid=1">gogogo</a>
 	
 	<h1>CafeIn</h1>
+	<ul class="filter">
+		<li><a href="/?sort=postNum">댓글순</a></li>
+	</ul>
 	<hr>
 	<ul class="cafe-list">
 		<c:forEach items="${cafeList}" var="cafe">
@@ -31,34 +34,11 @@
 				<img src="http://placehold.it/80x80">
 				<div class="cid">${cafe.cid}</div>
 				<div class="name">${cafe.name}</div>
-				<div class="post-num">포스트 3개</div>
+				<div class="post-num">포스트 ${cafe.postNum}개</div>
 				<div class="address">성남시 분당구 삼평동</div>
 				<div class="distance">0.3km</div>
 			</li>
 		</c:forEach>
-		<!-- 
-			<li>
-				<img src="http://placehold.it/80x80">
-				<div class="name">김다방</div>
-				<div class="post-num">포스트 23개</div>
-				<div class="address">토이시 토이구 토이동</div>
-				<div class="distance">0.4km</div>
-			</li>
-			<li>
-				<img src="http://placehold.it/80x80">
-				<div class="name">박다방</div>
-				<div class="post-num">포스트 300개</div>
-				<div class="address">성남시 분당구 삼평동</div>
-				<div class="distance">1.0km</div>
-			</li>
-			<li>
-				<img src="http://placehold.it/80x80">
-				<div class="name">정다방</div>
-				<div class="post-num">포스트 1234개</div>
-				<div class="address">성남시 분당구 삼평동</div>
-				<div class="distance">48.8km</div>
-			</li>
-		-->
 	</ul>
 </body>
 </html>

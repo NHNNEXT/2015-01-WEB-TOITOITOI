@@ -25,10 +25,16 @@ public class CafeDAO {
 	}
 	
 	public ArrayList<Cafe> getCafeList() {
+		return getCafeList(false);
+	}
+	
+	public ArrayList<Cafe> getCafeList(boolean sort) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "SELECT * FROM cafe";
+		String sql = "SELECT c.cid AS cid, c.name AS name, count(p.pid) AS posts "
+				+ "FROM cafe c JOIN post p ON p.cid = c.cid GROUP BY c.cid ";
+		sql += (sort)? "ORDER BY posts DESC;" : "";
 		ArrayList<Cafe> cafeList = new ArrayList<Cafe>();
 		
 		try {
@@ -38,7 +44,8 @@ public class CafeDAO {
 			while(rs.next()) {
 				int cid = rs.getInt("cid");
 				String name = rs.getString("name");
-				cafeList.add(new Cafe(cid, name));
+				int postNum = rs.getInt("posts");
+				cafeList.add(new Cafe(cid, name, postNum));
 			}
 			pstmt.close();
 			conn.close();

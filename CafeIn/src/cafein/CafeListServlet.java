@@ -21,8 +21,14 @@ import cafein.cafe.CafeDAO;
 public class CafeListServlet extends HttpServlet {  
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String filter = request.getParameter("sort");
+		ArrayList<Cafe> cafeList;
 		CafeDAO cafedao = new CafeDAO();
-		ArrayList<Cafe> cafeList = cafedao.getCafeList();
+		
+		// http://stackoverflow.com/questions/3321526/should-i-use-string-isempty-or-equalsstring
+		boolean sortByPostNum = "postNum".equals(filter);
+		System.out.println("getCafeList - sort : "+sortByPostNum);
+		cafeList = cafedao.getCafeList(sortByPostNum);
 		
 		request.setAttribute("cafeList", cafeList);
 		request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
