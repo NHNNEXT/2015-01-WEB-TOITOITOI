@@ -25,8 +25,19 @@
 		<servlet-name>CafeListServlet</servlet-name>
 		<servlet-class>cafein.CafeListServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>SearchCafeServlet</display-name>
+		<servlet-name>SearchCafeServlet</servlet-name>
+		<servlet-class>cafein.cafe.SearchCafeServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>CafeListServlet</servlet-name>
 		<url-pattern>/CafeListServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SearchCafeServlet</servlet-name>
+		<url-pattern>/SearchCafeServlet</url-pattern>
 	</servlet-mapping>
 </web-app>

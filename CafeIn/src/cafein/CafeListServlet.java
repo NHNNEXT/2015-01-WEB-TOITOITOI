@@ -27,7 +27,6 @@ public class CafeListServlet extends HttpServlet {
 		
 		// http://stackoverflow.com/questions/3321526/should-i-use-string-isempty-or-equalsstring
 		boolean sortByPostNum = "postNum".equals(filter);
-		System.out.println("getCafeList - sort : "+sortByPostNum);
 		cafeList = cafedao.getCafeList(sortByPostNum);
 		
 		request.setAttribute("cafeList", cafeList);

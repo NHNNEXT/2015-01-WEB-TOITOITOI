@@ -30,4 +30,9 @@ public class CafeDAOTest {
 		System.out.println(cafeList.get(1));
 		assertNotNull(cafeList.get(0));
 	}
+
+	@Test
+	public void searchCafeTest() {
+		System.out.println(cafeDAO.searchCafe("test"));
+ 	}
 }
