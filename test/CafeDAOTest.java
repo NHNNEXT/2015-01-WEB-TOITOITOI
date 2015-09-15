@@ -16,5 +16,12 @@ public class CafeDAOTest {
 		System.out.println(cafeList.get(0));
 		assertNotNull(cafeList.get(0));
 	}
+	
+	@Test
+	public void searchCafeTest() {
+		CafeDAO cafedao = new CafeDAO();
+		ArrayList<Cafe> cafeList = cafedao.searchCafe("test");
+		System.out.println(cafedao.searchCafe("test"));
+ 	}
 
 }
