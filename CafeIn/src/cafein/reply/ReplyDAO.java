@@ -55,7 +55,7 @@ public class ReplyDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = "SELECT * FROM reply WHERE pid=? ORDER BY postingtime";
+		String sql = "SELECT * FROM reply WHERE pid=? ORDER BY postingtime DESC";
 		ArrayList<Reply> result = new ArrayList<Reply>();
 
 		try {
