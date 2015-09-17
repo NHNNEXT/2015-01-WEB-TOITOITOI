@@ -3,6 +3,7 @@ use cafein;
 DROP TABLE IF EXISTS `reply`;
 DROP TABLE IF EXISTS `post`;
 DROP TABLE IF EXISTS `cafe`;
+DROP TABLE IF EXISTS `nudge`;
 
 CREATE TABLE `cafe` (
   `cid` int(11) NOT NULL AUTO_INCREMENT,
@@ -30,4 +31,13 @@ CREATE TABLE `reply` (
   PRIMARY KEY (`reid`),
   KEY `pid` (`pid`),
   CONSTRAINT `reply_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `post` (`pid`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `nudge` (
+  `nudgeid` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` int(11) NOT NULL,
+  `contents` varchar(200) NOT NULL,
+  PRIMARY KEY (`nudgeid`),
+  KEY `cid` (`cid`),
+  CONSTRAINT `nudge_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `cafe` (`cid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
