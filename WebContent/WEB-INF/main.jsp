@@ -24,7 +24,7 @@
 </head>
 
 <body>
-	<header class="top-bar">CafeIn</header>
+	<header class="top-bar">cafeIn</header>
 	<div class="posting">
 		<form action="/createpost" method="post">
 			<input class="posting-textbox" name="contents" type="text"

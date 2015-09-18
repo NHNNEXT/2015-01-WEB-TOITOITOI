@@ -18,6 +18,7 @@ public class MainServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int cid = Integer.parseInt(request.getParameter("cid"));
+		String cafeName = request.getParameter("name");
 		PostDAO postdao = new PostDAO();
 		ReplyDAO replydao = new ReplyDAO();
 		ArrayList<Post> posts = postdao.getPosts(cid);
@@ -25,7 +26,6 @@ public class MainServlet extends HttpServlet {
 			int pid = post.getPid();
 			post.setReplyList(replydao.getReplys(pid));
 		}
-		
 		request.setAttribute("posts", posts);
 		request.getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 	}
