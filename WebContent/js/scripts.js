@@ -140,10 +140,23 @@ $(".like-post").click(function() {
 	});
 });
 
-var nudges = ['가을가을한 오늘, 당신의 추천곡은?', 'coffea에 가끔 나타나는 여신을 본 적이 있나요?', '나만 아는 우리동네 깨알꿀팁이 있나요?', '커피는 언제 마셔야 제맛일까요?'];
+var nudges = [];
 var nudgeIndex = 0;
-function changeNudege () {
-	$('.posting-textbox').attr('placeholder', nudges[(nudgeIndex++)%nudges.length]);
+
+var cid = $('input[name="cid"]').attr('value');
+$.get('/nudge?cid='+cid, function(data) {
+	parsedData = JSON.parse(data);
+	for (var i = 0; i < parsedData.length; i++) {
+		nudges.push(parsedData[i].contents);
+	}
+});
+
+function changeNudge () {
+	var nextNudge = (nudges.length)? nudges[(nudgeIndex++)%nudges.length] : '이 카페 아메리카노 어때요?';
+	$('.posting-textbox').attr('placeholder', nextNudge);
 }
-var intervalNudgeID = window.setInterval(changeNudege, 5000);
-changeNudege();
+function setTimeOutNudge () {
+	changeNudge();
+	window.setTimeout(setTimeOutNudge, 5000);
+}
+window.setTimeout(setTimeOutNudge, 10);
