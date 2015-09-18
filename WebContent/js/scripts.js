@@ -139,3 +139,11 @@ $(".like-post").click(function() {
 		}
 	});
 });
+
+var nudges = ['가을가을한 오늘, 당신의 추천곡은?', 'coffea에 가끔 나타나는 여신을 본 적이 있나요?', '나만 아는 우리동네 깨알꿀팁이 있나요?', '커피는 언제 마셔야 제맛일까요?'];
+var nudgeIndex = 0;
+function changeNudege () {
+	$('.posting-textbox').attr('placeholder', nudges[(nudgeIndex++)%nudges.length]);
+}
+var intervalNudgeID = window.setInterval(changeNudege, 5000);
+changeNudege();
