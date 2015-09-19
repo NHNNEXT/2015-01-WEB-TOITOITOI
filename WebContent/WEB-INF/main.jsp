@@ -11,7 +11,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>cafe In</title>
+<title>${cafeName}</title>
 <meta name="viewport"
 	content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <!--meta name="description" content="The HTML5 Herald"-->
@@ -24,7 +24,7 @@
 </head>
 
 <body>
-	<header class="top-bar">cafeIn</header>
+	<header class="top-bar">${cafeName}</header>
 	<div class="posting">
 		<form action="/createpost" method="post">
 			<input class="posting-textbox" name="contents" type="text"
