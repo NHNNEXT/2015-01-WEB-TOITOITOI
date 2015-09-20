@@ -45,7 +45,7 @@
 			</li>
 		</c:forEach>
 	</ul>
-	<div class="cafe-list-bg"></div>
+	<!-- <div class="cafe-list-bg"></div>  -->
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/scripts.js"></script>
 </body>
