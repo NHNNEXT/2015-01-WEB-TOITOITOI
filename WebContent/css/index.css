@@ -11,7 +11,7 @@ body{
 	position: relative;
     display: block;
     height: 16vh;
-    margin: 14vh auto 2vh auto;
+    margin: 15vh auto 2vh auto;
 }
 
 
@@ -27,9 +27,10 @@ body{
     border: 2px solid rgba(255,255,255,1);
     border-radius: 100px;
     color: white;
+    text-shadow: 1px 1px rgba(0,0,0,0.7);    
     font-size: 15pt;
     font-family: "AppleSDGothicNeo-Medium",arial, sans-serif;
-    background-color: rgba(0, 0, 0, 0.18);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 .search #search-button{
 	display: none;
@@ -42,7 +43,7 @@ body{
     height: 3.6vh;
     width: 3.6vh;
     position: absolute;
-    top: 33.4vh;
+    top: 34.4vh;
     right: 13vw;
     -webkit-filter: drop-shadow(2px 1px 3px black);
     filter: drop-shadow(2px 2px 3px black);
@@ -57,49 +58,53 @@ body{
     width: 81%;
     height: 6.5vh;
     border-radius: 100px;
-    top: 32vh;
+    top: 33vh;
     left: 9vw;
     z-index: -1;
 }
 .search .textbox::-webkit-input-placeholder{
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.55);    
     line-height: 5vh;
     font-size: 12pt;
-    font-weight: 100;
+    font-weight: 300;
     font-style: italic;
+    text-shadow: none;        
 }
 .search .textbox:-moz-placeholder{
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.55);    
     line-height: 5vh;
     font-size: 12pt;
-    font-weight: 100;
+    font-weight: 300;
     font-style: italic;
+    text-shadow: none;  
 }
 .search .textbox::-moz-placeholder{
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.55);    
     line-height: 5vh;
     font-size: 12pt;
-    font-weight: 100;
+    font-weight: 300;
     font-style: italic;
+    text-shadow: none;  
 }
 .search .textbox:-ms-input-placeholder{
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.55);    
     line-height: 5vh;
     font-size: 12pt;
-    font-weight: 100;
+    font-weight: 300;
     font-style: italic;
+    text-shadow: none;  
 }
 
 /* cafe-list */
 .cafe-list {
     list-style-type: none;
-    border: 1px solid rgba(243, 202, 197, 0.5);
+    border: 2px solid rgba(243, 202, 197, 0.65);
     border-radius: 22px;
     box-sizing: border-box;
-    padding: 0 7px;
-    background-color: rgba(34, 27, 25, 0.5);
-    width: 94%;
-    height: 54.6vh;
+    padding: 1px 5px;
+    background-color: rgba(34, 27, 25, 0.4);
+    width: 89%;
+    height: 50.6vh;
     margin: 0 auto;
     margin-top: 4vh;
     color: white;
@@ -121,15 +126,15 @@ body{
 .cafe-list li{
     clear: left;
     height: 80px;
-    padding: 11px 5px;
+    padding: 7px 3px;
     border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 .cafe-list .info {
-	color: inherit;
-	text-decoration: none;
+    color: inherit;
+    text-decoration: none;
     float: left;
     display: inline-block;
-    width: 51vw;
+    width: 43vw;
     height: 14vh;
     margin-left: 5vw;
     box-sizing: border-box;
@@ -140,29 +145,29 @@ body{
     height: 14vh;
 }
 .cafe-list .name {
-	font-family: "AppleSDGothicNeo-Medium", arial, sans-serif;
-    font-size: 2em;
+    font-family: "AppleSDGothicNeo-Medium", arial, sans-serif;
+    font-size: 1.9em;
 }
 .cafe-list .post-num {
-	width: 18vw;
     display: inline-block;
-    line-height: 115%;
-    margin-left: 3.5vw;
-    vertical-align: -0.3em;
+    line-height: 110%;
+    margin-left: 4.5vw;
+    vertical-align: -0.1em;
     font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
+    font-size: 0.9em;
 }
 .cafe-list .address {
-	display: inline-block;
+    display: inline-block;
     font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-    font-size: 0.82em;
+    font-size: 0.85em;
     width: 26vw;
     margin-top: 0.4em;
 }
 .cafe-list .distance {
 	font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-    width: 18vw;
+    font-size: 0.9em;
     display: inline-block;
     line-height: 115%;
-    margin-left: 3.5vw;
+    margin-left: 2.5vw;
     vertical-align: 0.2em;
 }
