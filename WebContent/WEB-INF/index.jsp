@@ -22,26 +22,30 @@
 
 </head>
 <body>
-	<a href="/cafe?cid=1">gogogo</a>
-	
-	<h1>CafeIn</h1>
-	<ul class="filter">
+	<img class="logo" src="http://i62.tinypic.com/10f9eo4.png">
+	<!-- <ul class="filter">
 		<li><a href="/?sort=postNum">댓글순</a></li>
-	</ul>
-	<form name="search" method="get" action="/searchcafe">
-		<input type="text" name="keyword" placeholder="카페 이름을 검색해주세요." value="${keyword}"/> <input type="submit" value="검색" />
+	</ul> -->
+	<form class="search" name="search" method="get" action="/searchcafe">
+		<input class="textbox" type="text" name="keyword" placeholder="카페 이름을 검색해주세요." value="${keyword}"/> 
+		<input id="search-button" type="submit" value="검색"/>
+		<label for="search-button"></label>
+		<div class="search-bg"></div>
 	</form>
-	<hr>
 	<ul class="cafe-list">
 		<c:forEach items="${cafeList}" var="cafe">
-			<li><img src="http://placehold.it/80x80">
-				<div class="cid">${cafe.cid}</div>
-				<div class="name">${cafe.name}</div>
-				<div class="post-num">포스트 ${cafe.postNum}개</div>
-				<div class="address">성남시 분당구 삼평동</div>
-				<div class="distance">0.3km</div></li>
+			<li>
+				<img src="http://placehold.it/80x80">
+				<a class = "info" href="/cafe?cid=${cafe.cid}">
+					<span class="name">${cafe.name}</span>
+					<span class="post-num"><b>POST</b><br>${cafe.postNum}개</span>
+					<span class="address">성남시 분당구 삼평동</span>
+					<span class="distance">0.3km</span>
+				</a>
+			</li>
 		</c:forEach>
 	</ul>
+	<div class="cafe-list-bg"></div>
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/scripts.js"></script>
 </body>
