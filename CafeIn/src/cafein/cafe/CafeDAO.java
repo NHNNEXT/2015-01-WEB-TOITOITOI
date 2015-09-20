@@ -28,7 +28,7 @@ public class CafeDAO {
 		String searchQuery = (keywordSearch) ? " WHERE c.name LIKE ? " : "";
 		String orderQuery = (sortByPostNum) ? " ORDER BY posts DESC " : "";
 
-		String result = "SELECT c.cid AS cid, c.name AS name, count(p.pid) AS posts " + " FROM cafe c JOIN post p ON p.cid = c.cid " + searchQuery
+		String result = "SELECT c.cid AS cid, c.name AS name, count(p.pid) AS posts " + " FROM cafe c LEFT JOIN post p ON p.cid = c.cid " + searchQuery
 				+ " GROUP BY c.cid " + orderQuery;
 
 		return result;
