@@ -54,7 +54,8 @@ public class CafeDAO {
 			while (rs.next()) {
 				int cid = rs.getInt("cid");
 				String name = rs.getString("name");
-				cafeList.add(new Cafe(cid, name));
+				int postNum = rs.getInt("posts");
+				cafeList.add(new Cafe(cid, name, postNum));
 			}
 			pstmt.close();
 			conn.close();
