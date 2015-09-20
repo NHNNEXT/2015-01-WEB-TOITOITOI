@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cafein.post.Post;
+
 public class CafeDAO {
 
 	public Connection getConnection() {
@@ -21,28 +23,25 @@ public class CafeDAO {
 			return null;
 		}
 	}
-	
+
 	private String getCafeListSQL(boolean keywordSearch, boolean sortByPostNum) {
 		String searchQuery = (keywordSearch) ? " WHERE c.name LIKE ? " : "";
 		String orderQuery = (sortByPostNum) ? " ORDER BY posts DESC " : "";
-		
-		String result = "SELECT c.cid AS cid, c.name AS name, count(p.pid) AS posts "
-				+ " FROM cafe c JOIN post p ON p.cid = c.cid "
-				+ searchQuery
-				+ " GROUP BY c.cid "
-				+ orderQuery;
-		
+
+		String result = "SELECT c.cid AS cid, c.name AS name, count(p.pid) AS posts " + " FROM cafe c JOIN post p ON p.cid = c.cid " + searchQuery
+				+ " GROUP BY c.cid " + orderQuery;
+
 		return result;
 	}
 
 	public ArrayList<Cafe> getCafeList() {
 		return getCafeList(false);
 	}
-	
+
 	public ArrayList<Cafe> getCafeList(boolean sort) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+
 		String sql = getCafeListSQL(false, sort);
 		System.out.println("result query : " + sql);
 
@@ -92,5 +91,29 @@ public class CafeDAO {
 			e.printStackTrace();
 		}
 		return cafeList;
+	}
+
+	public String getName(int cid) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		String sql = "SELECT * FROM cafe WHERE cid=?";
+		String cafeName = null;
+
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cid);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				cafeName = rs.getString("name");
+			}
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cafeName;
 	}
 }

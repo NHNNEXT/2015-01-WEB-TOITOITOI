@@ -5,7 +5,7 @@ public class Cafe {
 	private int cid;
 	private String name;
 	private int postNum;
-
+	
 	public Cafe(int cid, String name) {
 		this.cid = cid;
 		this.name = name;
@@ -15,7 +15,7 @@ public class Cafe {
 		this.name = name;
 		this.postNum = postNum;
 	}
-
+	
 	public int getCid() {
 		return cid;
 	}

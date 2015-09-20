@@ -4,10 +4,6 @@ public class Nudge {
 	private int nudgeId;
 	private String contents;
 	
-	public Nudge(int cid) {
-		super();
-	}
-	
 	public Nudge(int nudgeId, String contents) {
 		super();
 		this.nudgeId = nudgeId;
