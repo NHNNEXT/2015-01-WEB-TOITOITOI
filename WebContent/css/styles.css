@@ -249,20 +249,21 @@ body{
 	display: block;
     position: relative;
     margin: 0 auto;
+   	padding-left: 15px;
     width: 90%;
     height: 57px;
     min-width: 150px;
     font-size: 12pt;
     line-height: 35px;
     border-radius: 100px;
-    border: 1px solid rgba(237, 222, 204, 0.5);
+    border: 1px solid rgba(237, 222, 204, 0.8);
     background-color: rgba(255, 255, 255, 0.07);
     outline-style: none;
     box-sizing: border-box;
-    -webkit-transition-property: top, height, font-size;
+    -webkit-transition-property: top, height, line-height, border-color, font-size;
     -webkit-transition-duration: 0.4s;
     -webkit-transition-timing-function: ease;
-    transition-property: top, height, font-size;
+    transition-property: top, height, line-height, border-color, font-size;
     transition-duration: 0.4s;
     transition-timing-function: ease;
     font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
@@ -292,7 +293,7 @@ body{
     padding: 0;
     border-radius: 38px;
     font-size: 10pt;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     background-color: rgba(255, 255, 255, 0.25);
     cursor: pointer;
     color: white;
@@ -327,6 +328,6 @@ body{
     -webkit-transition-duration: 0.4s;
     -webkit-transition-timing-function: ease;
     transition-property: top, left, width, height, border-radius, font-size;
-    transition-duration: 0.4s;
+    transition-duration: 0.6s;
     transition-timing-function: ease;    
 }

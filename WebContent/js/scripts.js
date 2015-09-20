@@ -3,21 +3,6 @@ var posting_textbox_style = document.querySelector('.posting .textbox').style;
 var posting_textboxbg_style = document.querySelector('.posting .textbox-bg').style;
 var posting_send_style = document.querySelector('.posting .send').style;
 
-var posting_textbox = document.querySelector(".posting .textbox");
-
-posting_textbox.addEventListener('focus', function(event) {
-
-	posting_style.postion = "fixed";
-	posting_style.height = '80px';
-	posting_style.paddingRight = "60px";
-	posting_textbox_style.width = '100%';
-	posting_textbox_style.height = '70px';
-	posting_textbox_style.fontSize = '14pt';
-	posting_send_style.opacity = 1;
-	posting_send_style.right = "5px";
-
-}, false);
-
 var curPos = window.scrollY;
 var posting = document.querySelector('.posting');
 var posting_pos = posting.getBoundingClientRect();
@@ -30,12 +15,14 @@ window.addEventListener("scroll", function(event) {
 		posting_textbox_style.top = '1vh';
 		posting_textbox_style.height = '32px';
 		posting_textbox_style.lineHeight = '32px';
-		posting_textbox_style.fontSize = '10pt';
+		posting_textbox_style.fontSize = '9pt';
+		posting_textbox_style.borderColor = "rgba(237,222,204,0.8)";
 		posting_textboxbg_style.top = '0';
 		posting_textboxbg_style.left = '0';
 		posting_textboxbg_style.width = '100%';
 		posting_textboxbg_style.height = '46px';
 		posting_textboxbg_style.borderRadius = '0px';
+		posting_textboxbg_style.borderBottom = '1px solid rgba(234, 202, 190, 0.15)';		
 		posting_send_style.top = '1vh';
 		posting_send_style.right = '5%';
 		posting_send_style.height = '32px';
@@ -55,6 +42,7 @@ window.addEventListener("scroll", function(event) {
 		posting_textboxbg_style.width = '90%';
 		posting_textboxbg_style.height = '57px';
 		posting_textboxbg_style.borderRadius = '100px';
+		posting_textboxbg_style.borderBottom = 'none';		
 		posting_send_style.top = '0';
 		posting_send_style.right = '5.3%';
 		posting_send_style.height = '57px';
@@ -63,6 +51,22 @@ window.addEventListener("scroll", function(event) {
 		curPos = scrollY;
 	}
 
+}, false);
+
+var posting_textbox = document.querySelector(".posting .textbox");
+
+posting_textbox.addEventListener('focus', function(event) {
+	/* input박스가 스크롤해서 쪼그라들었을 때만 클릭시 이벤트 적용! */
+	if (scrollY > 176){
+		posting_style.height = "65px";
+		posting_textbox_style.height = '50px';
+		posting_textbox_style.lineHeight = '50px';
+		posting_textbox_style.fontSize = '10pt';
+		posting_textboxbg_style.height = '65px';
+		posting_send_style.right = '5.3%';
+		posting_send_style.height = '50px';
+		posting_textboxbg_style.borderBottom = '1px solid rgba(234, 202, 190, 0.15)';		
+	}
 }, false);
 
 $(".like-reply").click(function() {
@@ -167,7 +171,7 @@ $.get('/nudge?cid='+cid, function(data) {
 
 function changeNudge () {
 	var nextNudge = (nudges.length)? nudges[(nudgeIndex++)%nudges.length] : '이 카페 아메리카노 어때요?';
-	$('.posting-textbox').attr('placeholder', nextNudge);
+	$('.posting .textbox').attr('placeholder', nextNudge);
 }
 function setTimeOutNudge () {
 	changeNudge();
