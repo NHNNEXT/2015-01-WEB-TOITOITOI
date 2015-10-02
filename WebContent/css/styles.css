@@ -140,13 +140,14 @@ li .time{
     top: -29px;
     right: 1px;
     height: 24px;
-    width: 39px;
+    width: 15vmin;
     background-color: rgba(18,8,2,0.5);
     border: 0;
     border-radius: 8px;
     border: 1px solid rgba(237, 222, 204, 0.1);
     color: rgb(241, 234, 227);
     font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
+    font-size: 3.5vmin;
 }
 
 .quatation-up{
@@ -312,6 +313,7 @@ min-height: 11vmin;}
     right: 5.1%;
     width: 7vmax;
     height: 7.7vmax;
+    letter-spacing: 2px;
     padding: 0;
     border-radius: 50px;
     font-size: 4vmin;

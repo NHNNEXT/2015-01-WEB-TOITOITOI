@@ -39,7 +39,7 @@
 				<input class="textbox" name="contents" type="textbox" placeholder="	Q. 이 카페 아메리카노 어때요?">
 				<div class="textbox-bg"></div>
 				<input class="cid" type="hidden" name="cid" value="${param.cid}">
-				<button class="send">게 시</button>
+				<button class="send">게시</button>
 			</form>
 		</div>
 	</header>
@@ -67,7 +67,7 @@
 					<form action="/createReply" method="post">
 						<input class="textbox" name="reply" type="text" placeholder=" re: 댓글 달기..."> 
 						<input name="pid" type="hidden" value="${post.pid}">
-						<button class="send">게 시</button>
+						<button class="send">게시</button>
 					</form>
 				</div>
 			</li>
