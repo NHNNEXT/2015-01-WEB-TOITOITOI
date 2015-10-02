@@ -22,7 +22,7 @@
 
 </head>
 <body>
-	<img class="logo" src="http://i62.tinypic.com/10f9eo4.png">
+	<img class="logo" src="http://i58.tinypic.com/t8qbko.png">
 	<!-- <ul class="filter">
 		<li><a href="/?sort=postNum">댓글순</a></li>
 	</ul> -->
@@ -37,15 +37,19 @@
 			<li>
 				<img src="http://placehold.it/80x80">
 				<a class = "info" href="/cafe?cid=${cafe.cid}">
-					<span class="name">${cafe.name}</span>
-					<span class="post-num"><b>POST</b><br>${cafe.postNum}개</span>
-					<span class="address">성남시 분당구 삼평동</span>
-					<span class="distance">0.3km</span>
+					<span class="left-column">
+						<span class="name">${cafe.name}</span>
+						<span class="address">성남시 분당구 삼평동</span>
+					</span>
+					<span class="right-column">
+						<span class="post-num"><b>POST</b><br>${cafe.postNum}개</span>
+						<span class="distance">0.3km</span>
+					</span>
 				</a>
 			</li>
 		</c:forEach>
 	</ul>
-	<!-- <div class="cafe-list-bg"></div>  -->
+	<div class="cafe-list-bg"></div>
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/scripts.js"></script>
 </body>

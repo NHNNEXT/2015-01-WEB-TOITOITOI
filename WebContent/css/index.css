@@ -1,17 +1,17 @@
 /* body */
 body{
-	background-image: url(http://i61.tinypic.com/qod0u9.png);
-    background-repeat: no-repeat;
-    background-size: 100vw 100vh;
+	background-image: url(http://i60.tinypic.com/21lv8uf.png);
+	background-size: 101%;
+	height: 583px;
 }
 
 
 /* header */
 .logo{
 	position: relative;
-    display: block;
-    height: 16vh;
-    margin: 15vh auto 2vh auto;
+	display: block;
+	height: 16vh;
+	margin: 19vh auto 5vh auto;
 }
 
 
@@ -19,18 +19,18 @@ body{
 .search .textbox{
     display: block;
     width: 87%;
-    height: 6.5vh;
+    height: 6vh;
     margin: 0 auto;
-    padding-left: 37px;
+    padding-left: 7vmin;
     outline-style: none;
     box-sizing: border-box;
-    border: 2px solid rgba(255,255,255,1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 100px;
-    color: white;
-    text-shadow: 1px 1px rgba(0,0,0,0.7);    
-    font-size: 15pt;
+    color: #FFFFFF;
+    text-shadow: 1px 1px rgba(0,0,0,0.7);
+    font-size: 3vh;
     font-family: "AppleSDGothicNeo-Medium",arial, sans-serif;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.28);
 }
 .search #search-button{
 	display: none;
@@ -38,34 +38,33 @@ body{
 .search label{
     background-image: url(http://i58.tinypic.com/2mevhqv.png);
     background-size: cover;
-    background-repeat: no-repeat;
-    display: block;
-    height: 3.6vh;
-    width: 3.6vh;
-    position: absolute;
-    top: 34.4vh;
-    right: 13vw;
+    height: 3.5vh;
+    width: 3.5vh;
+    position: relative;
+    float: right;
+    top: -5vh;
+    right: 10vw;
     -webkit-filter: drop-shadow(2px 1px 3px black);
     filter: drop-shadow(2px 2px 3px black);
 }
 .search-bg{
-    background-image: url(http://i59.tinypic.com/vrestu.png);
+    background-image: url(http://i61.tinypic.com/29fyvbo.png);
     background-attachment: fixed;
     background-size: cover;
     filter: url('blur.svg#blur');
     filter: blur(10px);
-    position: absolute;
-    width: 81%;
-    height: 6.5vh;
+    position: relative;
+    width: 87%;
+    height: 6vh;
     border-radius: 100px;
-    top: 33vh;
-    left: 9vw;
+    top: -6vh;
+    margin: 0 auto;
     z-index: -1;
 }
 .search .textbox::-webkit-input-placeholder{
-    color: rgba(0, 0, 0, 0.55);    
-    line-height: 5vh;
-    font-size: 12pt;
+    color: rgba(255, 255, 255, 0.65);  
+    vertical-align: middle;
+    font-size: 2.8vh;
     font-weight: 300;
     font-style: italic;
     text-shadow: none;        
@@ -98,35 +97,36 @@ body{
 /* cafe-list */
 .cafe-list {
     list-style-type: none;
-    border: 2px solid rgba(243, 202, 197, 0.65);
-    border-radius: 22px;
+    border: 1px solid rgba(243, 202, 197, 0.35);
+    border-radius: 17px;
     box-sizing: border-box;
-    padding: 1px 5px;
-    background-color: rgba(34, 27, 25, 0.4);
-    width: 89%;
-    height: 50.6vh;
+    padding: 0 5px;
+    background-color: rgba(26, 17, 9, 0.6);
+    position: relative;
+    top: -2vh;
+    width: 88%;
+    height: 44vh;
     margin: 0 auto;
-    margin-top: 4vh;
-    color: white;
+    color: rgba(255,255,255,0.8);
     overflow: scroll;
+    clear: right;
 }
 .cafe-list-bg{
-    position: absolute;
-    top: 42.5vh;
-    left: 5.5vw;
-    width: 89%;
-    height: 54.6vh;
+    position: relative;
+    top: -45vh;
+    margin: 0 auto;
+    width: 88.5%;
+    height: 44vh;
     border-radius: 22px;
     background-size: cover;
-    background-image: url(http://i59.tinypic.com/vrestu.png);
+    background-image: url(http://i60.tinypic.com/2zno21x.png);
     background-attachment: fixed;
-
     z-index: -1;
 }
 .cafe-list li{
     clear: left;
-    height: 80px;
-    padding: 7px 3px;
+    height: 11vh;
+    padding: 2.7vw 1.2vw;
     border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 .cafe-list .info {
@@ -134,40 +134,45 @@ body{
     text-decoration: none;
     float: left;
     display: inline-block;
-    width: 43vw;
-    height: 14vh;
+    width: 53vw;
     margin-left: 5vw;
     box-sizing: border-box;
 }
-.cafe-list img {	
+.cafe-list .info .left-column{
+	display: inline-block;
+	width: 35vw;
+}
+.cafe-list .info .right-column{
+	display: inline-block;
+	width: 15vw;
+}
+.cafe-list img {
     float: left;
     border-radius: 15px;
-    height: 14vh;
+    height: 11vh;
+    background-color: rgba(0,0,0,1);
 }
 .cafe-list .name {
-    font-family: "AppleSDGothicNeo-Medium", arial, sans-serif;
-    font-size: 1.9em;
+    font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
+    font-size: 4vh;
+    line-height: 7vh;
 }
 .cafe-list .post-num {
     display: inline-block;
     line-height: 110%;
-    margin-left: 4.5vw;
-    vertical-align: -0.1em;
     font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-    font-size: 0.9em;
+    font-size: 2.2vh;
 }
 .cafe-list .address {
     display: inline-block;
     font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-    font-size: 0.85em;
-    width: 26vw;
-    margin-top: 0.4em;
+    font-size: 2.0vh;
+    width: 30.5vw;
+    margin-top: 0.0em;
 }
 .cafe-list .distance {
 	font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-    font-size: 0.9em;
-    display: inline-block;
-    line-height: 115%;
-    margin-left: 2.5vw;
-    vertical-align: 0.2em;
+	font-size: 2.5vh;
+	display: inline-block;
+	margin-top: 1vh;
 }

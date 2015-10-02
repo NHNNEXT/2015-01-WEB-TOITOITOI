@@ -26,22 +26,24 @@
 
 <body>
 	<header class="top-bar">
-		<img class="logo" src="http://i60.tinypic.com/1jujr7.png"></img>
+		<a class="logo" href="/"></a>
 		<img class="search" src="http://i62.tinypic.com/20b0bog.png"></img>
 	</header>
-	<div class="title">
-		<div class="youarein">You're in</div>
-		<div class="cafe-name">Coffea</div>
-	</div>
-	<div class="posting">
-		<form action="/createpost" method="post">
-			<input class="textbox" name="contents" type="textbox" placeholder="	Q. 이 카페 아메리카노 어때요?">
-			<div class="textbox-bg"></div>
-			<input type="hidden" name="cid" value="${param.cid}">
-			<button class="send">게 시</button>
-		</form>
-	</div>
-	<ul>
+	<header class="title-posting">
+		<div class="title">
+			<div class="youarein">You're in</div>
+			<div class="cafe-name">Coffea</div>
+		</div>
+		<div class="posting">
+			<form class="posting-form" action="/createpost" method="post">
+				<input class="textbox" name="contents" type="textbox" placeholder="	Q. 이 카페 아메리카노 어때요?">
+				<div class="textbox-bg"></div>
+				<input class="cid" type="hidden" name="cid" value="${param.cid}">
+				<button class="send">게 시</button>
+			</form>
+		</div>
+	</header>
+	<ul class="posts">
 		<c:forEach items="${posts}" var="post">
 			<li class="post">
 				<img class="quatation-up" src="http://i58.tinypic.com/30holtz.png">
@@ -56,22 +58,23 @@
 				<ul class="replies">
 					<c:forEach items="${post.replyList}" var="reply">
 						<li class="reply">
-							<span class="reply-content">re: ${reply.replyContent}</span>
-							<span class="like-reply" value="${reply.reId}" name ="likesOnReply" action="/likedOnReply" method= "post" >${reply.liked}</span>
+							<div class="reply-content">re: ${reply.replyContent}</div>
+							<div class="like-reply" value="${reply.reId}" name ="likesOnReply" action="/likedOnReply" method= "post" >${reply.liked}</div>
 						</li>
 					</c:forEach>
 				</ul>
 				<div class="replyBox">
 					<form action="/createReply" method="post">
-						<input name="reply" type="text" placeholder=" re: 댓글 달기..."> 
+						<input class="textbox" name="reply" type="text" placeholder=" re: 댓글 달기..."> 
 						<input name="pid" type="hidden" value="${post.pid}">
-						<button>게 시</button>
+						<button class="send">게 시</button>
 					</form>
 				</div>
 			</li>
 		</c:forEach>
 	</ul>
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/scripts.js"></script>
 </body>
 </html>
