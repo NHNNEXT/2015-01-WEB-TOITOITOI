@@ -19,6 +19,7 @@ import cafein.reply.ReplyDAO;
 public class MainServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
 		int cid = Integer.parseInt(request.getParameter("cid"));
 		CafeDAO cafedao = new CafeDAO();
 		PostDAO postdao = new PostDAO();
@@ -33,6 +34,7 @@ public class MainServlet extends HttpServlet {
 		}
 		request.setAttribute("cafeName",cafeName);
 		request.setAttribute("posts", posts);
+		*/
 		request.getRequestDispatcher("/WEB-INF/main.jsp").forward(request, response);
 	}
 

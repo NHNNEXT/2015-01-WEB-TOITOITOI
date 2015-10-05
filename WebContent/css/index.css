@@ -2,7 +2,7 @@
 body{
 	background-image: url(http://i60.tinypic.com/21lv8uf.png);
 	background-size: 101%;
-	height: 583px;
+	height: 430px;
 }
 
 
@@ -113,7 +113,7 @@ body{
 }
 .cafe-list-bg{
     position: relative;
-    top: -45vh;
+    top: -46vh;
     margin: 0 auto;
     width: 88.5%;
     height: 44vh;
@@ -134,7 +134,7 @@ body{
     text-decoration: none;
     float: left;
     display: inline-block;
-    width: 53vw;
+    width: 41vw;
     margin-left: 5vw;
     box-sizing: border-box;
 }
@@ -149,7 +149,7 @@ body{
 .cafe-list img {
     float: left;
     border-radius: 15px;
-    height: 11vh;
+    height: 16vh;
     background-color: rgba(0,0,0,1);
 }
 .cafe-list .name {

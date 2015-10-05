@@ -43,7 +43,36 @@
 			</form>
 		</div>
 	</header>
-	<ul class="posts"></ul>
+	<ul class="posts">
+		<c:forEach items="${posts}" var="post">
+			<li class="post">
+				<img class="quatation-up" src="http://i58.tinypic.com/30holtz.png">
+				<div class="contents">${post.contents}</div>
+				<img class="quatation-down" src="http://i59.tinypic.com/dr46mw.png">
+				<div class="info">
+					<span class="like-post" value="${post.pid}" name="likesOnPost" action="/likedOnPost">${post.liked}</span>
+					<span class="replies-post">${fn:length(post.replyList)}</span>
+					<c:set var="date" value="${fn:split(post.creattime, ' ')}" />
+					<div class="time">${date[0]}</div>
+				</div>
+				<ul class="replies">
+					<c:forEach items="${post.replyList}" var="reply">
+						<li class="reply">
+							<div class="reply-content">re: ${reply.replyContent}</div>
+							<div class="like-reply" value="${reply.reId}" name ="likesOnReply" action="/likedOnReply" method= "post" >${reply.liked}</div>
+						</li>
+					</c:forEach>
+				</ul>
+				<div class="replyBox">
+					<form action="/createReply" method="post">
+						<input class="textbox" name="reply" type="text" placeholder=" re: 댓글 달기..."> 
+						<input name="pid" type="hidden" value="${post.pid}">
+						<button class="send">게시</button>
+					</form>
+				</div>
+			</li>
+		</c:forEach>
+	</ul>
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/scripts.js"></script>

@@ -9,6 +9,97 @@ var posting_top = posting.offsetTop;
 var topBar = document.querySelector('.top-bar');
 var topBar_height = topBar.offsetHeight;
 
+
+function getPostList() {
+	var cidURL = window.location.search;
+	var posts;
+	
+	$.ajax({
+	      url: '/api/postlist' + cidURL,
+	      type: 'GET', 
+	      success: function(data) {
+	    	data;
+	    	posts = data.posts;
+	        console.log(posts);
+	        renderPosts(posts);
+	      },
+	      error: function(e) {
+	        console.log(e)
+	      }
+	});
+
+};
+
+function getReplyList(pid) {
+	var replies;
+	$.ajax({
+		url: '/api/replylist' + '?pid=' + pid,
+		type: 'GET', 
+		success: function(data) {
+			replies = data.replies;
+			console.log(replies);
+			renderReplies(pid, replies);
+			return replies;
+		},
+		error: function(e) {
+			console.log(e);
+			replies = null;
+		}
+	});
+	return replies;
+}
+
+
+function renderPosts(posts) {
+	var post_ul = document.querySelector(".posts");
+
+	posts.forEach(function(post){
+		post_ul.insertAdjacentHTML('beforeend', 
+			'<li class="post" data-key='+post.pid+'>' + 
+				'<img class="quatation-up" src="http://i58.tinypic.com/30holtz.png">' +
+				'<div class="contents">' + post.contents + '</div>' +
+				'<img class="quatation-down" src="http://i59.tinypic.com/dr46mw.png">' +
+				'<div class="info">' +
+					'<span class="like-post" value=' + post.pid + ' name="likesOnPost" action="/likedOnPost">' + post.liked + '</span>' +
+					'<span class="replies-post">' + 0 + '</span>' +
+					'<div class="time">' + post.creattime.split(" ")[0] + '</div>' +
+				'</div>' +
+				'<ul class="replies"></ul>' +
+				'<div class="replyBox">' +
+					'<form action="/createReply" method="post">' +
+						'<input class="textbox" name="reply" type="text" placeholder=" re: 댓글 달기...">' + 
+						'<input name="pid" type="hidden" value="' + post.pid + '">' +
+						'<button class="send">게시</button>' +
+					'</form>' +
+				'</div>' +
+			'</li>' 
+		);
+		var replies = getReplyList(post.pid);
+		//renderReplies(post.pid, replies);
+	});
+}
+
+function renderReplies(pid, replies){
+	var post = document.querySelector('li[data-key="'+pid+'"]');
+	var reply_ul = post.querySelector(".replies");
+	var replies_post = post.querySelector(".replies-post");
+	
+	replies_post.textContent = replies.length;
+	
+	replies.forEach(function(reply){
+		reply_ul.insertAdjacentHTML('beforeend',
+				'<li class="reply">' +
+				'<div class="reply-content">re: ' + reply.replyContent + '</div>' +
+				'<div class="like-reply" value="' + reply.reId + '" name ="likesOnReply" action="/likedOnReply" method= "post" >' + reply.liked + '</div>' +
+				'</li>'
+		);
+	});
+	
+}
+
+getPostList();
+
+
 window.addEventListener("scroll", function(event) {
 	if (scrollY > (posting_top - topBar_height)) {
 		posting_style.position = "fixed";
@@ -130,8 +221,8 @@ $(document).ready(function() {
 	      dataType: 'html',
 	      data: form.serialize(), // serialize form data 
 	      success: function(data) {
-	        form.trigger('reset'); // reset form
 	        updatePosts();
+	        form.trigger('reset'); // reset form
 	      },
 	      error: function(e) {
 	        console.log(e)
@@ -139,14 +230,15 @@ $(document).ready(function() {
 	    });
 	  });
 	});
-/*
+
 function updatePosts(){
 	var posts = document.querySelector(".posts")
 	var firstPost = posts.firstElementChild;
 	
 	var newPost = firstPost.cloneNode(true);
 	var postContents = document.querySelector(".posting .textbox");
-	newPost.querySelector(".contents").textContents = postContents.value;
+	debugger;
+	newPost.querySelector(".contents").textContent = postContents.value;
 
 	var reply = newPost.querySelector(".reply");
 	while(reply){
@@ -167,7 +259,7 @@ function updatePosts(){
 		posts.appendChild(newPost);
 	}
 }
-*/
+
 $(document).ready(function() {
 	  var form = $('.replyBox form'); // contact form
 	  var submit = $('.replyBox .send');  // submit button

@@ -10,6 +10,8 @@ ul {
 li .info{
     margin: 0 7px 0 15px;
 }
+
+
 li.post {
     border: 1px dashed rgba(255,255,255,0.3);
     border-radius: 25px;
@@ -35,6 +37,12 @@ li.post .contents{
     margin: 18px 0 55px 0;
     padding: 0 18px;
 }
+
+li.template{
+	display: none;
+}
+
+
 .like-post::before {
     content: '\2665';
     margin-right: 6px;
@@ -82,7 +90,7 @@ li .time{
     margin: 9px 0;
     padding: 2vmax 0 0 3vmin;
     color: rgba(166,92,107,1);
-    font-size: 3.2vmin;
+    font-size: 3.7vmin;
     font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
     border-top: 1px solid rgba(237, 222, 204, 0.15);
     border-bottom: 1px solid rgba(237, 222, 204, 0.15);
@@ -100,7 +108,7 @@ li .time{
 .reply{
     color: white;
     font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-    margin-bottom: 2vh;
+    margin-bottom: 2vmax;
 }
 
 .replyBox {
