@@ -392,3 +392,19 @@ min-height: 11vmin;}
 	right: 5%;
 	height: 8vmin;
 }
+
+.posting.glue.focus {
+	height: 65px;
+}
+.posting.glue.focus .textbox {
+	height: 50px;
+	line-height: 50px;
+	font-size: 4.5vmin;
+}
+.posting.glue.focus .textbox-bg {
+	height: 65px;
+}
+.posting.glue.focus .send {
+	right: 5.3%;
+	height: 50px;
+}

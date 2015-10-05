@@ -35,7 +35,6 @@ function getReplyList(pid) {
 		type: 'GET',
 		success: function(data) {
 			replies = data.replies;
-			console.log(replies);
 			renderReplies(pid, replies);
 			return replies;
 		},
@@ -97,34 +96,7 @@ function renderReplies(pid, replies){
 
 getPostList();
 
-
-function dealScroll() {
-	if (scrollY > (posting_top - topBar_height)) {
-		$(posting).addClass('glue');
-	}
-	if (scrollY < (posting_top - topBar_height)) {
-		$(posting).removeClass('glue');
-	}
-}
-// 스크롤 가운데서 새로고침 또는 뒤로 돌아왔을 때, 캐싱된 스크롤 위치에 있게 됨.
-dealScroll();
-window.addEventListener("scroll", dealScroll, false);
-
 var posting_textbox = document.querySelector(".posting .textbox");
-
-posting_textbox.addEventListener('focus', function(event) {
-	/* input박스가 스크롤해서 쪼그라들었을 때만 클릭시 이벤트 적용! */
-	if (scrollY > 176){
-		posting_style.height = "65px";
-		posting_textbox_style.height = '50px';
-		posting_textbox_style.lineHeight = '50px';
-		posting_textbox_style.fontSize = '4.5vmin';
-		posting_textboxbg_style.height = '65px';
-		posting_send_style.right = '5.4%';
-		posting_send_style.height = '50px';
-		posting_textboxbg_style.borderBottom = '1px solid rgba(234, 202, 190, 0.15)';
-	}
-}, false);
 
 $(".like-reply").click(function() {
 	// todo
@@ -324,3 +296,61 @@ function setTimeOutNudge () {
 	window.setTimeout(setTimeOutNudge, 5000);
 }
 window.setTimeout(setTimeOutNudge, 10);
+
+$('.posting input').on('focus', function (e) {
+	if (!$('.posting').hasClass('glue')) {
+		return;
+	}
+	$('.posting').addClass('focus');
+	var prevScrollTop = $(window).scrollTop();
+	$(window).scrollTop(prevScrollTop);
+	var toBeChangedElement = [$('.top-bar'), $('.posting')];
+	var changedArray = toBeChangedElement.map(function (el, index, array) {
+		var prevOption = {
+			'position' : 'fixed',
+			'top' : $(el).position().top
+		};
+		$(el).css({
+			'position' : 'absolute',
+			'top' : $(el).offset().top
+		});
+		return {
+			'element':el,
+			'prevOption': prevOption
+		};
+	});
+
+	$(window).on('scroll.topBar', function () {
+		toBeChangedElement.forEach(function (el, index, array) {
+			$(el).css({
+				'top' : $(el).offset().top + $(window).scrollTop() - prevScrollTop
+			});
+		})
+		prevScrollTop = $(window).scrollTop();
+	});
+
+	$('.posting input').on('blur', function () {
+		$('.posting').removeClass('focus');
+		changedArray.forEach(function (item, index) {
+			var $element = $(item.element);
+			$element.css(item.prevOption);
+		});
+		$(window).off('scroll.topBar');
+		$('.posting input').off('blur');
+	});
+});
+
+
+function dealScroll() {
+	if (scrollY > (posting_top - topBar_height)) {
+		$(posting).addClass('glue');
+	}
+	if (scrollY < (posting_top - topBar_height)) {
+		$(posting).removeClass('glue');
+	}
+}
+// 스크롤 가운데서 새로고침 또는 뒤로 돌아왔을 때, 캐싱된 스크롤 위치에 있게 됨.
+$(document).ready(function () {
+	dealScroll();
+});
+$(window).on("scroll touchmove", dealScroll);
