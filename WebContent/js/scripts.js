@@ -202,7 +202,6 @@ function updatePosts(){
 
 	var newPost = firstPost.cloneNode(true);
 	var postContents = document.querySelector(".posting .textbox");
-	debugger;
 	newPost.querySelector(".contents").textContent = postContents.value;
 
 	var reply = newPost.querySelector(".reply");

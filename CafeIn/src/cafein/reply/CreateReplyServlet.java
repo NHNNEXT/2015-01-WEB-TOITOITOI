@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cafein.post.Post;
+import cafein.util.Validation;
 
 @WebServlet("/createReply")
 public class CreateReplyServlet extends HttpServlet {
@@ -22,6 +23,11 @@ public class CreateReplyServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String reply = request.getParameter("reply");
+		if (!Validation.isValidParameter(reply)) {
+			// error message
+			response.sendRedirect("/cafe?cid=1");
+			return;
+		}
 		logger.debug("Re:" + reply);
 		Reply re = new Reply(reply);
 		ReplyDAO replydao = new ReplyDAO();

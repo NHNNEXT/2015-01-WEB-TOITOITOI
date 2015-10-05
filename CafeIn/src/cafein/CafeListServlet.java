@@ -12,11 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-
 import cafein.cafe.Cafe;
 import cafein.cafe.CafeDAO;
 import cafein.reply.LikedOnReplyServlet;
+import cafein.util.Validation;
 
 
 /**
@@ -26,15 +25,6 @@ import cafein.reply.LikedOnReplyServlet;
 @WebServlet({""})
 public class CafeListServlet extends HttpServlet {  
 	private static final Logger logger = LoggerFactory.getLogger(LikedOnReplyServlet.class);
-	
-	// Util 빼면 좋을텐데.
-	public boolean isValid(String parameter) {
-		// {latitude, "".equals(latitude) , latitude == null, latitude.isEmpty()}
-		// "?lat=" {, true, false, true}
-		// "?" {null, false, true, ERROR}
-		// "?lat=37.51" {37.51, false, false, false}
-		return (parameter!=null) && !(parameter.isEmpty());
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String filter = request.getParameter("sort");
@@ -44,8 +34,7 @@ public class CafeListServlet extends HttpServlet {
 		ArrayList<Cafe> cafeList = null;
 		CafeDAO cafedao = new CafeDAO();
 		
-		if (isValid(latitude) && isValid(longitude)) {
-			System.out.println("오지마");
+		if (Validation.isValidParameter(latitude) && Validation.isValidParameter(longitude)) {
 			cafeList = cafedao.getCafeList(latitude, longitude);
 		} else {
 			// http://stackoverflow.com/questions/3321526/should-i-use-string-isempty-or-equalsstring
