@@ -60,8 +60,27 @@ function showCafelist(param){
 	})
 }
 
-$('#search-button').click(function(e){
-	e.preventDefault();
+showCafelist();
+
+function rendCafelist(cafes){
+	var cafelist = document.querySelector(".cafe-list");
+
+	cafes.forEach(function(cafe){
+		cafelist.insertAdjacentHTML('beforeend',
+		'<li>'+
+				'<img src="http://placehold.it/80x80">'+
+				'<a class = "info" href="/cafe?cid='+cafe.cid+'">'
+					+'<span class="name">'+cafe.name+'</span>'
+					+'<span class="post-num"><b>POST</b><br>'+cafe.postNum+'개</span>'
+					+'<span class="address">'+'성남시 분당구 삼평동'+'</span>'
+					+'<span class="distance">'+'0.3km'+'</span>'+
+				'</a>'+
+		'</li>')
+	});
+}
+
+$('.search').on('submit',function(e){
+	e.preventDefault();	
 	var form = $(".search");
 
 	$.ajax({
