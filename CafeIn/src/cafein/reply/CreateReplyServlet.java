@@ -1,7 +1,11 @@
 package cafein.reply;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+
 import cafein.post.Post;
 import cafein.util.Validation;
 
@@ -21,21 +27,29 @@ public class CreateReplyServlet extends HttpServlet {
 	private static final Logger logger = LoggerFactory.getLogger(CreateReplyServlet.class);
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String reply = request.getParameter("reply");
-		if (!Validation.isValidParameter(reply)) {
-			// error message
-			response.sendRedirect("/cafe?cid=1");
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String content = req.getParameter("content");
+		String cid = req.getParameter("cid");
+		if (!Validation.isValidParameter(content)) {
+			resp.sendRedirect("/cafe?cid="+cid);		//프론트에서도 에러메시지 출력해줘야함.
 			return;
 		}
-		logger.debug("Re:" + reply);
-		Reply re = new Reply(reply);
+		logger.debug("Re:" + content);
+		Reply reply = new Reply(content);
 		ReplyDAO replydao = new ReplyDAO();
 		try {
-			replydao.addReply(re, Integer.parseInt(request.getParameter("pid")));
+			Reply newReply = replydao.addReply(reply, Integer.parseInt(req.getParameter("pid")));
+			String jsonData = replyToJson(req, resp, newReply); 
+			resp.setContentType("application/json;charset=UTF-8");	
+			PrintWriter out = resp.getWriter();
+			out.print(jsonData);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		response.sendRedirect("/cafe?cid=1");
+	}
+	
+	public String replyToJson(HttpServletRequest req, HttpServletResponse resp, Reply reply){
+		final Gson gson = new Gson();
+		return gson.toJson(reply);
 	}
 }

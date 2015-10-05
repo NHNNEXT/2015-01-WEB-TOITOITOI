@@ -28,7 +28,7 @@ public class ReplyDAO {
 		}
 	}
 
-	public void addReply(Reply re, int pid) throws SQLException {
+	public Reply addReply(Reply re, int pid) throws SQLException {
 
 		String sql = "INSERT INTO reply (pid,content) VALUES(?,?)";
 		Connection conn = null;
@@ -49,8 +49,41 @@ public class ReplyDAO {
 				conn.close();
 			}
 		}
+		return getReplyJustInserted(pid);
 	}
 
+	public Reply getReplyJustInserted(int pid) throws SQLException {
+		String sql = "SELECT * FROM reply WHERE pid=? ORDER BY postingtime DESC limit 1";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getConnection();
+			System.out.println("connection:" + conn);
+			System.out.println(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pid);
+			ResultSet rs = pstmt.executeQuery();
+			
+			Reply newReply=null;
+			while(rs.next()){
+				int Pid = rs.getInt("pid");
+				String contents = rs.getString("content");
+				String creattime = rs.getString("postingtime");
+				int liked = rs.getInt("liked");
+				newReply = new Reply(Pid,contents,creattime,liked); 
+			}
+			return newReply;
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+	
 	public ArrayList<Reply> getReplys(int pid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
