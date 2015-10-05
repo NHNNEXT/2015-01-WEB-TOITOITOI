@@ -3,20 +3,18 @@ var posting_textbox_style = document.querySelector('.posting .textbox').style;
 var posting_textboxbg_style = document.querySelector('.posting .textbox-bg').style;
 var posting_send_style = document.querySelector('.posting .send').style;
 
-var curPos = window.scrollY;
 var posting = document.querySelector('.posting');
 var posting_top = posting.offsetTop;
 var topBar = document.querySelector('.top-bar');
 var topBar_height = topBar.offsetHeight;
 
-
 function getPostList() {
 	var cidURL = window.location.search;
 	var posts;
-	
+
 	$.ajax({
 	      url: '/api/postlist' + cidURL,
-	      type: 'GET', 
+	      type: 'GET',
 	      success: function(data) {
 	    	data;
 	    	posts = data.posts;
@@ -34,7 +32,7 @@ function getReplyList(pid) {
 	var replies;
 	$.ajax({
 		url: '/api/replylist' + '?pid=' + pid,
-		type: 'GET', 
+		type: 'GET',
 		success: function(data) {
 			replies = data.replies;
 			console.log(replies);
@@ -54,8 +52,8 @@ function renderPosts(posts) {
 	var post_ul = document.querySelector(".posts");
 
 	posts.forEach(function(post){
-		post_ul.insertAdjacentHTML('beforeend', 
-			'<li class="post" data-key='+post.pid+'>' + 
+		post_ul.insertAdjacentHTML('beforeend',
+			'<li class="post" data-key='+post.pid+'>' +
 				'<img class="quatation-up" src="http://i58.tinypic.com/30holtz.png">' +
 				'<div class="contents">' + post.contents + '</div>' +
 				'<img class="quatation-down" src="http://i59.tinypic.com/dr46mw.png">' +
@@ -67,12 +65,12 @@ function renderPosts(posts) {
 				'<ul class="replies"></ul>' +
 				'<div class="replyBox">' +
 					'<form action="/createReply" method="post">' +
-						'<input class="textbox" name="reply" type="text" placeholder=" re: 댓글 달기...">' + 
+						'<input class="textbox" name="reply" type="text" placeholder=" re: 댓글 달기...">' +
 						'<input name="pid" type="hidden" value="' + post.pid + '">' +
 						'<button class="send">게시</button>' +
 					'</form>' +
 				'</div>' +
-			'</li>' 
+			'</li>'
 		);
 		var replies = getReplyList(post.pid);
 		//renderReplies(post.pid, replies);
@@ -83,9 +81,9 @@ function renderReplies(pid, replies){
 	var post = document.querySelector('li[data-key="'+pid+'"]');
 	var reply_ul = post.querySelector(".replies");
 	var replies_post = post.querySelector(".replies-post");
-	
+
 	replies_post.textContent = replies.length;
-	
+
 	replies.forEach(function(reply){
 		reply_ul.insertAdjacentHTML('beforeend',
 				'<li class="reply">' +
@@ -94,56 +92,23 @@ function renderReplies(pid, replies){
 				'</li>'
 		);
 	});
-	
+
 }
 
 getPostList();
 
 
-window.addEventListener("scroll", function(event) {
+function dealScroll() {
 	if (scrollY > (posting_top - topBar_height)) {
-		posting_style.position = "fixed";
-		posting_style.top = "5.9vmax";
-		posting_style.zIndex = "2";
-		posting_textbox_style.top = '0.7vmax';
-		posting_textbox_style.height = '8vmin';
-		posting_textbox_style.lineHeight = '8vmin';
-		posting_textbox_style.fontSize = '4min';
-		posting_textbox_style.borderColor = "rgba(237,222,204,0.8)";
-		posting_textboxbg_style.top = '0';
-		posting_textboxbg_style.left = '0';
-		posting_textboxbg_style.width = '100%';
-		posting_textboxbg_style.height = '11vmin';
-		posting_textboxbg_style.borderRadius = '0px';
-		posting_textboxbg_style.borderBottom = '1px solid rgba(234, 202, 190, 0.15)';		
-		posting_send_style.top = '0.7vmax';
-		posting_send_style.right = '5%';
-		posting_send_style.height = '8vmin';
-		curPos = scrollY;
-	} 
-	
-	if (scrollY < (posting_top - topBar_height)) {
-		posting_style.position = "relative";
-		posting_style.top = "0";
-		posting_style.zIndex = "0";
-		posting_textbox_style.top = '0';
-		posting_textbox_style.height = '7.7vmax';
-		posting_textbox_style.lineHeight = '7.7vmax';
-		posting_textbox_style.fontSize = '4.5vmin';
-		posting_textboxbg_style.left = '5%';
-		posting_textboxbg_style.width = '90%';
-		posting_textboxbg_style.height = '7.7vmax';
-		posting_textboxbg_style.borderRadius = '100px';
-		posting_textboxbg_style.borderBottom = 'none';		
-		posting_send_style.top = '0';
-		posting_send_style.right = '5.2%';
-		posting_send_style.height = '7.7vmax';
-		curPos = scrollY;
-	} else {
-		curPos = scrollY;
+		$(posting).addClass('glue');
 	}
-
-}, false);
+	if (scrollY < (posting_top - topBar_height)) {
+		$(posting).removeClass('glue');
+	}
+}
+// 스크롤 가운데서 새로고침 또는 뒤로 돌아왔을 때, 캐싱된 스크롤 위치에 있게 됨.
+dealScroll();
+window.addEventListener("scroll", dealScroll, false);
 
 var posting_textbox = document.querySelector(".posting .textbox");
 
@@ -157,7 +122,7 @@ posting_textbox.addEventListener('focus', function(event) {
 		posting_textboxbg_style.height = '65px';
 		posting_send_style.right = '5.4%';
 		posting_send_style.height = '50px';
-		posting_textboxbg_style.borderBottom = '1px solid rgba(234, 202, 190, 0.15)';		
+		posting_textboxbg_style.borderBottom = '1px solid rgba(234, 202, 190, 0.15)';
 	}
 }, false);
 
@@ -219,7 +184,7 @@ $(document).ready(function() {
 	      url: '/createpost', // form action url
 	      type: 'POST', // form submit method get/post
 	      dataType: 'html',
-	      data: form.serialize(), // serialize form data 
+	      data: form.serialize(), // serialize form data
 	      success: function(data) {
 	        updatePosts();
 	        form.trigger('reset'); // reset form
@@ -234,7 +199,7 @@ $(document).ready(function() {
 function updatePosts(){
 	var posts = document.querySelector(".posts")
 	var firstPost = posts.firstElementChild;
-	
+
 	var newPost = firstPost.cloneNode(true);
 	var postContents = document.querySelector(".posting .textbox");
 	debugger;
@@ -245,14 +210,14 @@ function updatePosts(){
 		reply.parentNode.removeChild(reply);
 		reply = newPost.querySelector(".reply");
 	}
-	
+
 	var firstPostFloat = firstPost.style.float;
 	if (firstPostFloat=="right" || firstPostFloat==""){
 		newPost.style.float = "left";
 	} else {
 		newPost.style.float = "right";
 	}
-	
+
 	if(posts.firstChild){
 		posts.insertBefore(newPost, posts.firstChild);
 	} else {
@@ -272,7 +237,7 @@ $(document).ready(function() {
 	      url: '/createReply', // form action url
 	      type: 'POST', // form submit method get/post
 	      dataType: 'html',
-	      data: form.serialize(), // serialize form data 
+	      data: form.serialize(), // serialize form data
 	      success: function(data) {
 	        form.trigger('reset'); // reset form
 	        console.log(e);
@@ -288,9 +253,9 @@ $(document).ready(function() {
 function updateReplies(replyButton){
 	var replies = document.querySelector(".replies")
 	var firstReply = replies.firstElementChild;
-	
-	var replyContents = replyButton.parentNode.querySelector(".textbox"); 
-	replies.insertAdjacentHTML('beforeend', 
+
+	var replyContents = replyButton.parentNode.querySelector(".textbox");
+	replies.insertAdjacentHTML('beforeend',
 	"<li class='reply'>" +
 			"<div class='reply-content'> re: " + replyContents.value + "</div>" +
 			"<div class='like-reply' value='${reply.reId}' name ='likesOnReply' action='/likedOnReply' method= 'post' >1</div>" +
@@ -305,14 +270,14 @@ $(".like-post").click(function() {
 	// else
 	// -1. removeclass(on)
 	// ajax(unlike) (reid, status = minus)
-	
+
 	var pid = $(this).attr("value");
 	var datas = {
 			'pid' : pid,
 			'status' : 'plus'
 	};
 	var div = $(this);
-	
+
 	if (!$(this).hasClass('on')) {
 		$(this).addClass('on');
 		var likes = parseInt($(this).text()) + 1;
@@ -360,4 +325,3 @@ function setTimeOutNudge () {
 	window.setTimeout(setTimeOutNudge, 5000);
 }
 window.setTimeout(setTimeOutNudge, 10);
-

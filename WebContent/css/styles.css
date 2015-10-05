@@ -23,11 +23,11 @@ li.post {
 }
 li.post:nth-child(odd) {
 	float: right;
-	clear: right;	
+	clear: right;
 }
 li.post:nth-child(even) {
 	float: left;
-	clear: left;	
+	clear: left;
 }
 li.post .contents{
     font-size: 7vmin;
@@ -261,12 +261,14 @@ body{
 	transition-property: height, padding-right;
 	transition-duration: 0.4s;
 	transition-timing-function: ease;
+	top: 0;
 }
 
 .posting form{
 min-height: 11vmin;}
 
 .posting .textbox{
+  top: 0;
 	display: block;
 	position: relative;
 	margin: 0 auto;
@@ -276,8 +278,8 @@ min-height: 11vmin;}
 	width: 90%;
 	height: 7.7vmax;
 	min-width: 150px;
-	font-size: 3.9vmin;
-	line-height: 35px;
+	font-size: 4.5vmin;
+	line-height: 7.7vmax;
 	border-radius: 100px;
 	border: 1px solid rgba(237, 222, 204, 1);
 	background-color: rgba(255, 255, 255, 0.1);
@@ -317,8 +319,8 @@ min-height: 11vmin;}
 .posting .send {
     position: absolute;
     float: right;
-    top: 0px;
-    right: 5.1%;
+    top: 0;
+    right: 5.2%;
     width: 7vmax;
     height: 7.7vmax;
     letter-spacing: 2px;
@@ -347,7 +349,8 @@ min-height: 11vmin;}
 	min-width: 150px;
 	margin: 0 auto;
 	border-radius: 100px;
-	top: 0px;
+  border-bottom: 0;
+	top: 0;
 	left: 5%;
 	filter: url('blur.svg#blur');
 	filter: blur(10px);
@@ -364,6 +367,28 @@ min-height: 11vmin;}
 	transition-timing-function: ease;
 }
 
-.search-result{
-    display: none;
+.posting.glue {
+	position: fixed;
+	top: 5.9vmax;
+	z-index: 2;
+}
+.posting.glue .textbox {
+	top: 0.7vmax;
+	height: 8vmin;
+	line-height: 8vmin;
+	font-size: 4vmin;
+	border-color: rgba(237,222,204,0.8);
+}
+.posting.glue .textbox-bg {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 11vmin;
+	border-radius: 0;
+	border-bottom: 1px solid rgba(234, 202, 190, 0.15);
+}
+.posting.glue .send {
+	top: 0.7vmax;
+	right: 5%;
+	height: 8vmin;
 }
