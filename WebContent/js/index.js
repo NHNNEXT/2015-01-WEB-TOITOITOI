@@ -15,7 +15,7 @@ if ('geolocation' in navigator) {
 }
 
 function changePosition (calledFrom, position) {
-  alert('success', calledFrom, position);
+  $('#test').text('success :'+calledFrom+', '+position.coords.latitude);
   console.log('success', calledFrom, position);
 	showCafelist({
 		'lat' : position.coords.latitude,
@@ -36,7 +36,7 @@ function logError (calledFrom, error) {
       break;
     default:
 			showCafelist();
-			alert('error', calledFrom, error.message);
+			$('#test').text('error :'+calledFrom+', '+error.message);
       console.error('error', calledFrom, error.message);
   }
 }
