@@ -5,16 +5,20 @@ public class Cafe {
 	private int cid;
 	private String name;
 	private int postNum;
+	private double distance;
 	
 	public Cafe(int cid, String name) {
 		this.cid = cid;
 		this.name = name;
 	}
 	public Cafe(int cid, String name, int postNum) {
-		this.cid = cid;
-		this.name = name;
+		this(cid, name);
 		this.postNum = postNum;
 	}
+	public Cafe(int cid, String name, int postNum, double distance) {
+		this(cid, name, postNum);
+		this.distance = distance;
+	}	
 	
 	public int getCid() {
 		return cid;
@@ -37,6 +41,13 @@ public class Cafe {
 		this.postNum = postNum;
 	}
 
+	public double getDistance() {
+		return distance;
+	}
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+	
 	@Override
 	public String toString() {
 		return "Cafe [cid=" + cid + ", name=" + name + ", postNum=" + postNum + "]";

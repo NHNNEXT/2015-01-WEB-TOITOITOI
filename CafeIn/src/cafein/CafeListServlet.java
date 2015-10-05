@@ -22,12 +22,20 @@ public class CafeListServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String filter = request.getParameter("sort");
-		ArrayList<Cafe> cafeList;
+		String latitude = request.getParameter("lat");
+		String longitude = request.getParameter("long");
+		
+		ArrayList<Cafe> cafeList = null;
 		CafeDAO cafedao = new CafeDAO();
 		
-		// http://stackoverflow.com/questions/3321526/should-i-use-string-isempty-or-equalsstring
-		boolean sortByPostNum = "postNum".equals(filter);
-		cafeList = cafedao.getCafeList(sortByPostNum);
+		boolean sortByDist = !("".equals(latitude) || "".equals(longitude));
+		if (sortByDist) {
+			cafeList = cafedao.getCafeList(latitude, longitude);
+		} else {
+			// http://stackoverflow.com/questions/3321526/should-i-use-string-isempty-or-equalsstring
+			boolean sortByPostNum = "postNum".equals(filter);
+			cafeList = cafedao.getCafeList(sortByPostNum);			
+		}
 		
 		request.setAttribute("cafeList", cafeList);
 		request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);

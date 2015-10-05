@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import cafein.post.Post;
-
 public class CafeDAO {
 
 	public Connection getConnection() {
@@ -56,6 +54,42 @@ public class CafeDAO {
 				String name = rs.getString("name");
 				int postNum = rs.getInt("posts");
 				cafeList.add(new Cafe(cid, name, postNum));
+			}
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cafeList;
+	}
+	
+	public ArrayList<Cafe> getCafeList(String latitude, String longitude) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		String sql = "SELECT c.cid AS cid, c.name AS name, count(p.pid) AS posts, distance_between(c.latitude, c.longitude, "
+				+ latitude + ", " + longitude
+				+ ") AS distance "
+				+ "FROM cafe c "
+				+ "LEFT JOIN post p ON p.cid = c.cid "
+				+ "WHERE c.latitude IS NOT NULL "
+				+ "GROUP BY c.cid "
+				+ "ORDER BY distance";
+		System.out.println("result query : " + sql);
+
+		ArrayList<Cafe> cafeList = new ArrayList<Cafe>();
+
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int cid = rs.getInt("cid");
+				String name = rs.getString("name");
+				int postNum = rs.getInt("posts");
+				Double distance = rs.getDouble("distance");
+				
+				cafeList.add(new Cafe(cid, name, postNum, distance));
 			}
 			pstmt.close();
 			conn.close();
