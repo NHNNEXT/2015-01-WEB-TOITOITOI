@@ -56,7 +56,7 @@ function renderPosts(posts) {
 				'<div class="contents">' + post.contents + '</div>' +
 				'<img class="quatation-down" src="http://i59.tinypic.com/dr46mw.png">' +
 				'<div class="info">' +
-					'<span class="like-post" value=' + post.pid + ' name="likesOnPost" action="/likedOnPost">' + post.liked + '</span>' +
+					'<span class="like-post" data-key=' + post.pid + ' name="likesOnPost" action="/likedOnPost">' + post.liked + '</span>' +
 					'<span class="replies-post">' + 0 + '</span>' +
 					'<div class="time">' + post.creattime.split(" ")[0] + '</div>' +
 				'</div>' +
@@ -66,6 +66,7 @@ function renderPosts(posts) {
 						'<input class="textbox" name="content" type="text" placeholder=" re: 댓글 달기...">' +
 						'<input name="pid" type="hidden" value="' + post.pid + '">' +
 						'<input name="cid" type="hidden" value="' + post.cid + '">' +
+
 						'<button class="send">게시</button>' +
 					'</form>' +
 				'</div>' +
@@ -98,51 +99,51 @@ getPostList();
 
 var posting_textbox = document.querySelector(".posting .textbox");
 
-//$(".like-reply").click(function() {
-//	// todo
-//	// if(!on)
-//	// +1 .addclass(on)
-//	// ajax(like) (reid, status = plus)
-//	// else
-//	// -1. removeclass(on)
-//	// ajax(unlike) (reid, status = minus)
-//
-//	var reid = $(this).attr("value");
-//	var datas = {
-//		'reid' : reid,
-//		'status' : 'plus'
-//	};
-//	var div = $(this);
-//
-//	if (!$(this).hasClass('on')) {
-//		$(this).addClass('on');
-//		var likes = parseInt($(this).text()) + 1;
-//		$(this).html(likes);
-//	}
-//	else {
-//		$(this).removeClass('on');
-//		var likes = parseInt($(this).text()) - 1;
-//		$(this).html(likes);
-//		datas = {
-//				'reid' : reid,
-//				'status' : 'minus'
-//		};
-//	}
-//	console.log(datas);
-//	$.ajax({
-//		type : "POST",
-//		url : "/likedOnReply",
-//		data : datas,
-//		success : function(data) {
-//			console.log("success");
-//			// div.html(data);
-//		},
-//		error : function(xhr, status, error) {
-//			console.log(status);
-//			// console.log(error);
-//		}
-//	});
-//});
+$('.posts').on('click', '.like-reply', function(e) {
+	// todo
+	// if(!on)
+	// +1 .addclass(on)
+	// ajax(like) (reid, status = plus)
+	// else
+	// -1. removeclass(on)
+	// ajax(unlike) (reid, status = minus)
+
+	var reid = $(this).attr("value");
+	var datas = {
+		'reid' : reid,
+		'status' : 'plus'
+	};
+	var div = $(this);
+
+	if (!$(this).hasClass('on')) {
+		$(this).addClass('on');
+		var likes = parseInt($(this).text()) + 1;
+		$(this).html(likes);
+	}
+	else {
+		$(this).removeClass('on');
+		var likes = parseInt($(this).text()) - 1;
+		$(this).html(likes);
+		datas = {
+				'reid' : reid,
+				'status' : 'minus'
+		};
+	}
+	console.log(datas);
+	$.ajax({
+		type : "POST",
+		url : "/likedOnReply",
+		data : datas,
+		success : function(data) {
+			console.log("success");
+			// div.html(data);
+		},
+		error : function(xhr, status, error) {
+			console.log(status);
+			// console.log(error);
+		}
+	});
+});
 
   // form submit event
 
@@ -230,8 +231,7 @@ $(document).ready(function() {
 	  });
 	});
 
-
-$(".like-post").click(function() {
+$('.posts').on('click', '.like-post', function(e) {
 	// todo
 	// if(!on)
 	// +1 .addclass(on)
@@ -240,7 +240,9 @@ $(".like-post").click(function() {
 	// -1. removeclass(on)
 	// ajax(unlike) (reid, status = minus)
 
-	var pid = $(this).attr("value");
+	var pid = $(this).attr("data-key");
+	console.log(pid);
+
 	var datas = {
 			'pid' : pid,
 			'status' : 'plus'

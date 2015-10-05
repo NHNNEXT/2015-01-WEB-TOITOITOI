@@ -75,7 +75,7 @@ function rendCafelist(cafes){
 				'<a class = "info" href="/cafe?cid='+cafe.cid+'">'
 					+'<span class="name">'+cafe.name+'</span>'
 					+'<span class="post-num"><b>POST</b><br>'+cafe.postNum+'개</span>'
-					+'<span class="address">'+'성남시 분당구 삼평동'+'</span>'+
+					+'<span class="address">'+'성남시 분당구 삼평동'+'</span>'
 					+'<span class="distance">'+'0.3km'+'</span>'+
 				'</a>'+
 		'</li>')
@@ -85,7 +85,7 @@ function rendCafelist(cafes){
 $('#search-button').click(function(e){
 	e.preventDefault();	
 	var form = $(".search");
-	
+
 	$.ajax({
 		type: "get",
 		url : "/searchcafe",
@@ -115,7 +115,7 @@ function getCafelist(cafes){
 				'<a class = "info" href="/cafe?cid='+cafe.cid+'">'
 					+'<span class="name">'+cafe.name+'</span>'
 					+'<span class="post-num"><b>POST</b><br>'+cafe.postNum+'개</span>'
-					+'<span class="address">'+'성남시 분당구 삼평동'+'</span>'+
+					+'<span class="address">'+'성남시 분당구 삼평동'+'</span>'
 					+'<span class="distance">'+'0.3km'+'</span>'+
 				'</a>'+
 		'</li>'
