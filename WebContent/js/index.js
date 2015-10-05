@@ -15,7 +15,8 @@ if ('geolocation' in navigator) {
 }
 
 function changePosition (calledFrom, position) {
-  console.log(calledFrom, position);
+  alert('success', calledFrom, position);
+  console.log('success', calledFrom, position);
 	showCafelist({
 		'lat' : position.coords.latitude,
 		'long' : position.coords.longitude
@@ -35,7 +36,8 @@ function logError (calledFrom, error) {
       break;
     default:
 			showCafelist();
-      console.error(calledFrom, error.message);
+			alert('error', calledFrom, error.message);
+      console.error('error', calledFrom, error.message);
   }
 }
 
