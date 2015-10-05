@@ -2,7 +2,7 @@
 body{
 	background-image: url(http://i60.tinypic.com/2zno21x.png);
 	background-size: 101%;
-	height: 53vh;
+	height: 79vmax;
 }
 @viewport{
 	orientation : portrait;
@@ -183,9 +183,10 @@ body{
 }
 .cafe-list .distance {
 	font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-	font-size: 2.5vh;
+	font-size: 1.7vmax;
 	display: inline-block;
 	position: absolute;
 	line-height: 2.5em;
-	right: 4px;
+	right: 4vmin;
+	padding-top: 2.2vmax;
 }
