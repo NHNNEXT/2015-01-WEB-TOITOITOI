@@ -12,11 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-
 import cafein.cafe.Cafe;
 import cafein.cafe.CafeDAO;
 import cafein.reply.LikedOnReplyServlet;
+import cafein.util.Validation;
 
 
 @WebServlet({""})
@@ -30,10 +29,7 @@ public class CafeListServlet extends HttpServlet {
 		
 		ArrayList<Cafe> cafeList = null;
 		CafeDAO cafedao = new CafeDAO();
-		
-		boolean sortByDist = !("".equals(latitude) || "".equals(longitude));
-		if (sortByDist) {
-			logger.debug("in");
+		if (Validation.isValidParameter(latitude) && Validation.isValidParameter(longitude)) {
 			cafeList = cafedao.getCafeList(latitude, longitude);
 		} else {
 			// http://stackoverflow.com/questions/3321526/should-i-use-string-isempty-or-equalsstring

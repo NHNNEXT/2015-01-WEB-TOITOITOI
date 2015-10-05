@@ -32,9 +32,8 @@
 		<label for="search-button"></label>
 		<div class="search-bg"></div>
 	</form>
-	
-	<ul class="cafe-list">
 
+	<ul class="cafe-list">
 	</ul>
 	<div class="cafe-list-bg"></div>
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>

@@ -62,36 +62,36 @@ body{
     z-index: -1;
 }
 .search .textbox::-webkit-input-placeholder{
-    color: rgba(255, 255, 255, 0.65);  
+    color: rgba(255, 255, 255, 0.65);
     vertical-align: middle;
     font-size: 2.8vh;
     font-weight: 300;
     font-style: italic;
-    text-shadow: none;        
+    text-shadow: none;
 }
 .search .textbox:-moz-placeholder{
-    color: rgba(0, 0, 0, 0.55);    
+    color: rgba(0, 0, 0, 0.55);
     line-height: 5vh;
     font-size: 12pt;
     font-weight: 300;
     font-style: italic;
-    text-shadow: none;  
+    text-shadow: none;
 }
 .search .textbox::-moz-placeholder{
-    color: rgba(0, 0, 0, 0.55);    
+    color: rgba(0, 0, 0, 0.55);
     line-height: 5vh;
     font-size: 12pt;
     font-weight: 300;
     font-style: italic;
-    text-shadow: none;  
+    text-shadow: none;
 }
 .search .textbox:-ms-input-placeholder{
-    color: rgba(0, 0, 0, 0.55);    
+    color: rgba(0, 0, 0, 0.55);
     line-height: 5vh;
     font-size: 12pt;
     font-weight: 300;
     font-style: italic;
-    text-shadow: none;  
+    text-shadow: none;
 }
 
 /* cafe-list */
