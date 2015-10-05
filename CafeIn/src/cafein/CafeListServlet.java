@@ -18,10 +18,6 @@ import cafein.reply.LikedOnReplyServlet;
 import cafein.util.Validation;
 
 
-/**
- * Servlet implementation class CafeListServlet
- */
-
 @WebServlet({""})
 public class CafeListServlet extends HttpServlet {  
 	private static final Logger logger = LoggerFactory.getLogger(LikedOnReplyServlet.class);
@@ -33,7 +29,6 @@ public class CafeListServlet extends HttpServlet {
 		
 		ArrayList<Cafe> cafeList = null;
 		CafeDAO cafedao = new CafeDAO();
-		
 		if (Validation.isValidParameter(latitude) && Validation.isValidParameter(longitude)) {
 			cafeList = cafedao.getCafeList(latitude, longitude);
 		} else {
@@ -41,11 +36,7 @@ public class CafeListServlet extends HttpServlet {
 			boolean sortByPostNum = "postNum".equals(filter);
 			cafeList = cafedao.getCafeList(sortByPostNum);			
 		}
-		
-		//request.setAttribute("cafeList", cafeList);
 		request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-		
-		
 	}
 
 

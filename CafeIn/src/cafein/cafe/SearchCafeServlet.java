@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cafein.post.PostDAO;
+import com.google.gson.Gson;
 
 @WebServlet("/searchcafe")
 public class SearchCafeServlet extends HttpServlet {
@@ -21,13 +21,15 @@ public class SearchCafeServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		String keyword = request.getParameter("keyword");
 		CafeDAO cafedao = new CafeDAO();
-		logger.debug(keyword);
+		logger.debug("keyword:"+keyword);
 		ArrayList<Cafe> cafeList = cafedao.searchCafe(keyword);
-
-		request.setAttribute("cafeList", cafeList);
-		request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		response.getWriter().write(new Gson().toJson(cafeList));
+		//logger.debug(new Gson().toJson(cafeList));
 	}
 
 }

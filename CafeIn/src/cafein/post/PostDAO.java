@@ -30,20 +30,20 @@ public class PostDAO {
 		}
 	}
 
-	public void addPost(Post post) throws SQLException {
+	public Post addPost(Post post) throws SQLException {
 		String sql = "INSERT INTO post (cid, content) VALUES(?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
 		try {
 			conn = getConnection();
-			// logging framework를 적용해서
 			System.out.println("connection:" + conn);
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, post.getCid());
 			pstmt.setString(2, post.getContents());
 			pstmt.executeUpdate();
+			return getPostJustInserted(post.getCid());
 		} finally {
 			if (pstmt != null) {
 				pstmt.close();
@@ -52,7 +52,38 @@ public class PostDAO {
 				conn.close();
 			}
 		}
-		
+	}
+
+	public Post getPostJustInserted(int cid) throws SQLException {
+		String sql = "SELECT * FROM post WHERE cid=? ORDER BY postingtime DESC limit 1";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getConnection();
+			System.out.println("connection:" + conn);
+			System.out.println(sql);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cid);
+			ResultSet rs = pstmt.executeQuery();
+			
+			Post post=null;
+			while(rs.next()){
+				int pid = rs.getInt("pid");
+				String contents = rs.getString("content");
+				String creattime = rs.getString("postingtime");
+				int liked = rs.getInt("liked");
+				post = new Post(pid,contents,creattime,liked);
+			}
+			return post;
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
 	}
 
 	public ArrayList<Post> getPosts(int cid) {

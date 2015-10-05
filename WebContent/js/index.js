@@ -52,6 +52,7 @@ function showCafelist(){
 		type: "get",
 		url : "/api/cafelist",
 		dataType : 'json',
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		success : function(result) {
 			console.log(result);
 			rendCafelist(result);
@@ -78,6 +79,48 @@ function rendCafelist(cafes){
 					+'<span class="distance">'+'0.3km'+'</span>'+
 				'</a>'+
 		'</li>')
-	})
+	});
 }
 
+$('#search-button').click(function(e){
+	e.preventDefault();	
+	var form = $(".search");
+	
+	$.ajax({
+		type: "get",
+		url : "/searchcafe",
+		data : form.serialize(), 
+		dataType : 'json',
+		success : function(result) {
+			console.log(result);
+			var cafelist = getCafelist(result);
+			$(".cafe-list").empty();
+			console.log(cafelist);
+			$(".cafe-list").append(cafelist);
+			//rendSearchedCafelist(result);
+		},
+		error : function(xhr, status, error) {
+			console.log(status)
+		}
+	});
+
+});
+
+function getCafelist(cafes){
+	var result = '';
+
+	cafes.forEach(function(cafe){
+		result += '<li>'+
+				'<img src="http://placehold.it/80x80">'+
+				'<a class = "info" href="/cafe?cid='+cafe.cid+'">'
+					+'<span class="name">'+cafe.name+'</span>'
+					+'<span class="post-num"><b>POST</b><br>'+cafe.postNum+'개</span>'
+					+'<span class="address">'+'성남시 분당구 삼평동'+'</span>'+
+					+'<span class="distance">'+'0.3km'+'</span>'+
+				'</a>'+
+		'</li>'
+	});
+
+	console.log(result);
+	return result;
+}

@@ -30,10 +30,8 @@ public class APICafeListServlet extends HttpServlet {
 		CafeDAO cafedao = new CafeDAO();
 		cafeList = cafedao.getCafeList();
 		
+		response.setContentType("application/json; charset=UTF-8");
 		response.getWriter().write(new Gson().toJson(cafeList));
 		logger.debug(new Gson().toJson(cafeList));
 	}
-
-
-
 }
