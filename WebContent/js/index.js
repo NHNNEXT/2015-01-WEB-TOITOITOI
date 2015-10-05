@@ -7,28 +7,19 @@ if ('geolocation' in navigator) {
       maximumAge : 10800000 // 3hr to ms
     }
   );
-	navigator.geolocation.getCurrentPosition(
-    changePosition.bind(this, 'highAcc'),
-    logError.bind(this, 'highAcc'),
-    {
-      enableHighAccuracy : true,
-      maximumAge : 1800000 // 30min to ms
-    }
-  );
-  var watchID = navigator.geolocation.watchPosition(
-    changePosition.bind(this, 'watch'),
-    logError.bind(this, 'watch'),
-    {
-      maximumAge : 120000 // 2min to ms
-    }
-  );
 } else {
-  console.log('browser doesn\'t support geolocation');
+	var error = {
+		'message' : 'browser doesn\'t support geolocation'
+	};
+	logError.call(this, 'no geo');
 }
 
 function changePosition (calledFrom, position) {
   console.log(calledFrom, position);
-  // ajax 되고 나면 해야지 \^^/
+	showCafelist({
+		'lat' : position.coords.latitude,
+		'long' : position.coords.longitude
+	});
 }
 
 function logError (calledFrom, error) {
@@ -43,27 +34,29 @@ function logError (calledFrom, error) {
       debugger;
       break;
     default:
+			showCafelist();
       console.error(calledFrom, error.message);
   }
 }
 
-function showCafelist(){
+function showCafelist(param){
+	console.log('param', param);
 	$.ajax({
 		type: "get",
 		url : "/api/cafelist",
-		dataType : 'json',
-		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		data : (param) ? param : '',
 		success : function(result) {
 			console.log(result);
-			rendCafelist(result);
+			var cafelist = compileCafeList(result);
+			$(".cafe-list").empty();
+			console.log(cafelist);
+			$(".cafe-list").append(cafelist);
 		},
 		error : function(xhr, status, error) {
 			console.log(status)
 		}
 	})
 }
-
-showCafelist();
 
 function rendCafelist(cafes){
 	var cafelist = document.querySelector(".cafe-list");
@@ -83,17 +76,17 @@ function rendCafelist(cafes){
 }
 
 $('#search-button').click(function(e){
-	e.preventDefault();	
+	e.preventDefault();
 	var form = $(".search");
-	
+
 	$.ajax({
 		type: "get",
 		url : "/searchcafe",
-		data : form.serialize(), 
+		data : form.serialize(),
 		dataType : 'json',
 		success : function(result) {
 			console.log(result);
-			var cafelist = getCafelist(result);
+			var cafelist = compileCafeList(result);
 			$(".cafe-list").empty();
 			console.log(cafelist);
 			$(".cafe-list").append(cafelist);
@@ -106,7 +99,7 @@ $('#search-button').click(function(e){
 
 });
 
-function getCafelist(cafes){
+function compileCafeList(cafes){
 	var result = '';
 
 	cafes.forEach(function(cafe){
@@ -115,10 +108,9 @@ function getCafelist(cafes){
 				'<a class = "info" href="/cafe?cid='+cafe.cid+'">'
 					+'<span class="name">'+cafe.name+'</span>'
 					+'<span class="post-num"><b>POST</b><br>'+cafe.postNum+'개</span>'
-					+'<span class="address">'+'성남시 분당구 삼평동'+'</span>'+
-					+'<span class="distance">'+'0.3km'+'</span>'+
-				'</a>'+
-		'</li>'
+					+'<span class="address">'+'성남시 분당구 삼평동'+'</span>';
+		result += ('distance' in cafe) ? '<span class="distance">'+parseFloat(cafe.distance).toFixed(3)+'km'+'</span>' : '';
+		result +=	'</a>'+'</li>';
 	});
 
 	console.log(result);
