@@ -82,7 +82,7 @@ function rendCafelist(cafes){
 	});
 }
 
-$('#search-button').click(function(e){
+$('.search').on('submit',function(e){
 	e.preventDefault();	
 	var form = $(".search");
 
