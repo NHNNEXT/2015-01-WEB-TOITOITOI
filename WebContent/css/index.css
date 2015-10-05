@@ -1,25 +1,27 @@
 /* body */
 body{
-	background-image: url(http://i60.tinypic.com/21lv8uf.png);
+	background-image: url(http://i60.tinypic.com/2zno21x.png);
 	background-size: 101%;
-	height: 430px;
+	height: 53vh;
 }
-
+@viewport{
+	orientation : portrait;
+}
 
 /* header */
 .logo{
 	position: relative;
 	display: block;
-	height: 16vh;
-	margin: 19vh auto 5vh auto;
+	height: 16vmax;
+	margin: 19vmax auto 5vmax auto;
 }
 
 
 /* search */
 .search .textbox{
     display: block;
-    width: 87%;
-    height: 6vh;
+    width: 87vmin;
+    height: 6vmax;
     margin: 0 auto;
     padding-left: 7vmin;
     outline-style: none;
@@ -28,7 +30,7 @@ body{
     border-radius: 100px;
     color: #FFFFFF;
     text-shadow: 1px 1px rgba(0,0,0,0.7);
-    font-size: 3vh;
+    font-size: 3vmax;
     font-family: "AppleSDGothicNeo-Medium",arial, sans-serif;
     background-color: rgba(0, 0, 0, 0.28);
 }
@@ -38,12 +40,12 @@ body{
 .search label{
     background-image: url(http://i58.tinypic.com/2mevhqv.png);
     background-size: cover;
-    height: 3.5vh;
-    width: 3.5vh;
+    height: 3.5vmax;
+    width: 3.5vmax;
     position: relative;
     float: right;
-    top: -5vh;
-    right: 10vw;
+    top: -5vmax;
+    right: 10vmin;
     -webkit-filter: drop-shadow(2px 1px 3px black);
     filter: drop-shadow(2px 2px 3px black);
 }
@@ -54,10 +56,10 @@ body{
     filter: url('blur.svg#blur');
     filter: blur(10px);
     position: relative;
-    width: 87%;
-    height: 6vh;
+    width: 87vmin;
+    height: 6vmax;
     border-radius: 100px;
-    top: -6vh;
+    top: -6vmax;
     margin: 0 auto;
     z-index: -1;
 }
@@ -100,12 +102,12 @@ body{
     border: 1px solid rgba(243, 202, 197, 0.35);
     border-radius: 17px;
     box-sizing: border-box;
-    padding: 0 5px;
+    padding: 0 1.4vmin;
     background-color: rgba(26, 17, 9, 0.6);
     position: relative;
-    top: -2vh;
-    width: 88%;
-    height: 44vh;
+    top: -2vmax;
+    width: 88vmin;
+    height: 44vmax;
     margin: 0 auto;
     color: rgba(255,255,255,0.8);
     overflow: scroll;
@@ -115,28 +117,30 @@ body{
     position: relative;
     top: -46vh;
     margin: 0 auto;
-    width: 88.5%;
+    width: 88vmin;
     height: 44vh;
     border-radius: 22px;
     background-size: cover;
-    background-image: url(http://i60.tinypic.com/2zno21x.png);
+    background-image: url(http://i60.tinypic.com/6z8tut.jpg);
     background-attachment: fixed;
     z-index: -1;
 }
 .cafe-list li{
     clear: left;
-    height: 11vh;
+    height: 15.8vh;
     padding: 2.7vw 1.2vw;
     border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 .cafe-list .info {
-    color: inherit;
+    color: white;
     text-decoration: none;
-    float: left;
-    display: inline-block;
-    width: 41vw;
-    margin-left: 5vw;
-    box-sizing: border-box;
+    float: right;
+    width: 45vmin;
+    margin-right: 5vmin;
+    /* box-sizing: border-box; */
+    padding: 0.9vmax 0 1vmax 0;
+    height: 15vmax;
+    /* vertical-align: middle; */
 }
 .cafe-list .info .left-column{
 	display: inline-block;
@@ -147,28 +151,35 @@ body{
 	width: 15vw;
 }
 .cafe-list img {
-    float: left;
+    display: inline-block;
     border-radius: 15px;
-    height: 16vh;
+    width: 15vmax;
+    height: 15vmax;
     background-color: rgba(0,0,0,1);
+    border: 1px solid rgba(255,255,255,0.7);
+    /* vertical-align: -1.2vmax; */
 }
 .cafe-list .name {
-    font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-    font-size: 4vh;
-    line-height: 7vh;
+    display: block;
+    font-family: "AppleSDGothicNeo-thick", arial, sans-serif;
+    font-size: 3.2vmax;
+    line-height: 3.2vmax;
+    height: 2em;
+    margin-bottom: 2.2vmax;
 }
 .cafe-list .post-num {
     display: inline-block;
     line-height: 110%;
     font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-    font-size: 2.2vh;
+    font-size: 2.5vh;
 }
 .cafe-list .address {
     display: inline-block;
     font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-    font-size: 2.0vh;
-    width: 30.5vw;
+    font-size: 2.2vh;
+    width: 21.5vw;
     margin-top: 0.0em;
+    margin-left: 7vmin;
 }
 .cafe-list .distance {
 	font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
