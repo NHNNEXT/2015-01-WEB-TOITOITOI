@@ -87,7 +87,7 @@ function compileCafeList(cafes){
 
 	cafes.forEach(function(cafe){
 		result += '<li>'+
-				'<img src="http://placehold.it/80x80">'+
+				'<img src="http://kiboom.github.io/images'+Math.ceil(Math.random()*7)+'.jpeg">'+
 				'<a class = "info" href="/cafe?cid='+cafe.cid+'">'
 					+'<span class="name">'+cafe.name+'</span>'
 					+'<span class="post-num"><b>POST</b><br>'+cafe.postNum+'개</span>'
