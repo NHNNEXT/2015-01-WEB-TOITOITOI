@@ -98,20 +98,6 @@ getPostList();
 
 var posting_textbox = document.querySelector(".posting .textbox");
 
-posting_textbox.addEventListener('focus', function(event) {
-	/* input박스가 스크롤해서 쪼그라들었을 때만 클릭시 이벤트 적용! */
-	if (scrollY > 176){
-		posting_style.height = "65px";
-		posting_textbox_style.height = '50px';
-		posting_textbox_style.lineHeight = '50px';
-		posting_textbox_style.fontSize = '4.5vmin';
-		posting_textboxbg_style.height = '65px';
-		posting_send_style.right = '5.4%';
-		posting_send_style.height = '50px';
-		posting_textboxbg_style.borderBottom = '1px solid rgba(234, 202, 190, 0.15)';
-	}
-}, false);
-
 //$(".like-reply").click(function() {
 //	// todo
 //	// if(!on)
@@ -337,7 +323,7 @@ $('.posting input').on('focus', function (e) {
 			$(el).css({
 				'top' : $(el).offset().top + $(window).scrollTop() - prevScrollTop
 			});
-		})
+		});
 		prevScrollTop = $(window).scrollTop();
 	});
 
@@ -345,7 +331,7 @@ $('.posting input').on('focus', function (e) {
 		$('.posting').removeClass('focus');
 		changedArray.forEach(function (item, index) {
 			var $element = $(item.element);
-			$element.css(item.prevOption);
+			$element.attr('style', '');
 		});
 		$(window).off('scroll.topBar');
 		$('.posting input').off('blur');
