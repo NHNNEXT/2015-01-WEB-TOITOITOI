@@ -26,19 +26,18 @@ function changePosition (calledFrom, position) {
 function logError (calledFrom, error) {
   switch (error.code) {
     case error.PERMISSION_DENIED:
-    // 한 번 block하고 나면 다시 안 물어본다는 게 함정 ㅜㅜ
+			$('#test').text('위치 정보 접근 권한을 허용해주세요. 더 가까운 카페를 보여드립니다.');
+			$('#test').show();
       break;
     case error.TIMEOUT:
-      break;
     case error.POSITION_UNAVAILABLE:
-     case error.UNKNOWN_ERROR:
-      debugger;
-      break;
+	  case error.UNKNOWN_ERROR:
     default:
-			showCafelist();
 			$('#test').text('error :'+calledFrom+', '+error.message);
-      console.error('error', calledFrom, error.message);
+			debugger;
   }
+	showCafelist();
+  console.error('error', calledFrom, error.message);
 }
 
 function showCafelist(param){
@@ -80,7 +79,7 @@ function rendCafelist(cafes){
 }
 
 $('.search').on('submit',function(e){
-	e.preventDefault();	
+	e.preventDefault();
 	var form = $(".search");
 
 	$.ajax({

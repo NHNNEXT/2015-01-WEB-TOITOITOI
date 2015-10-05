@@ -22,7 +22,7 @@
 
 </head>
 <body>
-	<div id="test" style="position:fixed;left:0;top:0;background-color:white;">hi</div>
+	<div id="test" style="position:fixed;left:0;top:0;background-color:white;display:none;">hi</div>
 	<img class="logo" src="http://i58.tinypic.com/t8qbko.png">
 	<!-- <ul class="filter">
 		<li><a href="/?sort=postNum">댓글순</a></li>
