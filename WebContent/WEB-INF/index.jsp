@@ -34,21 +34,7 @@
 	</form>
 	
 	<ul class="cafe-list">
-		<!-- <c:forEach items="${cafeList}" var="cafe">
-			<li>
-				<img src="http://placehold.it/80x80">
-				<a class = "info" href="/cafe?cid=${cafe.cid}">
-					<span class="left-column">
-						<span class="name">${cafe.name}</span>
-						<span class="address">성남시 분당구 삼평동</span>
-					</span>
-					<span class="right-column">
-						<span class="post-num"><b>POST</b><br>${cafe.postNum}개</span>
-						<span class="distance"><!-- 알지도 못 하는 거리를 보여줄 순 없다 ㅜㅜ --></span>
-					</span>
-				</a>
-			</li>
-		</c:forEach> -->
+
 	</ul>
 	<div class="cafe-list-bg"></div>
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>

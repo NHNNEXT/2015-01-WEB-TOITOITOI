@@ -19,10 +19,6 @@ import cafein.cafe.CafeDAO;
 import cafein.reply.LikedOnReplyServlet;
 
 
-/**
- * Servlet implementation class CafeListServlet
- */
-
 @WebServlet({""})
 public class CafeListServlet extends HttpServlet {  
 	private static final Logger logger = LoggerFactory.getLogger(LikedOnReplyServlet.class);
@@ -37,17 +33,14 @@ public class CafeListServlet extends HttpServlet {
 		
 		boolean sortByDist = !("".equals(latitude) || "".equals(longitude));
 		if (sortByDist) {
+			logger.debug("in");
 			cafeList = cafedao.getCafeList(latitude, longitude);
 		} else {
 			// http://stackoverflow.com/questions/3321526/should-i-use-string-isempty-or-equalsstring
 			boolean sortByPostNum = "postNum".equals(filter);
 			cafeList = cafedao.getCafeList(sortByPostNum);			
 		}
-		
-		//request.setAttribute("cafeList", cafeList);
 		request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-		
-		
 	}
 
 
