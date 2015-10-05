@@ -333,7 +333,7 @@ min-height: 11vmin;}
 }
 
 .posting .textbox-bg{
-	position: absolute;
+	position: absolute;]
 	height: 7.7vmax;
 	width: 90%;
 	min-width: 150px;
@@ -354,5 +354,8 @@ min-height: 11vmin;}
 	transition-property: top, left, width, height, border-radius, font-size;
 	transition-duration: 0.6s;
 	transition-timing-function: ease;
-	height: 7.7vmax;
+}
+
+.search-result{
+    display: none;
 }

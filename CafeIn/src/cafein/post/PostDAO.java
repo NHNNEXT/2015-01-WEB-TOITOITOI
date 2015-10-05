@@ -1,5 +1,6 @@
 package cafein.post;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,59 +22,59 @@ public class PostDAO {
 		String pw = "db1004";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection(url,id,pw);
+			return DriverManager.getConnection(url, id, pw);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
 		}
 	}
-	
+
 	public void addPost(Post post) throws SQLException {
 		String sql = "INSERT INTO post (cid, content) VALUES(?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			conn = getConnection();
-			//logging framework를 적용해서 
-			System.out.println("connection:"+conn);
+			// logging framework를 적용해서
+			System.out.println("connection:" + conn);
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, post.getCid());
 			pstmt.setString(2, post.getContents());
 			pstmt.executeUpdate();
-		}  finally {
-			if(pstmt != null){
+		} finally {
+			if (pstmt != null) {
 				pstmt.close();
 			}
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 			}
 		}
 		
 	}
-	
+
 	public ArrayList<Post> getPosts(int cid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+
 		String sql = "SELECT * FROM post WHERE cid=? ORDER BY postingtime DESC";
 		ArrayList<Post> result = new ArrayList<Post>();
-		
+
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cid);
 			ResultSet rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				int pid = rs.getInt("pid");
 				String contents = rs.getString("content");
 				String creattime = rs.getString("postingtime");
 				int liked = rs.getInt("liked");
 				result.add(new Post(pid,contents,creattime,liked));
 			}
-			
+
 			pstmt.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -124,6 +125,4 @@ public class PostDAO {
 			}
 		}
 	}
-
-
 }

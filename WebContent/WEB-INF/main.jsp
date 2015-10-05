@@ -43,15 +43,62 @@
 			</form>
 		</div>
 	</header>
-	<ul class="posts">
+	<div class="search-result">
+		<ul class="posts">
+			<c:forEach items="${posts}" var="post">
+				<li class="post"><img class="quatation-up"
+					src="http://i58.tinypic.com/30holtz.png">
+					<div class="contents">${post.contents}</div> <img
+					class="quatation-down" src="http://i59.tinypic.com/dr46mw.png">
+					<div class="info">
+						<span class="like-post" value="${post.pid}" name="likesOnPost"
+							action="/likedOnPost">${post.liked}</span> <span
+							class="replies-post">${fn:length(post.replyList)}</span>
+						<c:set var="date" value="${fn:split(post.creattime, ' ')}" />
+						<div class="time">${date[0]}</div>
+					</div>
+					<ul class="replies">
+						<c:forEach items="${post.replyList}" var="reply">
+							<li class="reply"><span class="reply-content">re:
+									${reply.replyContent}</span> <span class="like-reply"
+								value="${reply.reId}" name="likesOnReply" action="/likedOnReply"
+								method="post">${reply.liked}</span></li>
+						</c:forEach>
+					</ul>
+					<div class="replyBox">
+						<form action="/createReply" method="post">
+							<input name="reply" type="text" placeholder=" re: 댓글 달기...">
+							<input name="pid" type="hidden" value="${post.pid}">
+							<button>게 시</button>
+						</form>
+					</div></li>
+			</c:forEach>
+		</ul>
+	</div>
+	<div class="title">
+		<div class="youarein">You're in</div>
+		<div class="cafe-name">Coffea</div>
+	</div>
+	<div class="posting">
+		<form action="/createpost" method="post" enctype="multipart/form-data">
+			<input class="textbox" name="contents" type="textbox"
+				placeholder="	Q. 이 카페 아메리카노 어때요?"> <input name="photo"
+				type="file">
+			<div class="textbox-bg"></div>
+			<input type="hidden" name="cid" value="${param.cid}">
+			<button class="send">게 시</button>
+		</form>
+	</div>
+	<ul>
 		<c:forEach items="${posts}" var="post">
-			<li class="post">
-				<img class="quatation-up" src="http://i58.tinypic.com/30holtz.png">
-				<div class="contents">${post.contents}</div>
-				<img class="quatation-down" src="http://i59.tinypic.com/dr46mw.png">
+			<li class="post"><img class="quatation-up"
+				src="http://i58.tinypic.com/30holtz.png">
+				<div class="contents">${post.contents}</div> <img
+				class="quatation-down" src="http://i59.tinypic.com/dr46mw.png">
 				<div class="info">
-					<span class="like-post" value="${post.pid}" name="likesOnPost" action="/likedOnPost">${post.liked}</span>
-					<span class="replies-post">${fn:length(post.replyList)}</span>
+					<span class="like-post" value="${post.pid}" name="likesOnPost"
+						action="/likedOnPost">${post.liked}</span> <span
+						class="replies-post">${fn:length(post.replyList)}</span>
 					<c:set var="date" value="${fn:split(post.creattime, ' ')}" />
 					<div class="time">${date[0]}</div>
 				</div>
@@ -69,8 +116,7 @@
 						<input name="pid" type="hidden" value="${post.pid}">
 						<button class="send">게시</button>
 					</form>
-				</div>
-			</li>
+				</div></li>
 		</c:forEach>
 	</ul>
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>

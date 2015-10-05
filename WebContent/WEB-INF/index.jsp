@@ -32,8 +32,9 @@
 		<label for="search-button"></label>
 		<div class="search-bg"></div>
 	</form>
+	
 	<ul class="cafe-list">
-		<c:forEach items="${cafeList}" var="cafe">
+		<!-- <c:forEach items="${cafeList}" var="cafe">
 			<li>
 				<img src="http://placehold.it/80x80">
 				<a class = "info" href="/cafe?cid=${cafe.cid}">
@@ -47,7 +48,7 @@
 					</span>
 				</a>
 			</li>
-		</c:forEach>
+		</c:forEach> -->
 	</ul>
 	<div class="cafe-list-bg"></div>
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>

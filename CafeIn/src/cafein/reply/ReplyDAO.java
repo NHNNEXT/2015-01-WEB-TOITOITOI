@@ -103,12 +103,12 @@ public class ReplyDAO {
 			}
 		}
 	}
-	
+
 	public void minusLike(int replyId) throws SQLException {
 		String sql = "UPDATE reply SET liked = liked-1 WHERE reid = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			conn = getConnection();
 			logger.debug("connection:" + conn);
