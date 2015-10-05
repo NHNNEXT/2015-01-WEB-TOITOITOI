@@ -185,5 +185,7 @@ body{
 	font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
 	font-size: 2.5vh;
 	display: inline-block;
-	margin-top: 1vh;
+	position: absolute;
+	line-height: 2.5em;
+	right: 4px;
 }
