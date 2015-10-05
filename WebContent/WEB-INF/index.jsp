@@ -27,7 +27,7 @@
 		<li><a href="/?sort=postNum">댓글순</a></li>
 	</ul> -->
 	<form class="search" name="search" method="get" action="/searchcafe">
-		<input class="textbox" type="text" name="keyword" placeholder="카페 이름을 검색해주세요." value="${keyword}"/> 
+		<input class="textbox" type="text" name="keyword" placeholder="카페 이름을 검색해주세요." value="${keyword}"/>
 		<input id="search-button" type="submit" value="검색"/>
 		<label for="search-button"></label>
 		<div class="search-bg"></div>
@@ -43,7 +43,7 @@
 					</span>
 					<span class="right-column">
 						<span class="post-num"><b>POST</b><br>${cafe.postNum}개</span>
-						<span class="distance">0.3km</span>
+						<span class="distance"><!-- 알지도 못 하는 거리를 보여줄 순 없다 ㅜㅜ --></span>
 					</span>
 				</a>
 			</li>
@@ -51,6 +51,6 @@
 	</ul>
 	<div class="cafe-list-bg"></div>
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/scripts.js"></script>
+	<script src="${pageContext.request.contextPath}/js/index.js"></script>
 </body>
 </html>
