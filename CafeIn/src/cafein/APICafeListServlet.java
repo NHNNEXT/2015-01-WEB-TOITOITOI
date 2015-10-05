@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import cafein.cafe.Cafe;
 import cafein.cafe.CafeDAO;
 import cafein.reply.LikedOnReplyServlet;
+import cafein.util.Validation;
 
 @WebServlet("/api/cafelist")
 public class APICafeListServlet extends HttpServlet {
@@ -26,9 +27,16 @@ public class APICafeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Cafe> cafeList;
+		String latitude = request.getParameter("lat");
+		String longitude = request.getParameter("long");
 		CafeDAO cafedao = new CafeDAO();
-		cafeList = cafedao.getCafeList();
+		ArrayList<Cafe> cafeList = null;
+
+		if (Validation.isValidParameter(latitude) && Validation.isValidParameter(longitude)) {
+			cafeList = cafedao.getCafeList(latitude, longitude);
+		} else {
+			cafeList = cafedao.getCafeList();
+		}
 		
 		response.setContentType("application/json; charset=UTF-8");
 		response.getWriter().write(new Gson().toJson(cafeList));
