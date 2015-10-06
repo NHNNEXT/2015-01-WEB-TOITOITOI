@@ -29,13 +29,16 @@ public class APICafeListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String latitude = request.getParameter("lat");
 		String longitude = request.getParameter("long");
+		String filter = request.getParameter("sort");
+
 		CafeDAO cafedao = new CafeDAO();
 		ArrayList<Cafe> cafeList = null;
 
 		if (Validation.isValidParameter(latitude) && Validation.isValidParameter(longitude)) {
 			cafeList = cafedao.getCafeList(latitude, longitude);
 		} else {
-			cafeList = cafedao.getCafeList();
+			boolean sortByPostNum = "postNum".equals(filter);
+			cafeList = cafedao.getCafeList(sortByPostNum);
 		}
 		
 		response.setContentType("application/json; charset=UTF-8");

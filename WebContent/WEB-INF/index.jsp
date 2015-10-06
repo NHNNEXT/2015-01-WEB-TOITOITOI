@@ -24,9 +24,6 @@
 <body>
 	<div id="test" style="position:fixed;left:0;top:0;background-color:white;display:none;">hi</div>
 	<img class="logo" src="http://i58.tinypic.com/t8qbko.png">
-	<!-- <ul class="filter">
-		<li><a href="/?sort=postNum">댓글순</a></li>
-	</ul> -->
 	<form class="search" name="search" method="get" action="/searchcafe">
 		<input class="textbox" type="text" name="keyword" placeholder="카페 이름을 검색해주세요." value="${keyword}"/>
 		<input id="search-button" type="submit" value="검색"/>

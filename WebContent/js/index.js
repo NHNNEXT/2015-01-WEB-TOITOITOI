@@ -1,7 +1,7 @@
 if ('geolocation' in navigator) {
 	navigator.geolocation.getCurrentPosition(
     changePosition.bind(this, 'lowAcc'),
-    logError.bind(this, 'lowAcc'),
+    handleError.bind(this, 'lowAcc'),
     {
       timeout : 20000, // ms
       maximumAge : 10800000 // 3hr to ms
@@ -11,7 +11,7 @@ if ('geolocation' in navigator) {
 	var error = {
 		'message' : 'browser doesn\'t support geolocation'
 	};
-	logError.call(this, 'no geo');
+	handleError.call(this, 'no geo');
 }
 
 function changePosition (calledFrom, position) {
@@ -23,7 +23,7 @@ function changePosition (calledFrom, position) {
 	});
 }
 
-function logError (calledFrom, error) {
+function handleError (calledFrom, error) {
   switch (error.code) {
     case error.PERMISSION_DENIED:
 			$('#test').text('위치 정보 접근 권한을 허용해주세요. 더 가까운 카페를 보여드립니다.');
@@ -36,7 +36,7 @@ function logError (calledFrom, error) {
 			$('#test').text('error :'+calledFrom+', '+error.message);
 			debugger;
   }
-	showCafelist();
+	showCafelist({'sort':'postNum'});
   console.error('error', calledFrom, error.message);
 }
 
@@ -57,25 +57,6 @@ function showCafelist(param){
 			console.log(status)
 		}
 	})
-}
-
-showCafelist();
-
-function rendCafelist(cafes){
-	var cafelist = document.querySelector(".cafe-list");
-
-	cafes.forEach(function(cafe){
-		cafelist.insertAdjacentHTML('beforeend',
-		'<li>'+
-				'<img src="http://placehold.it/80x80">'+
-				'<a class = "info" href="/cafe?cid='+cafe.cid+'">'
-					+'<span class="name">'+cafe.name+'</span>'
-					+'<span class="post-num"><b>POST</b><br>'+cafe.postNum+'개</span>'
-					+'<span class="address">'+'성남시 분당구 삼평동'+'</span>'
-					+'<span class="distance">'+'0.3km'+'</span>'+
-				'</a>'+
-		'</li>')
-	});
 }
 
 $('.search').on('submit',function(e){
