@@ -27,7 +27,9 @@ public class CafeController extends HttpServlet {
 		// View view = news InternalResourceView("/WEB-INF/view/main.jsp");
 		//
 		// return new ModelAndView(view,model);
-
+		// cid에 맞는 카페개별 페이지를 보여줘야 하는데, 
+		// 아직 springd에서 view class를 만들지 않아서 일반적인 방식을 쓸수없었다.
+		
 		req.getRequestDispatcher("/WEB-INF/view/main.jsp").forward(req, res);
 	}
 

@@ -10,13 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import cafein.util.Validation;
 import com.google.gson.Gson;
 import cafein.reply.Reply;
 
-@WebServlet("/createpost")
+@RestController
 public class CreatePostServlet extends HttpServlet {
-	@Override
+	@RequestMapping("/createpost")
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String contents = req.getParameter("contents");
 		int cid = Integer.parseInt(req.getParameter("cid"));
