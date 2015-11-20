@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import cafein.util.Result;
+
 @RestController
 public class LikedController {
 	@RequestMapping(value = "/liked", method = RequestMethod.POST)

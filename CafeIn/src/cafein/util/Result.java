@@ -1,4 +1,4 @@
-package cafein.post;
+package cafein.util;
 
 public class Result {
 	private boolean success;
