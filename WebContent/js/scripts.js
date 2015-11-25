@@ -13,12 +13,10 @@ function getPostList() {
 	var posts;
 
 	$.ajax({
-	      url: '/api/postlist' + cidURL,
+	      url: '/api/postlist'
 	      type: 'GET',
 	      success: function(data) {
-	    	data;
-	    	posts = data.posts;
-	        renderPosts(posts);
+	        renderPosts(data);
 	      },
 	      error: function(e) {
 	        console.log(e)

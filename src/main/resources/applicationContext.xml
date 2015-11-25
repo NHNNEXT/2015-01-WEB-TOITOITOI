@@ -14,5 +14,9 @@
 	p:username="${database.username}"
 	p:password="${database.password}"
 	/>
-
+	
+<!-- 	<bean id="cafeDAO" class="cafein.dao.CafeinDAO"
+	p:dataSource-ref="dataSource"/>
+ -->
+ <bean id="cafeinDAO" class="cafein.dao.CafeinDAO" p:dataSource-ref="dataSource"></bean>
 </beans>

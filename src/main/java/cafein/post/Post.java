@@ -12,6 +12,9 @@ public class Post {
 	private int cid;
 	private int liked;
 	
+	public Post() {
+		
+	}
 	public Post(int cid, String contents) {
 		this.cid = cid;
 		this.contents = contents;
@@ -58,6 +61,40 @@ public class Post {
 	}
 	public void setLiked(int liked) {
 		this.liked = liked;
+	}
+	@Override
+	public String toString() {
+		return "Post [pid=" + pid + ", contents=" + contents + ", creattime=" + creattime + ", replyList=" + replyList
+				+ ", cid=" + cid + ", liked=" + liked + "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + cid;
+		result = prime * result + ((contents == null) ? 0 : contents.hashCode());
+		result = prime * result + pid;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Post other = (Post) obj;
+		if (cid != other.cid)
+			return false;
+		if (contents == null) {
+			if (other.contents != null)
+				return false;
+		} else if (!contents.equals(other.contents))
+			return false;
+		if (pid != other.pid)
+			return false;
+		return true;
 	}
 	
 }

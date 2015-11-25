@@ -2,12 +2,15 @@ use cafein;
 
 DROP TABLE IF EXISTS `reply`;
 DROP TABLE IF EXISTS `post`;
-DROP TABLE IF EXISTS `cafe`;
 DROP TABLE IF EXISTS `nudge`;
+DROP TABLE IF EXISTS `cafe`;
 
 CREATE TABLE `cafe` (
   `cid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
+  `postNum` int(11) DEFAULT NULL,
+  `latitude` decimal(18,15) DEFAULT NULL,
+  `longitude` decimal(18,15) DEFAULT NULL,
   PRIMARY KEY (`cid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
