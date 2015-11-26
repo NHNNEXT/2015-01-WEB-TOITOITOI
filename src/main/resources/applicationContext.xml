@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<context:property-placeholder location="classpath*:applicationProperties.xml"/>
-	
+	<!--dataSource는 connection pull역할.-->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
 	p:driverClassName="${database.driverClassName}"
 	p:url="${database.url}"
@@ -18,5 +18,7 @@
 <!-- 	<bean id="cafeDAO" class="cafein.dao.CafeinDAO"
 	p:dataSource-ref="dataSource"/>
  -->
- <bean id="cafeinDAO" class="cafein.dao.CafeinDAO" p:dataSource-ref="dataSource"></bean>
+ 
+ <bean id="dbInitializer" class="cafein.dao.DBinitializer" p:dataSource-ref="dataSource"></bean>
+ <!-- <bean id="replydao" class="cafein.reply.ReplyDAO" p:dataSource-ref="dataSource"/> -->
 </beans>

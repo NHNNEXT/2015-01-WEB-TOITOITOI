@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cafein.dao.CafeinDAO;
+import cafein.dao.DBinitializer;
 import cafein.post.Post;
 
 @RunWith(SpringJUnit4ClassRunner.class)@ContextConfiguration("classpath:/applicationContext.xml")
 public class CafeinDaoTest {
 	private static final Logger logger = LoggerFactory.getLogger(CafeinDaoTest.class);
 	@Autowired
-	private CafeinDAO cafeindao;
+	private DBinitializer cafeindao;
 	@Test
 	public void findByPid() {
 		Post post = cafeindao.findByPid(2);

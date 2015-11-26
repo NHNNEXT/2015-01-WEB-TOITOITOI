@@ -23,8 +23,8 @@ public class ReplyDAOTest {
 
 	@Test
 	public void testAddReply() throws SQLException {
-		Reply testingRe = TEST_REPLY;
-		replyDAO.addReply(testingRe, 2);
+		String content = null;
+		replyDAO.addReply(content, 2);
 	}
 	//client에서 정상적으로 newlike갯수가 넘어왔을 때, sql에 liked +1 test
 	@Test

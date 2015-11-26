@@ -13,8 +13,8 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import cafein.post.Post;
 
-public class CafeinDAO extends JdbcDaoSupport{
-	//CafeinDAO class의 instance가 자동으로 생성됨.
+public class DBinitializer extends JdbcDaoSupport{
+	//CafeinDAO class의 DB에 table 생성,test data insert.
 	@PostConstruct
 	public void initialize() {
 		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();

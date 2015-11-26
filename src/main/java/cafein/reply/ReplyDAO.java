@@ -28,7 +28,7 @@ public class ReplyDAO {
 		}
 	}
 
-	public Reply addReply(Reply re, int pid) throws SQLException {
+	public Reply addReply(String content, int pid) throws SQLException {
 
 		String sql = "INSERT INTO reply (pid,content) VALUES(?,?)";
 		Connection conn = null;
@@ -39,7 +39,7 @@ public class ReplyDAO {
 			System.out.println("connection:" + conn);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pid);
-			pstmt.setString(2, re.getReplyContent());
+			pstmt.setString(2, content);
 			pstmt.executeUpdate();
 		} finally {
 			if (pstmt != null) {
@@ -53,6 +53,7 @@ public class ReplyDAO {
 	}
 
 	public Reply getReplyJustInserted(int pid) throws SQLException {
+		//다른사람이 같은 post
 		String sql = "SELECT * FROM reply WHERE pid=? ORDER BY postingtime DESC limit 1";
 		Connection conn = null;
 		PreparedStatement pstmt = null;

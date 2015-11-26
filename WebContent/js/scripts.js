@@ -13,7 +13,7 @@ function getPostList() {
 	var posts;
 
 	$.ajax({
-	      url: '/api/postlist'
+	      url: '/api/postlist'+cidURL,
 	      type: 'GET',
 	      success: function(data) {
 	        renderPosts(data);
@@ -32,8 +32,8 @@ function getReplyList(pid) {
 		type: 'GET',
 		success: function(data) {
 			replies = data.replies;
-			renderReplies(pid, replies);
-			return replies;
+			renderReplies(pid, data);
+			return data;
 		},
 		error: function(e) {
 			console.log(e);
@@ -278,10 +278,10 @@ var nudges = [];
 var nudgeIndex = 0;
 
 var cid = $('input[name="cid"]').attr('value');
-$.get('/nudge?cid='+cid, function(data) {
-	parsedData = JSON.parse(data);
-	for (var i = 0; i < parsedData.length; i++) {
-		nudges.push(parsedData[i].contents);
+$.get('/nudge/'+cid, function(data) {
+	console.log(data);
+	for (var i = 0; i < data.length; i++) {
+		nudges.push(data[i].contents);
 	}
 });
 

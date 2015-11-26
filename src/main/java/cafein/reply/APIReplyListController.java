@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class APIReplyListController extends HttpServlet{
 
-	@RequestMapping(value ="/api/replylist", method = RequestMethod.POST)
+	@RequestMapping(value ="/api/replylist", method = RequestMethod.GET)
 	public List<Reply> getReplyList(@RequestParam(value = "pid",required = false)int pid){
 			return new ReplyDAO().getReplys(pid);
 		

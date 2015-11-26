@@ -23,15 +23,19 @@ public class CreateReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@RequestMapping(value="/createReply", method=RequestMethod.POST)
-	protected Reply doPost(@RequestBody String content, @RequestBody int cid, @RequestBody int pid, HttpServletResponse resp) throws ServletException, IOException {
+	protected Reply createReply(@RequestBody String content, @RequestBody int cid, @RequestBody int pid, HttpServletResponse resp) throws ServletException, IOException {
 		if (!Validation.isValidParameter(content)) {
-			resp.sendRedirect("/cafe?cid=" + cid);
-			// return "redirect:" + "/cafe?cid=" + cid;   // Reply를 JSON으로 반환하는 서블릿에서 리다이렉르트 하려면 어떻게 해야하나?
+			//resp.sendRedirect("/cafe?cid=" + cid);
+			//error상황일 때 어떻게 보여줄지. 클라이언트에 json으로 error메시지를 넘긴다.
+			//json으로 에러상황을 알릴때 어떻게 처리?
+			throw new IllegalArgumentException();
+			// @ControllerAdivce
+			// return "redirect:/cafe";   
+			 // Reply를 JSON으로 반환하는 서블릿에서 리다이렉르트 하려면 어떻게 해야하나?
 		}
-		logger.debug("Re:" + content);
-		Reply newReply = new Reply(content);
+		logger.debug("Reply:" + content);
 		try {
-			return (new ReplyDAO().addReply(newReply, pid));
+			return (new ReplyDAO().addReply(content, pid));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;	// Reply를 JSON으로 반환하는 서블릿에서 SQLException은 어떻게 처리해야하나?
