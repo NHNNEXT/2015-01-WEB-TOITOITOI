@@ -11,26 +11,29 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import cafein.post.PostDAO;
 
-public class PostDAO {
+@Repository
+public class PostDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
 
-	public Connection getConnection() {
-		String url = "jdbc:mysql://localhost:3307/cafein";
-		String id = "root";
-		String pw = "db1004";
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection(url, id, pw);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
+	// public Connection getConnection() {
+	// String url = "jdbc:mysql://localhost:3307/cafein";
+	// String id = "root";
+	// String pw = "db1004";
+	// try {
+	// Class.forName("com.mysql.jdbc.Driver");
+	// return DriverManager.getConnection(url, id, pw);
+	// } catch (Exception e) {
+	// System.out.println(e.getMessage());
+	// return null;
+	// }
+	// }
 
-	public Post addPost(int cid, String content) throws SQLException {
+	public Post addPost(Post post) throws SQLException {
 		String sql = "INSERT INTO post (cid, content) VALUES(?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -40,10 +43,10 @@ public class PostDAO {
 			System.out.println("connection:" + conn);
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cid);
-			pstmt.setString(2, content);
+			pstmt.setInt(1, post.getCid());
+			pstmt.setString(2, post.getContents());
 			pstmt.executeUpdate();
-			return getPostJustInserted(cid);
+			return getPostJustInserted(post.getCid());
 		} finally {
 			if (pstmt != null) {
 				pstmt.close();
@@ -66,14 +69,14 @@ public class PostDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cid);
 			ResultSet rs = pstmt.executeQuery();
-			
-			Post post=null;
-			while(rs.next()){
+
+			Post post = null;
+			while (rs.next()) {
 				int pid = rs.getInt("pid");
 				String contents = rs.getString("content");
 				String creattime = rs.getString("postingtime");
 				int liked = rs.getInt("liked");
-				post = new Post(pid,contents,creattime,liked);
+				post = new Post(pid, contents, creattime, liked);
 			}
 			return post;
 		} finally {
@@ -104,7 +107,7 @@ public class PostDAO {
 				String contents = rs.getString("content");
 				String creattime = rs.getString("postingtime");
 				int liked = rs.getInt("liked");
-				result.add(new Post(pid,contents,creattime,liked));
+				result.add(new Post(pid, contents, creattime, liked));
 			}
 
 			pstmt.close();

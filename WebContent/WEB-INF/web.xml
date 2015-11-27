@@ -18,6 +18,17 @@
 		<filter-name>Set Character Encoding</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+	<!-- Bootstraps the root web application context before servlet initialization -->
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/applicationContext.xml</param-value>
+	</context-param>
 	
 	<!-- spring framework와 mapping url -->
 	<servlet>
@@ -28,49 +39,20 @@
 		<servlet-name>home</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
-	<!-- <servlet>
-		<description>
-		</description>
-		<display-name>CafeListServlet</display-name>
-		<servlet-name>CafeListServlet</servlet-name>
-		<servlet-class>cafein.CafeListServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
-		</description>
-		<display-name>SearchCafeServlet</display-name>
-		<servlet-name>SearchCafeServlet</servlet-name>
-		<servlet-class>cafein.cafe.SearchCafeServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
-		</description>
-		<display-name>SearchContentsServlet</display-name>
-		<servlet-name>SearchContentsServlet</servlet-name>
-		<servlet-class>cafein.post.SearchContentsServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
-		</description>
-		<display-name>APICafeListServlet</display-name>
-		<servlet-name>APICafeListServlet</servlet-name>
-		<servlet-class>cafein.APICafeListServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CafeListServlet</servlet-name>
-		<url-pattern>/CafeListServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>SearchCafeServlet</servlet-name>
-		<url-pattern>/SearchCafeServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>SearchContentsServlet</servlet-name>
-		<url-pattern>/SearchContentsServlet</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>APICafeListServlet</servlet-name>
-		<url-pattern>/APICafeListServlet</url-pattern>
-	</servlet-mapping> -->
+
+	<!-- <servlet> <description> </description> <display-name>CafeListServlet</display-name> 
+		<servlet-name>CafeListServlet</servlet-name> <servlet-class>cafein.CafeListServlet</servlet-class> 
+		</servlet> <servlet> <description> </description> <display-name>SearchCafeServlet</display-name> 
+		<servlet-name>SearchCafeServlet</servlet-name> <servlet-class>cafein.cafe.SearchCafeServlet</servlet-class> 
+		</servlet> <servlet> <description> </description> <display-name>SearchContentsServlet</display-name> 
+		<servlet-name>SearchContentsServlet</servlet-name> <servlet-class>cafein.post.SearchContentsServlet</servlet-class> 
+		</servlet> <servlet> <description> </description> <display-name>APICafeListServlet</display-name> 
+		<servlet-name>APICafeListServlet</servlet-name> <servlet-class>cafein.APICafeListServlet</servlet-class> 
+		</servlet> <servlet-mapping> <servlet-name>CafeListServlet</servlet-name> 
+		<url-pattern>/CafeListServlet</url-pattern> </servlet-mapping> <servlet-mapping> 
+		<servlet-name>SearchCafeServlet</servlet-name> <url-pattern>/SearchCafeServlet</url-pattern> 
+		</servlet-mapping> <servlet-mapping> <servlet-name>SearchContentsServlet</servlet-name> 
+		<url-pattern>/SearchContentsServlet</url-pattern> </servlet-mapping> <servlet-mapping> 
+		<servlet-name>APICafeListServlet</servlet-name> <url-pattern>/APICafeListServlet</url-pattern> 
+		</servlet-mapping> -->
 </web-app>

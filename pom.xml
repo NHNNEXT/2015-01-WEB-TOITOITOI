@@ -8,18 +8,25 @@
 
 	<properties>
 		<tomcat.version>8.0.24</tomcat.version>
+		<org.springframework.version>4.2.3.RELEASE</org.springframework.version>
 	</properties>
 
 	<dependencies>
+		<!-- springframwork 관련 lib -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.2.2.RELEASE</version>
+			<version>${org.springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>4.2.2.RELEASE</version>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework.version}</version>
 		</dependency>
 
 		<dependency>
@@ -112,11 +119,7 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>4.2.3.RELEASE</version>
-		</dependency>
+
 
 	</dependencies>
 	<build>

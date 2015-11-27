@@ -7,20 +7,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CafeDAO {
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Repository;
 
-	public Connection getConnection() {
-		String url = "jdbc:mysql://localhost:3307/cafein";
-		String id = "root";
-		String pw = "db1004";
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection(url, id, pw);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
+@Repository
+public class CafeDAO extends JdbcDaoSupport{
+
+//	public Connection getConnection() {
+//		String url = "jdbc:mysql://localhost:3307/cafein";
+//		String id = "root";
+//		String pw = "db1004";
+//		try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//			return DriverManager.getConnection(url, id, pw);
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());
+//			return null;
+//		}
+//	}
 
 	private String getCafeListSQL(boolean keywordSearch, boolean sortByPostNum) {
 		String searchQuery = (keywordSearch) ? " WHERE c.name LIKE ? " : "";

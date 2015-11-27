@@ -5,6 +5,8 @@ public class Reply {
 	private String replyContent;
 	private String replyTime; 
 	private int liked;
+	private int pid;
+	
 	
 	public int getLiked() {
 		return liked;
@@ -48,6 +50,14 @@ public class Reply {
 	}
 	public void setReplyTime(String replyTime) {
 		this.replyTime = replyTime;
+	}
+
+	public int getPid() {
+		return pid;
+	}
+
+	public void setPid(int pid) {
+		this.pid = pid;
 	}
 
 }

@@ -18,17 +18,18 @@ public class CafeinDaoTest {
 	private static final Logger logger = LoggerFactory.getLogger(CafeinDaoTest.class);
 	@Autowired
 	private DBinitializer cafeindao;
-	@Test
-	public void findByPid() {
-		Post post = cafeindao.findByPid(2);
-		logger.debug("Post: {}", post);
-	}
 	
-	@Test
-	public void addPost() throws Exception {
-		Post post = new Post(2,"spring카페,포스트");
-		cafeindao.addPost(post);
-		logger.debug(post.toString());
-	}
+//	@Test
+//	public void findByPid() {
+//		Post post = cafeindao.findByPid();
+//		logger.debug("Post: {}", post);
+//	}
+//	
+//	@Test
+//	public void addPost() throws Exception {
+//		Post post = new Post(2,"spring카페,포스트");
+//		cafeindao.addPost(post);
+//		logger.debug(post.toString());
+//	}
 
 }

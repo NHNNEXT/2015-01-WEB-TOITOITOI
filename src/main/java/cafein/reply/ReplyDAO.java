@@ -9,26 +9,29 @@ import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import cafein.post.Post;
 
-public class ReplyDAO {
+@Repository
+public class ReplyDAO extends JdbcDaoSupport{
 	private static final Logger logger = LoggerFactory.getLogger(ReplyDAO.class);
 
-	public Connection getConnection() {
-		String url = "jdbc:mysql://localhost:3307/cafein";
-		String id = "root";
-		String pw = "db1004";
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection(url, id, pw);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
+//	public Connection getConnection() {
+//		String url = "jdbc:mysql://localhost:3307/cafein";
+//		String id = "root";
+//		String pw = "db1004";
+//		try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//			return DriverManager.getConnection(url, id, pw);
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());
+//			return null;
+//		}
+//	}
 
-	public Reply addReply(String content, int pid) throws SQLException {
+	public Reply addReply(Reply reply) throws SQLException {
 
 		String sql = "INSERT INTO reply (pid,content) VALUES(?,?)";
 		Connection conn = null;
@@ -38,8 +41,8 @@ public class ReplyDAO {
 			conn = getConnection();
 			System.out.println("connection:" + conn);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pid);
-			pstmt.setString(2, content);
+			pstmt.setInt(1, reply.getPid());
+			pstmt.setString(2, reply.getReplyContent());
 			pstmt.executeUpdate();
 		} finally {
 			if (pstmt != null) {
@@ -49,7 +52,7 @@ public class ReplyDAO {
 				conn.close();
 			}
 		}
-		return getReplyJustInserted(pid);
+		return getReplyJustInserted(reply.getPid());
 	}
 
 	public Reply getReplyJustInserted(int pid) throws SQLException {
