@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import cafein.post.Post;
 
-@Repository
 public class ReplyDAO extends JdbcDaoSupport{
 	private static final Logger logger = LoggerFactory.getLogger(ReplyDAO.class);
 

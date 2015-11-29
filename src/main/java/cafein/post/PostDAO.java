@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import cafein.post.PostDAO;
 
-@Repository
 public class PostDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
 
@@ -35,8 +34,10 @@ public class PostDAO extends JdbcDaoSupport {
 
 	public Post addPost(Post post) throws SQLException {
 		String sql = "INSERT INTO post (cid, content) VALUES(?, ?)";
+		String query = "SELECT LAST_INSERT_ID() FROM post";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pre = null;
 
 		try {
 			conn = getConnection();
@@ -46,7 +47,10 @@ public class PostDAO extends JdbcDaoSupport {
 			pstmt.setInt(1, post.getCid());
 			pstmt.setString(2, post.getContents());
 			pstmt.executeUpdate();
-			return getPostJustInserted(post.getCid());
+			
+			pre = conn.prepareStatement(query);
+			ResultSet re = pre.executeQuery();
+			return getPostJustInserted(re.getInt("pid"));
 		} finally {
 			if (pstmt != null) {
 				pstmt.close();
@@ -57,8 +61,8 @@ public class PostDAO extends JdbcDaoSupport {
 		}
 	}
 
-	public Post getPostJustInserted(int cid) throws SQLException {
-		String sql = "SELECT * FROM post WHERE cid=? ORDER BY postingtime DESC limit 1";
+	public Post getPostJustInserted(int pid) throws SQLException {
+		String sql = "SELECT * FROM post WHERE pid=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -67,16 +71,16 @@ public class PostDAO extends JdbcDaoSupport {
 			System.out.println("connection:" + conn);
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cid);
+			pstmt.setInt(1, pid);
 			ResultSet rs = pstmt.executeQuery();
 
 			Post post = null;
 			while (rs.next()) {
-				int pid = rs.getInt("pid");
+				int postId = rs.getInt("pid");
 				String contents = rs.getString("content");
 				String creattime = rs.getString("postingtime");
 				int liked = rs.getInt("liked");
-				post = new Post(pid, contents, creattime, liked);
+				post = new Post(postId, contents, creattime, liked);
 			}
 			return post;
 		} finally {

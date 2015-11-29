@@ -7,8 +7,8 @@
 
 	<context:property-placeholder location="classpath*:applicationProperties.xml" />
 
-	<context:annotation-config />
-	
+	<context:annotation-config/>
+
 	<!--dataSource는 connection pool역할. -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		p:driverClassName="${database.driverClassName}" p:url="${database.url}"
@@ -16,9 +16,9 @@
 
 	<bean id="dbInitializer" class="cafein.dao.DBinitializer"
 		p:dataSource-ref="dataSource"></bean>
-	<bean id="replydao" class="cafein.reply.ReplyDAO"
-		p:dataSource-ref="dataSource" />
-	<bean id="cafedao" class="cafein.cafe.CafeDAO" p:dataSource-ref="dataSource" />
-	<bean id="postdao" class="cafein.post.PostDAO" p:dataSource-ref="dataSource" />
-
+	<bean id="cafedao" class="cafein.cafe.CafeDAO" p:dataSource-ref="dataSource"></bean>
+	<bean id="postdao" class="cafein.post.PostDAO" p:dataSource-ref="dataSource"></bean>
+	<bean id="replydao" class="cafein.reply.ReplyDAO" p:dataSource-ref="dataSource"></bean>
+	<bean id="nudgedao" class="cafein.cafe.NudgeDAO" p:dataSource-ref="dataSource"></bean>
+	
 </beans>

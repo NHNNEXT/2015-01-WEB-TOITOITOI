@@ -1,19 +1,13 @@
 package cafein.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-
-import cafein.post.Post;
 
 //현재 클래스의 DB에 table 생성,test data insert.
 public class DBinitializer extends JdbcDaoSupport{

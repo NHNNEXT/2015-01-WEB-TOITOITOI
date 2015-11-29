@@ -1,7 +1,6 @@
 package cafein.cafe;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-@Repository
 public class CafeDAO extends JdbcDaoSupport{
 
 //	public Connection getConnection() {

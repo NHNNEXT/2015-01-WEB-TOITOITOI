@@ -4,6 +4,7 @@
 <%@ page import="cafein.post.Post"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
@@ -26,8 +27,8 @@
 
 <body>
 	<header class="top-bar">
-		<a class="logo" href="/"></a>
-		<img class="search" src="http://i62.tinypic.com/20b0bog.png"></img>
+		<a class="logo" href="/"></a> <img class="search"
+			src="http://i62.tinypic.com/20b0bog.png"></img>
 	</header>
 	<header class="title-posting">
 		<div class="title">
@@ -35,17 +36,26 @@
 			<div class="cafe-name">Coffea</div>
 		</div>
 		<div class="posting">
-			<form class="posting-form" action="/createpost" method="post">
-				<input class="textbox" name="contents" type="textbox" placeholder="	Q. 이 카페 아메리카노 어때요?">
+			<form:form modelAttribute="newpost" cssClass="posting-form" action="/createpost" method="post">
+				<form:input path="contents" placeholder="Q. 이 카페 아메리카노 어때요?" />
+				<div class="textbox-bg"></div>
+				<form:hidden path="cid" />
+				<button class="send">게시</button>
+			</form:form>
+			
+			<%-- <form class="posting-form" action="/createpost" method="post">
+				<input class="textbox" name="contents" type="textbox"
+					placeholder="	Q. 이 카페 아메리카노 어때요?">
 				<div class="textbox-bg"></div>
 				<input class="cid" type="hidden" name="cid" value="${param.cid}">
 				<button class="send">게시</button>
-			</form>
+			</form> --%>
 		</div>
 	</header>
 	<ul class="posts"></ul>
 	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/scripts.js"></script>
 </body>
 </html>
