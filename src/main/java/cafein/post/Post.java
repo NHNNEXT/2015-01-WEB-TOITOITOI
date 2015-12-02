@@ -15,7 +15,9 @@ public class Post {
 	public Post() {
 		
 	}
-	
+	public Post(int cid){
+		this.cid = cid;
+	}
 	public Post(int cid, String contents) {
 		this.cid = cid;
 		this.contents = contents;

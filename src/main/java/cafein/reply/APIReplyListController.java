@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,10 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class APIReplyListController extends HttpServlet{
-
+	@Autowired
+	private ReplyDAO replydao;
+	
 	@RequestMapping(value ="/api/replylist", method = RequestMethod.GET)
 	public List<Reply> getReplyList(@RequestParam(value = "pid",required = false)int pid){
-			return new ReplyDAO().getReplys(pid);
+			return replydao.getReplys(pid);
 		
 	}
 }

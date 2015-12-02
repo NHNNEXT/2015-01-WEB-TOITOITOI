@@ -1,20 +1,16 @@
 package cafein.post;
 
-import java.sql.Array;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
 
-import cafein.post.PostDAO;
+import com.mysql.jdbc.Statement;
 
 public class PostDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
@@ -34,23 +30,29 @@ public class PostDAO extends JdbcDaoSupport {
 
 	public Post addPost(Post post) throws SQLException {
 		String sql = "INSERT INTO post (cid, content) VALUES(?, ?)";
-		String query = "SELECT LAST_INSERT_ID() FROM post";
+		//String query = "SELECT pid FROM post ORDER BY postingtime desc limit 1";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		PreparedStatement pre = null;
+	//	PreparedStatement pre = null;
 
 		try {
 			conn = getConnection();
 			System.out.println("connection:" + conn);
 			System.out.println(sql);
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, post.getCid());
 			pstmt.setString(2, post.getContents());
 			pstmt.executeUpdate();
+			logger.debug(pstmt.toString());
 			
-			pre = conn.prepareStatement(query);
-			ResultSet re = pre.executeQuery();
-			return getPostJustInserted(re.getInt("pid"));
+			//pre = conn.prepareStatement(query);
+			//pre.setInt(1, post.getCid());
+			ResultSet re = pstmt.getGeneratedKeys();
+			int last_insert_pid = 0;
+			if(re.next()){
+				last_insert_pid = re.getInt(1);
+			}
+			return getPostJustInserted(last_insert_pid);
 		} finally {
 			if (pstmt != null) {
 				pstmt.close();
@@ -69,7 +71,7 @@ public class PostDAO extends JdbcDaoSupport {
 		try {
 			conn = getConnection();
 			System.out.println("connection:" + conn);
-			System.out.println(sql);
+			System.out.println(sql+pid);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pid);
 			ResultSet rs = pstmt.executeQuery();
@@ -101,6 +103,7 @@ public class PostDAO extends JdbcDaoSupport {
 		ArrayList<Post> result = new ArrayList<Post>();
 
 		try {
+			logger.debug("CID:"+cid);
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cid);

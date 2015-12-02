@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.mysql.jdbc.Statement;
+
 import cafein.post.Post;
 
 public class ReplyDAO extends JdbcDaoSupport{
@@ -35,14 +37,22 @@ public class ReplyDAO extends JdbcDaoSupport{
 		String sql = "INSERT INTO reply (pid,content) VALUES(?,?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		
 
 		try {
 			conn = getConnection();
 			System.out.println("connection:" + conn);
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, reply.getPid());
 			pstmt.setString(2, reply.getReplyContent());
 			pstmt.executeUpdate();
+			
+			ResultSet result = pstmt.getGeneratedKeys();
+			int last_insert_id = 0;
+			if(result.next()){
+				last_insert_id = result.getInt(1);
+			}
+			return getReplyJustInserted(last_insert_id);
 		} finally {
 			if (pstmt != null) {
 				pstmt.close();
@@ -51,12 +61,11 @@ public class ReplyDAO extends JdbcDaoSupport{
 				conn.close();
 			}
 		}
-		return getReplyJustInserted(reply.getPid());
 	}
 
-	public Reply getReplyJustInserted(int pid) throws SQLException {
+	public Reply getReplyJustInserted(int reid) throws SQLException {
 		//다른사람이 같은 post
-		String sql = "SELECT * FROM reply WHERE pid=? ORDER BY postingtime DESC limit 1";
+		String sql = "SELECT * FROM reply WHERE reid=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -65,16 +74,16 @@ public class ReplyDAO extends JdbcDaoSupport{
 			System.out.println("connection:" + conn);
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pid);
+			pstmt.setInt(1,reid);
 			ResultSet rs = pstmt.executeQuery();
 			
 			Reply newReply=null;
 			while(rs.next()){
-				int Pid = rs.getInt("pid");
+				int reId = rs.getInt("reid");
 				String contents = rs.getString("content");
 				String creattime = rs.getString("postingtime");
 				int liked = rs.getInt("liked");
-				newReply = new Reply(Pid,contents,creattime,liked); 
+				newReply = new Reply(reId,contents,creattime,liked); 
 			}
 			return newReply;
 		} finally {

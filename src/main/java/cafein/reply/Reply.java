@@ -15,7 +15,7 @@ public class Reply {
 	public void setLiked(int liked) {
 		this.liked = liked;
 	}
-
+	
 	public Reply(int reId, String replyContent, String replyTime, int liked) {
 		super();
 		this.reId = reId;
@@ -23,7 +23,10 @@ public class Reply {
 		this.replyTime = replyTime;
 		this.liked = liked;
 	}
-
+	public Reply (int pid, String content){
+		this.pid = pid;
+		this.replyContent = content;
+	}
 	public Reply(String content) {
 		super();
 		replyContent = content;

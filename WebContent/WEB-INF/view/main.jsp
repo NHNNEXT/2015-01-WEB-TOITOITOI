@@ -36,20 +36,21 @@
 			<div class="cafe-name">Coffea</div>
 		</div>
 		<div class="posting">
-			<form:form modelAttribute="newpost" cssClass="posting-form" action="/createpost" method="post">
+		
+			<%-- <form:form modelAttribute="newpost" cssClass="posting-form" action="/createpost" method="post">
 				<form:input path="contents" placeholder="Q. 이 카페 아메리카노 어때요?" />
 				<div class="textbox-bg"></div>
 				<form:hidden path="cid" />
 				<button class="send">게시</button>
-			</form:form>
+			</form:form> --%>
 			
-			<%-- <form class="posting-form" action="/createpost" method="post">
+			<form class="posting-form" action="/createpost" method="post">
 				<input class="textbox" name="contents" type="textbox"
 					placeholder="	Q. 이 카페 아메리카노 어때요?">
 				<div class="textbox-bg"></div>
 				<input class="cid" type="hidden" name="cid" value="${param.cid}">
 				<button class="send">게시</button>
-			</form> --%>
+			</form>
 		</div>
 	</header>
 	<ul class="posts"></ul>

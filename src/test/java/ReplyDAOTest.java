@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import cafein.post.Post;
 import cafein.reply.Reply;
@@ -13,12 +14,11 @@ import cafein.reply.ReplyDAO;
 
 public class ReplyDAOTest {
 	private Reply TEST_REPLY;
+	@Autowired
 	private ReplyDAO replyDAO;
 
 	@Before
 	public void setup() {
-		TEST_REPLY = new Reply("testing reply");
-		replyDAO = new ReplyDAO();
 	}
 
 	@Test

@@ -2,6 +2,8 @@ package cafein.support;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -12,12 +14,26 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cafein.dao.DBinitializer;
 import cafein.post.Post;
+import cafein.reply.Reply;
+import cafein.reply.ReplyDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)@ContextConfiguration("classpath:/applicationContext.xml")
 public class CafeinDaoTest {
 	private static final Logger logger = LoggerFactory.getLogger(CafeinDaoTest.class);
 	@Autowired
-	private DBinitializer cafeindao;
+	private DBinitializer DBinit;
+	
+	@Autowired
+	private ReplyDAO replydao;
+	
+	@Test
+	public void addReply() throws SQLException {
+		Reply testreply = new Reply(5, "newREE", null, 0);
+		testreply.setPid(2);
+		Reply result = replydao.addReply(testreply);
+		logger.debug(result.toString());
+	}
+	
 	
 //	@Test
 //	public void findByPid() {

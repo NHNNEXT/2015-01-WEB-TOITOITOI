@@ -2,43 +2,37 @@ package cafein.post;
 
 import java.sql.SQLException;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.google.gson.Gson;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cafein.util.Validation;
 
-@RestController("/createpost")
-public class CreatePostController {
+@Controller
 
+public class CreatePostController {
+	private static final Logger logger = LoggerFactory.getLogger(CreatePostController.class);
 	@Autowired
 	private PostDAO postdao;
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public Post createPost(@ModelAttribute("newpost") Post post, Model model) {
-		if (!Validation.isValidParameter(post.getContents())) {
+	@RequestMapping(value ="/createpost", method = RequestMethod.POST)
+	public @ResponseBody Post createPost(@RequestParam(value="cid")int cid, @RequestParam(value="contents",required = false)String contents) {
+		if (!Validation.isValidParameter(contents)) {
 			// error message
-			// return "redirect:/cafe";
+			//return "redirect:/cafe";
 		}
-
 		try {
-			model.addAttribute("newpost", new Post());
-			return postdao.addPost(post);
+			Post post = new Post(cid, contents);
+			  return postdao.addPost(post);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return null; 
 	}
 }
