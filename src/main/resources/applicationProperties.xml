@@ -4,7 +4,7 @@
 	<comment>applicationProperties</comment>
 
 	<entry key="database.driverClassName">org.h2.Driver</entry>
-	<entry key="database.url">jdbc:mysql://localhost:3306/cafein</entry>
+	<entry key="database.url">jdbc:mysql://localhost:3307/cafein</entry>
 	<entry key="database.username">root</entry>
-	<entry key="database.password"></entry>
+	<entry key="database.password">db1004</entry>
 </properties> 
