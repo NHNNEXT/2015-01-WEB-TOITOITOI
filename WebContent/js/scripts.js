@@ -240,12 +240,17 @@ $(document).ready(function() {
 	// form submit event
 	form.on('submit', function(e) {
 		e.preventDefault(); // prevent default form submit
-
+		var jsonForm = {};
+		form.serializeArray().map(function(input){
+			jsonForm[input.name] = input.value;
+		});
+		
 		$.ajax({
-			url : '/createpost', // form action url
-			type : 'POST', // form submit method get/post
+			url : '/createpost',
+			type : 'POST',
 			dataType : 'json',
-			data : form.serialize(), // serialize form data
+			contentType: "application/json",
+			data : JSON.stringify(jsonForm),
 			success : function(data) {
 				console.log(data);
 				console.log(postList);
