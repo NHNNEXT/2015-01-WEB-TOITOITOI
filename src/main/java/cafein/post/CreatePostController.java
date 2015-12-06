@@ -21,18 +21,17 @@ public class CreatePostController {
 	@Autowired
 	private PostDAO postdao;
 
-	@RequestMapping(value ="/createpost", method = RequestMethod.POST)
-	public @ResponseBody Post createPost(@RequestParam(value="cid")int cid, @RequestParam(value="contents",required = false)String contents) {
-		if (!Validation.isValidParameter(contents)) {
+	@RequestMapping(value = "/createpost", method = RequestMethod.POST)
+	public @ResponseBody Post createPost(@RequestBody Post post) {
+		if (!Validation.isValidParameter(post.getContents())) {
 			// error message
-			//return "redirect:/cafe";
+			// return "redirect:/cafe";
 		}
 		try {
-			Post post = new Post(cid, contents);
-			  return postdao.addPost(post);
+			return postdao.addPost(post);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null; 
+		return null;
 	}
 }
