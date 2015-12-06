@@ -122,6 +122,7 @@
 
 
 	</dependencies>
+	
 	<build>
 		<finalName>cafeIn</finalName>
 		<outputDirectory>WebContent/WEB-INF/classes</outputDirectory>
@@ -150,6 +151,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
 				<configuration>
 					<warSourceDirectory>WebContent</warSourceDirectory>
 					<webXml>WebContent/WEB-INF/web.xml</webXml>
