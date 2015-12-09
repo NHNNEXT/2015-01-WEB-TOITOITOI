@@ -1,41 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="cafein.cafe.Cafe"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!doctype html>
-
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="utf-8">
-
-<title>cafe in</title>
-<meta name="description" content="cafe post wall">
-<meta name="author" content="toitoitoi">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<link rel="stylesheet" type="text/css" href="/css/index.css">
-
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-
+	<meta charset="utf-8">
+	<title>Dear Here</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+	<script defer src="${pageContext.request.contextPath}/js/index.js"></script>
 </head>
 <body>
-	<div id="test" style="position:fixed;left:0;top:0;background-color:white;display:none;">hi</div>
-	<img class="logo" src="http://i58.tinypic.com/t8qbko.png">
-	<form class="search" name="search" method="get" action="/searchcafe">
-		<input class="textbox" type="text" name="keyword" placeholder="배포성공했다!" value="${keyword}"/>
-		<input id="search-button" type="submit" value="검색"/>
-		<label for="search-button"></label>
-		<div class="search-bg"></div>
-	</form>
-
-	<ul class="cafe-list">
-	</ul>
-	<div class="cafe-list-bg"></div>
-	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/index.js"></script>
+	<hr>
+	<header>
+		<h1>Dear Here</h1>
+		<p><span class="emphasis">인하대 정문</span>의 무언가에게 편지 한 통 써보세요!</p>
+	</header>
+	<section id="new-letter">
+		<form>
+			<label class="dear-label" for="dear-input">Dear.</label>
+			<input id="dear-input" type="text" name="dear">
+			<textarea></textarea>
+			<button>SEND</button>
+		</form>
+	</section>
+	<section id="letters">
+		<article>
+			<header>샘플</header>
+			<ul>
+				<li>2샘플아 안녕..?ㅂㅈㄷㄹㅂㅈ대렂ㄷㄹㄹ</li>
+				<li>1샘플아 안녕..?ㅂㅈㄷㄹㅂㅈ대렂ㄷㄹㄹ</li>
+				<li>3샘4플아 안녕..?ㅂㅈㄷㄹㅂㅈ대렂ㄷㄹㄹ</li>
+				<li>5샘2플아 안녕..?ㅂㅈㄷㄹㅂㅈ대렂ㄷㄹㄹ</li>
+			</ul>
+		</article>
+	</section>
 </body>
 </html>
  

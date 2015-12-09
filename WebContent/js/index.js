@@ -1,102 +1,98 @@
-if ('geolocation' in navigator) {
-	navigator.geolocation.getCurrentPosition(
-    changePosition.bind(this, 'lowAcc'),
-    handleError.bind(this, 'lowAcc'),
-    {
-      timeout : 20000, // ms
-      maximumAge : 10800000 // 3hr to ms
-    }
-  );
-} else {
-	var error = {
-		'message' : 'browser doesn\'t support geolocation'
-	};
-	handleError.call(this, 'no geo');
+
+var matches = document.body.matchesSelector || document.body.webkitMatchesSelector || document.body.mozMatchesSelector || document.body.msMatchesSelector || document.body.webkitMatchesSelector || document.body.matchesSelector;
+
+data = [
+	{'dear':'손톱깎이', 'preview':['오리아 안녕 123456789', 'ㅈㄹㅈㅂㄷㄹㅂㅈ 안녕 123456789', 'ㅈㄷㄹㅈㅂㄷ 123456789ㅇ']},
+	{'dear':'오리', 'preview':['호호호ewfwef후후후 안녕 123456789', 'ipsum ㅈㄹㅈlorem ipuse 56789', 'lorem ㅈㄷipusum 6789ㅇ']},
+	{'dear':'오리2', 'preview':['호호호ewfwef후후후 안녕 123456789', 'ipsum ㅈㄹㅈlorem ipuse 56789', 'lorem ㅈㄷipusum 6789ㅇ']},
+	{'dear':'인하대후문', 'preview':['lrem imp789', 'ㅈipsrem islern 6789', 'ㅈㄷqwefqwefwqef wefsdaㅇ']},
+	{'dear':'오리3', 'preview':['호호호ewfwef후후후 안녕 123456789', 'ipsum ㅈㄹㅈlorem ipuse 56789', 'lorem ㅈㄷipusum 6789ㅇ']},
+	{'dear':'인하대후문2', 'preview':['lrem imp789', 'ㅈipsrem islern 6789', 'ㅈㄷqwefqwefwqef wefsdaㅇ']},
+	{'dear':'인하대후문2', 'preview':['lrem imp789', 'ㅈipsrem islern 6789', 'ㅈㄷqwefqwefwqef wefsdaㅇ']},
+	{'dear':'인하대후문2', 'preview':['lrem imp789', 'ㅈipsrem islern 6789', 'ㅈㄷqwefqwefwqef wefsdaㅇ']},
+	{'dear':'인하대후문2', 'preview':['lrem imp789', 'ㅈipsrem islern 6789', 'ㅈㄷqwefqwefwqef wefsdaㅇ']},
+	{'dear':'인하대후문2', 'preview':['lrem imp789', 'ㅈipsrem islern 6789', 'ㅈㄷqwefqwefwqef wefsdaㅇ']},
+	{'dear':'오리4', 'preview':['호호호ewfwef후후후 안녕 123456789', 'ipsum ㅈㄹㅈlorem ipuse 56789', 'lorem ㅈㄷipusum 6789ㅇ']},
+	{'dear':'인하대후문3', 'preview':['lrem imp789', 'ㅈipsrem islern 6789', 'ㅈㄷqwefqwefwqef wefsdaㅇ']}
+];
+
+function addHeaders (dataList) {
+	var dataLen = dataList.length;
+	var codes = '';
+	for (var i = 0; i < dataLen; i++) {
+		codes += '<article><header>'+dataList[i]+'</header></article>';
+	}
+	document.querySelector('#letters').insertAdjacentHTML('beforeend', codes);
 }
 
-function changePosition (calledFrom, position) {
-  $('#test').text('success :'+calledFrom+', '+position.coords.latitude);
-  console.log('success', calledFrom, position);
-	showCafelist({
-		'lat' : position.coords.latitude,
-		'long' : position.coords.longitude
-	});
+function hasClass (el, name, reg) {
+	if (!el) { return false; }
+	if (!reg) reg = new RegExp('(\\s|^)'+name+'(\\s|$)');
+	return el.className.match(reg);
+}
+function addClass (el, name) {
+	if (!el) { return; }
+	if (!this.hasClass(el, name)) el.className += " "+name;
+}
+function removeClass (el, name, reg) {
+	if (!el) { return; }
+	if (!reg) reg = new RegExp('(\\s|^)'+name+'(\\s|$)');
+	el.className = el.className.replace(reg, " ").trim();
+}
+function toggleClass (el, name) {
+	if (!el) { return; }
+	var reg = new RegExp('(\\s|^)'+name+'(\\s|$)');
+	(hasClass(el, name, reg) ? removeClass : addClass)(el, name, reg);
 }
 
-function handleError (calledFrom, error) {
-  switch (error.code) {
-    case error.PERMISSION_DENIED:
-			$('#test').text('위치 정보 접근 권한을 허용해주세요. 더 가까운 카페를 보여드립니다.');
-			$('#test').show();
-      break;
-    case error.TIMEOUT:
-    case error.POSITION_UNAVAILABLE:
-	  case error.UNKNOWN_ERROR:
-    default:
-			$('#test').text('error :'+calledFrom+', '+error.message);
-			debugger;
-  }
-	showCafelist({'sort':'postNum'});
-  console.error('error', calledFrom, error.message);
+function addPreview (dataList, header) {
+	var dataLen = dataList.length;
+	var codes = '<ul>';
+	for (var i = 0; i < dataLen; i++) {
+		codes += '<li>'+dataList[i]+'</li>';
+	}
+	codes += '</ul>';
+	header.insertAdjacentHTML('afterend', codes);
 }
 
-function showCafelist(param){
-	console.log('param', param);
-	$.ajax({
-		type: "get",
-		url : "/api/cafelist",
-		data : (param) ? param : '',
-		success : function(result) {
-			console.log(result);
-			var cafelist = compileCafeList(result);
-			$(".cafe-list").empty();
-			console.log(cafelist);
-			$(".cafe-list").append(cafelist);
-		},
-		error : function(xhr, status, error) {
-			console.log(status)
+function findPreview (data, dear) {
+	var dataLen = data.length;
+	for (var i = 0; i < dataLen; i++) {
+		var current = data[i];
+		if (current.dear == dear) return current.preview;
+	}
+}
+
+function cloneElement (el) {
+	return JSON.parse(JSON.stringify(el));
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+	// document.addEventListener("scroll", function (event) {
+	// 	var hr = document.querySelector('hr');
+	// 	var newletter = document.querySelector('#new-letter');
+	// 	var top = parseInt(newletter.offsetTop);
+	// 	newletter.style.top = (top - 16)+'px';
+	// 	addClass(hr, 'fix');
+	// });
+	addHeaders(data.map(function (item, index, array) {
+		return item.dear;
+	}));
+	document.querySelector('#letters').addEventListener('click', function (e) {
+		var header = e.target;
+		if (!header.matches('header')) {
+			return;
 		}
-	})
-}
+		var list = header.parentNode.querySelector('ul');
 
-$('.search').on('submit',function(e){
-	e.preventDefault();
-	var form = $(".search");
-
-	$.ajax({
-		type: "get",
-		url : "/searchcafe",
-		data : form.serialize(),
-		dataType : 'json',
-		success : function(result) {
-			console.log(result);
-			var cafelist = compileCafeList(result);
-			$(".cafe-list").empty();
-			console.log(cafelist);
-			$(".cafe-list").append(cafelist);
-			//rendSearchedCafelist(result);
-		},
-		error : function(xhr, status, error) {
-			console.log(status)
+		if (!list) {
+			var previews = findPreview(data, header.textContent);
+			addPreview(previews, header);
+			addClass(header, 'on');
+		} else {
+			var currentOn = this.querySelector('.on');
+			removeClass(currentOn, 'on');
+			if (header !== currentOn) {addClass(header, 'on');}
 		}
 	});
-
 });
-
-function compileCafeList(cafes){
-	var result = '';
-
-	cafes.forEach(function(cafe){
-		result += '<li>'+
-				'<img src="http://kiboom.github.io/images'+Math.ceil(Math.random()*7)+'.jpeg">'+
-				'<a class = "info" href="/cafe?cid='+cafe.cid+'">'
-					+'<span class="name">'+cafe.name+'</span>'
-					+'<span class="post-num"><b>POST</b><br>'+cafe.postNum+'개</span>'
-					+'<span class="address">'+'성남시 분당구 삼평동'+'</span>';
-		result += ('distance' in cafe) ? '<span class="distance">'+parseFloat(cafe.distance).toFixed(3)+'km'+'</span>' : '';
-		result +=	'</a>'+'</li>';
-	});
-
-	console.log(result);
-	return result;
-}
