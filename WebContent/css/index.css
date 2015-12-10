@@ -16,10 +16,10 @@ hr {
     top: 0;
     z-index: 3;
 }
-body>header, section#new-letter {
+/*body>header, section#new-letter {
     position: fixed;
     z-index: 0;
-}
+}*/
 
 body>header {
     width: 100%;
@@ -62,7 +62,8 @@ section#new-letter {
 }
 section#letters {
     position: relative;
-    top: 19em;
+    /*top: 19em;*/
+    margin-top: 4em;
 }
 
 #new-letter form {
@@ -101,6 +102,7 @@ section#letters {
     background-image: linear-gradient(white, white 16px, black 17px, black 17px);
     background-size: 100% 17px;
     line-height: 17px;
+    height: calc(100vh - 30em);
 }
 #new-letter button {
     background-color: orange;
@@ -112,7 +114,8 @@ section#letters {
     position: absolute;
     left: 0;
     right: 0;
-    top: 9.5em;
+    /* top: 9.5em; */
+    bottom: -4.5em;
 }
 
 #letters article {
