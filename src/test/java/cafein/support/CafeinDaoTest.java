@@ -1,8 +1,7 @@
 package cafein.support;
 
-import static org.junit.Assert.*;
-
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cafein.dao.DBinitializer;
 import cafein.post.Post;
+import cafein.post.PostDAO;
 import cafein.reply.Reply;
 import cafein.reply.ReplyDAO;
 
@@ -21,8 +20,7 @@ import cafein.reply.ReplyDAO;
 public class CafeinDaoTest {
 	private static final Logger logger = LoggerFactory.getLogger(CafeinDaoTest.class);
 	@Autowired
-	private DBinitializer DBinit;
-	
+	private PostDAO postdao;
 	@Autowired
 	private ReplyDAO replydao;
 	
@@ -33,6 +31,13 @@ public class CafeinDaoTest {
 		Reply result = replydao.addReply(testreply);
 		logger.debug(result.toString());
 	}
+	
+	@Test 
+	public void getPost() throws SQLException {
+		ArrayList<Post> renew  = postdao.getPosts(1);
+		System.out.println(renew.toString());
+	}
+	
 	
 	
 //	@Test

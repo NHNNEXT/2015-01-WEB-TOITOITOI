@@ -15,12 +15,12 @@ public class DBinitializer extends JdbcDaoSupport{
 	
 	@PostConstruct
 	public void initialize() {
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource("table.sql"));
-		populator.addScript(new ClassPathResource("service.sql"));
-		populator.addScript(new ClassPathResource("insert.sql"));
-		DatabasePopulatorUtils.execute(populator, getDataSource());
-		logger.info("database initialiized");
+//		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+//		populator.addScript(new ClassPathResource("table.sql"));
+//		populator.addScript(new ClassPathResource("service.sql"));
+//		populator.addScript(new ClassPathResource("insert.sql"));
+//		DatabasePopulatorUtils.execute(populator, getDataSource());
+//		logger.info("database initialiized");
 	}
 	
 //	//우리 서비스에서는 필요하지 않은 method 임.test용.

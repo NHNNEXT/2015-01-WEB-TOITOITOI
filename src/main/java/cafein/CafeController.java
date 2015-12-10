@@ -19,7 +19,6 @@ public class CafeController extends HttpServlet {
 	
 	@RequestMapping("/cafe")
 	protected String getCafeView(Model model, @RequestParam int cid) throws ServletException, IOException {
-
 		// Map<String,Object> model = new HashMap<String,Object>();
 		// model.put("message", message);
 		//
