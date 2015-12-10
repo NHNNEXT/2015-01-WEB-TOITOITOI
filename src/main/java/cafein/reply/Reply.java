@@ -63,4 +63,51 @@ public class Reply {
 		this.pid = pid;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + liked;
+		result = prime * result + pid;
+		result = prime * result + reId;
+		result = prime * result + ((replyContent == null) ? 0 : replyContent.hashCode());
+		result = prime * result + ((replyTime == null) ? 0 : replyTime.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Reply other = (Reply) obj;
+		
+		if (pid != other.pid)
+			return false;
+		if (reId != other.reId)
+			return false;
+		if (replyContent == null) {
+			if (other.replyContent != null)
+				return false;
+		} else if (!replyContent.equals(other.replyContent))
+			return false;
+		if (replyTime == null) {
+			if (other.replyTime != null)
+				return false;
+		} else if (!replyTime.equals(other.replyTime))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Reply [reId=" + reId + ", replyContent=" + replyContent + ", replyTime=" + replyTime + ", liked="
+				+ liked + ", pid=" + pid + "]";
+	}
+	
+	
+
 }
