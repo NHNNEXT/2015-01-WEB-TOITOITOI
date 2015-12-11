@@ -9,20 +9,20 @@ import java.util.ArrayList;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-public class CafeDAO extends JdbcDaoSupport{
+public class placeDAO extends JdbcDaoSupport {
 
-//	public Connection getConnection() {
-//		String url = "jdbc:mysql://localhost:3307/cafein";
-//		String id = "root";
-//		String pw = "db1004";
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//			return DriverManager.getConnection(url, id, pw);
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//			return null;
-//		}
-//	}
+	// public Connection getConnection() {
+	// String url = "jdbc:mysql://localhost:3307/cafein";
+	// String id = "root";
+	// String pw = "db1004";
+	// try {
+	// Class.forName("com.mysql.jdbc.Driver");
+	// return DriverManager.getConnection(url, id, pw);
+	// } catch (Exception e) {
+	// System.out.println(e.getMessage());
+	// return null;
+	// }
+	// }
 
 	private String getCafeListSQL(boolean keywordSearch, boolean sortByPostNum) {
 		String searchQuery = (keywordSearch) ? " WHERE c.name LIKE ? " : "";
@@ -34,64 +34,27 @@ public class CafeDAO extends JdbcDaoSupport{
 		return result;
 	}
 
-	public ArrayList<Cafe> getCafeList() {
+	public ArrayList<Place> getCafeList() {
 		return getCafeList(false);
 	}
 
-	public ArrayList<Cafe> getCafeList(boolean sort) {
+	public ArrayList<Place> getCafeList(boolean sort) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
 		String sql = getCafeListSQL(false, sort);
 		System.out.println("result query : " + sql);
 
-		ArrayList<Cafe> cafeList = new ArrayList<Cafe>();
+		ArrayList<Place> cafeList = new ArrayList<Place>();
 
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				int cid = rs.getInt("cid");
+				int placeid = rs.getInt("id");
 				String name = rs.getString("name");
-				int postNum = rs.getInt("posts");
-				cafeList.add(new Cafe(cid, name, postNum));
-			}
-			pstmt.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return cafeList;
-	}
-	
-	public ArrayList<Cafe> getCafeList(String latitude, String longitude) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		String sql = "SELECT c.cid AS cid, c.name AS name, count(p.pid) AS posts, distance_between(c.latitude, c.longitude, "
-				+ latitude + ", " + longitude
-				+ ") AS distance "
-				+ "FROM cafe c "
-				+ "LEFT JOIN post p ON p.cid = c.cid "
-				+ "WHERE c.latitude IS NOT NULL "
-				+ "GROUP BY c.cid "
-				+ "ORDER BY distance";
-		System.out.println("result query : " + sql);
-
-		ArrayList<Cafe> cafeList = new ArrayList<Cafe>();
-
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				int cid = rs.getInt("cid");
-				String name = rs.getString("name");
-				int postNum = rs.getInt("posts");
-				Double distance = rs.getDouble("distance");
-				
-				cafeList.add(new Cafe(cid, name, postNum, distance));
+				cafeList.add(new Place(placeid,name));
 			}
 			pstmt.close();
 			conn.close();
@@ -101,12 +64,12 @@ public class CafeDAO extends JdbcDaoSupport{
 		return cafeList;
 	}
 
-	public ArrayList<Cafe> searchCafe(String keyword) {
+	public ArrayList<Place> searchCafe(String keyword) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
 		String sql = getCafeListSQL(true, false);
-		ArrayList<Cafe> cafeList = new ArrayList<Cafe>();
+		ArrayList<Place> cafeList = new ArrayList<Place>();
 
 		try {
 			conn = getConnection();
@@ -116,10 +79,9 @@ public class CafeDAO extends JdbcDaoSupport{
 			System.out.println("result query : " + pstmt);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				int cid = rs.getInt("cid");
+				int id = rs.getInt("id");
 				String name = rs.getString("name");
-				int postNum = rs.getInt("posts");
-				cafeList.add(new Cafe(cid, name, postNum));
+				cafeList.add(new Place(id, name));
 			}
 			pstmt.close();
 			conn.close();
@@ -134,7 +96,7 @@ public class CafeDAO extends JdbcDaoSupport{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = "SELECT * FROM cafe WHERE cid=?";
+		String sql = "SELECT * FROM place WHERE id=?";
 		String cafeName = null;
 
 		try {

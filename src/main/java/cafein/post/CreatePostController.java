@@ -23,7 +23,7 @@ public class CreatePostController {
 
 	@RequestMapping(value = "/createpost", method = RequestMethod.POST)
 	public @ResponseBody Post createPost(@RequestBody Post post) {
-		if (!Validation.isValidParameter(post.getContents())) {
+		if (!Validation.isValidParameter(post.getContent())) {
 			// error message
 			// return "redirect:/cafe";
 		}

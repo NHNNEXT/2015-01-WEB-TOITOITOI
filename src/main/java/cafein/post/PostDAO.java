@@ -29,19 +29,19 @@ public class PostDAO extends JdbcDaoSupport {
 	// }
 
 	public Post addPost(Post post) throws SQLException {
-		String sql = "INSERT INTO post (cid, content) VALUES(?, ?)";
+		String sql = "INSERT INTO post (place_id, dear, content) VALUES(?, ?, ?)";
 		//String query = "SELECT pid FROM post ORDER BY postingtime desc limit 1";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-	//	PreparedStatement pre = null;
 
 		try {
 			conn = getConnection();
 			System.out.println("connection:" + conn);
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			pstmt.setInt(1, post.getCid());
-			pstmt.setString(2, post.getContents());
+			pstmt.setInt(1, post.getPlaceId());
+			pstmt.setString(2, post.getDear());
+			pstmt.setString(3, post.getContent());
 			pstmt.executeUpdate();
 			logger.debug(pstmt.toString());
 			
@@ -64,7 +64,7 @@ public class PostDAO extends JdbcDaoSupport {
 	}
 
 	public Post getPostJustInserted(int pid) throws SQLException {
-		String sql = "SELECT * FROM post WHERE pid=?";
+		String sql = "SELECT * FROM post WHERE id=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -78,11 +78,12 @@ public class PostDAO extends JdbcDaoSupport {
 
 			Post post = null;
 			while (rs.next()) {
-				int postId = rs.getInt("pid");
+				int postId = rs.getInt("id");
+				String dear = rs.getString("dear");
 				String contents = rs.getString("content");
-				String creattime = rs.getString("postingtime");
-				int liked = rs.getInt("liked");
-				post = new Post(postId, contents, creattime, liked);
+				String createdtime = rs.getString("createdtime");
+				int likes = rs.getInt("likes");
+				post = new Post(postId, contents, createdtime, likes);
 			}
 			return post;
 		} finally {
@@ -99,7 +100,7 @@ public class PostDAO extends JdbcDaoSupport {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = "SELECT * FROM post WHERE place_id=? ORDER BY createdtime DESC";
+		String sql = "SELECT * FROM post WHERE place_id=? ORDER BY likes DESC";
 		ArrayList<Post> result = new ArrayList<Post>();
 
 		try {
@@ -111,10 +112,11 @@ public class PostDAO extends JdbcDaoSupport {
 
 			while (rs.next()) {
 				int pid = rs.getInt("id");
+				String dear = rs.getString("dear");
 				String contents = rs.getString("content");
-				String creattime = rs.getString("createdtime");
-				int liked = rs.getInt("likes");
-				result.add(new Post(pid, contents, creattime, liked));
+				String createdtime = rs.getString("createdtime");
+				int likes = rs.getInt("likes");
+				result.add(new Post(pid, dear, contents, createdtime, likes));
 			}
 
 			pstmt.close();

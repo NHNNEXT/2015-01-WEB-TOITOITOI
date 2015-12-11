@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchCafeController {
 	private static final long serialVersionUID = 1L;
 	@Autowired
-	private CafeDAO cafedao;
+	private placeDAO cafedao;
 	
 	@RequestMapping("/searchcafe")
-	protected List<Cafe> searchingCafe(@RequestParam(value="keyword",required=false) String keyword)
+	protected List<Place> searchingCafe(@RequestParam(value="keyword",required=false) String keyword)
 			throws ServletException, IOException {
 		return (cafedao.searchCafe(keyword));
 		
