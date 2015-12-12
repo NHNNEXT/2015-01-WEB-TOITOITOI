@@ -40,7 +40,7 @@ public class ReplyDAO extends JdbcDaoSupport {
 
 		try {
 			conn = getConnection();
-			System.out.println("connection:" + conn);
+			logger.debug("connection:" + conn);
 			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, reply.getPostId());
 			pstmt.setString(2, reply.getContent());
@@ -71,8 +71,7 @@ public class ReplyDAO extends JdbcDaoSupport {
 
 		try {
 			conn = getConnection();
-			System.out.println("connection:" + conn);
-			System.out.println(sql);
+			logger.debug("connection:" + conn);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, replyId);
 			ResultSet rs = pstmt.executeQuery();
