@@ -21,36 +21,28 @@ public class CafeinDaoTest {
 	private static final Logger logger = LoggerFactory.getLogger(CafeinDaoTest.class);
 	@Autowired
 	private PostDAO postdao;
+	
 	@Autowired
 	private ReplyDAO replydao;
 	
 	@Test
 	public void addReply() throws SQLException {
-		Reply testreply = new Reply(5, "newREE", null, 0);
-		testreply.setPostId(2);
-		Reply result = replydao.addReply(testreply);
+		Reply result = null;
+		Reply testreply = new Reply(1, "토이토이가 뭡니까?");
+		result = replydao.addReply(testreply);
 		logger.debug(result.toString());
 	}
-	
-//	@Test 
-//	public void getPost() throws SQLException {
-//		ArrayList<Post> renew  = postdao.getPosts(1);
-//		System.out.println(renew.toString());
-//	}
-//	
-	
-	
-//	@Test
-//	public void findByPid() {
-//		Post post = cafeindao.findByPid();
-//		logger.debug("Post: {}", post);
-//	}
-//	
-//	@Test
-//	public void addPost() throws Exception {
-//		Post post = new Post(2,"spring카페,포스트");
-//		cafeindao.addPost(post);
-//		logger.debug(post.toString());
-//	}
 
+	@Test
+	public void getPostById() throws SQLException {
+		int postId = 2;
+		Post test = postdao.getPostByPostId(postId);
+		logger.debug(test.toString());
+	}
+	
+	@Test
+	public void getReplys() {
+		int postId = 2;
+		logger.debug(replydao.getReplys(postId).toString());
+	}
 }

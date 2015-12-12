@@ -52,7 +52,7 @@ public class PostDAO extends JdbcDaoSupport {
 			if(re.next()){
 				last_insert_pid = re.getInt(1);
 			}
-			return getPostJustInserted(last_insert_pid);
+			return getPostByPostId(last_insert_pid);
 		} finally {
 			if (pstmt != null) {
 				pstmt.close();
@@ -63,7 +63,7 @@ public class PostDAO extends JdbcDaoSupport {
 		}
 	}
 
-	public Post getPostJustInserted(int pid) throws SQLException {
+	public Post getPostByPostId(int postId) throws SQLException {
 		String sql = "SELECT * FROM post WHERE id=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -71,14 +71,14 @@ public class PostDAO extends JdbcDaoSupport {
 		try {
 			conn = getConnection();
 			System.out.println("connection:" + conn);
-			System.out.println(sql+pid);
+			System.out.println(sql+postId);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pid);
+			pstmt.setInt(1, postId);
 			ResultSet rs = pstmt.executeQuery();
 
 			Post post = null;
 			while (rs.next()) {
-				int postId = rs.getInt("id");
+				int id = rs.getInt("id");
 				String dear = rs.getString("dear");
 				String contents = rs.getString("content");
 				String createdtime = rs.getString("createdtime");
