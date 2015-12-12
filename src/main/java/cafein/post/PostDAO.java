@@ -96,7 +96,38 @@ public class PostDAO extends JdbcDaoSupport {
 		}
 	}
 
-	public ArrayList<Post> getPosts(int placeid, String dearName, int nPage) {
+	public ArrayList<String> getDears(Integer placeId, Integer nPage) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = "SELECT dear FROM post WHERE place_id=? ORDER BY createdtime DESC LIMIT ?, ?";
+		ArrayList<String> result = new ArrayList<String>();
+		int startRow = (nPage-1)*10;
+		int endRow = (nPage)*10;
+		
+		try {
+			logger.debug("placeId : " + placeId);
+			logger.debug("nPage : " + nPage);
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, placeId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()){
+				result.add(rs.getString("dear"));
+			}
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			logger.error("Can not get dear list from DB");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}	
+	
+	public ArrayList<Post> getPreviews(int placeid, String dearName, int nPage) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		

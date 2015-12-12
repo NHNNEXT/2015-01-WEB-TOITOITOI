@@ -18,6 +18,6 @@ public class APIPostListController {
 	@RequestMapping(value = "/api/place/{placeId}/dear/{dearName}/post", method = RequestMethod.GET)
 	public List<Post> getPostList(@PathVariable("placeId")Integer placeId, @PathVariable("dearName")String dear,
 			@RequestParam("page")Integer nPage) {
-		return (postdao.getPosts (placeId,dear,nPage));
+		return (postdao.getPreviews(placeId,dear,nPage));
 	}
 }
