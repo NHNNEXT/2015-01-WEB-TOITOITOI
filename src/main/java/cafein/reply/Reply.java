@@ -1,77 +1,87 @@
 package cafein.reply;
 
 public class Reply {
-	private int reId;
-	private String replyContent;
-	private String replyTime; 
-	private int liked;
-	private int pid;
 	
+	private int replyId;
+	private String content;
+	private String createdtime;
+	private int likes;
+	private int postId;
 	
-	public int getLiked() {
-		return liked;
-	}
-
-	public void setLiked(int liked) {
-		this.liked = liked;
-	}
-	
-	public Reply(int reId, String replyContent, String replyTime, int liked) {
-		super();
-		this.reId = reId;
-		this.replyContent = replyContent;
-		this.replyTime = replyTime;
-		this.liked = liked;
-	}
-	public Reply (int pid, String content){
-		this.pid = pid;
-		this.replyContent = content;
-	}
-	public Reply(String content) {
-		super();
-		replyContent = content;
+	public Reply () {
+		
 	}
 	
 	public Reply(int replyId) {
-		reId = replyId;
+		this.replyId = replyId;
 	}
 	
-	public int getReId() {
-		return reId;
+	public Reply(String content) {
+		this.content = content;
 	}
-	public void setReId(int reId) {
-		this.reId = reId;
+	
+	public Reply(int postId, String content) {
+		this.postId = postId;
+		this.content = content;
 	}
-	public String getReplyContent() {
-		return replyContent;
-	}
-	public void setReplyContent(String replyContent) {
-		this.replyContent = replyContent;
-	}
-	public String getReplyTime() {
-		return replyTime;
-	}
-	public void setReplyTime(String replyTime) {
-		this.replyTime = replyTime;
+	
+	public Reply(int replyId, String replyContent, String createdime, int likes) {
+
+		this.replyId = replyId;
+		this.content = replyContent;
+		this.createdtime = createdime;
+		this.likes = likes;
 	}
 
-	public int getPid() {
-		return pid;
+	public int getReplyId() {
+		return replyId;
 	}
 
-	public void setPid(int pid) {
-		this.pid = pid;
+	public void setReplyId(int replyId) {
+		this.replyId = replyId;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getCreatedtime() {
+		return createdtime;
+	}
+
+	public void setCreatedtime(String createdtime) {
+		this.createdtime = createdtime;
+	}
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
+	public int getPostId() {
+		return postId;
+	}
+
+	public void setPostId(int postId) {
+		this.postId = postId;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + liked;
-		result = prime * result + pid;
-		result = prime * result + reId;
-		result = prime * result + ((replyContent == null) ? 0 : replyContent.hashCode());
-		result = prime * result + ((replyTime == null) ? 0 : replyTime.hashCode());
+		result = prime * result + ((content == null) ? 0 : content.hashCode());
+		result = prime * result + ((createdtime == null) ? 0 : createdtime.hashCode());
+		result = prime * result + likes;
+		result = prime * result + postId;
+		result = prime * result + replyId;
 		return result;
 	}
 
@@ -84,30 +94,30 @@ public class Reply {
 		if (getClass() != obj.getClass())
 			return false;
 		Reply other = (Reply) obj;
-		
-		if (pid != other.pid)
-			return false;
-		if (reId != other.reId)
-			return false;
-		if (replyContent == null) {
-			if (other.replyContent != null)
+		if (content == null) {
+			if (other.content != null)
 				return false;
-		} else if (!replyContent.equals(other.replyContent))
+		} else if (!content.equals(other.content))
 			return false;
-		if (replyTime == null) {
-			if (other.replyTime != null)
+		if (createdtime == null) {
+			if (other.createdtime != null)
 				return false;
-		} else if (!replyTime.equals(other.replyTime))
+		} else if (!createdtime.equals(other.createdtime))
+			return false;
+		if (likes != other.likes)
+			return false;
+		if (postId != other.postId)
+			return false;
+		if (replyId != other.replyId)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Reply [reId=" + reId + ", replyContent=" + replyContent + ", replyTime=" + replyTime + ", liked="
-				+ liked + ", pid=" + pid + "]";
+		return "Reply [replyId=" + replyId +"content=" + content + ", createdtime=" + createdtime
+				+ ", likes=" + likes + ", postId=" + postId + "]";
 	}
-	
-	
 
+	
 }

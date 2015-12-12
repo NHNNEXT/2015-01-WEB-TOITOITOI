@@ -16,40 +16,39 @@ import com.mysql.jdbc.Statement;
 
 import cafein.post.Post;
 
-public class ReplyDAO extends JdbcDaoSupport{
+public class ReplyDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(ReplyDAO.class);
 
-//	public Connection getConnection() {
-//		String url = "jdbc:mysql://localhost:3307/cafein";
-//		String id = "root";
-//		String pw = "db1004";
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//			return DriverManager.getConnection(url, id, pw);
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//			return null;
-//		}
-//	}
+	// public Connection getConnection() {
+	// String url = "jdbc:mysql://localhost:3307/cafein";
+	// String id = "root";
+	// String pw = "db1004";
+	// try {
+	// Class.forName("com.mysql.jdbc.Driver");
+	// return DriverManager.getConnection(url, id, pw);
+	// } catch (Exception e) {
+	// System.out.println(e.getMessage());
+	// return null;
+	// }
+	// }
 
 	public Reply addReply(Reply reply) throws SQLException {
 
-		String sql = "INSERT INTO reply (pid,content) VALUES(?,?)";
+		String sql = "INSERT INTO reply (post_id,content) VALUES(?,?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
 
 		try {
 			conn = getConnection();
 			System.out.println("connection:" + conn);
 			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstmt.setInt(1, reply.getPid());
-			pstmt.setString(2, reply.getReplyContent());
+			pstmt.setInt(1, reply.getPostId());
+			pstmt.setString(2, reply.getContent());
 			pstmt.executeUpdate();
-			
+
 			ResultSet result = pstmt.getGeneratedKeys();
 			int last_insert_id = 0;
-			if(result.next()){
+			if (result.next()) {
 				last_insert_id = result.getInt(1);
 			}
 			return getReplyJustInserted(last_insert_id);
@@ -63,29 +62,29 @@ public class ReplyDAO extends JdbcDaoSupport{
 		}
 	}
 
-	public Reply getReplyJustInserted(int reid) throws SQLException {
-		//다른사람이 같은 post
-		String sql = "SELECT * FROM reply WHERE reid=?";
+	public Reply getReplyJustInserted(int replyId) throws SQLException {
+		// 다른사람이 같은 post
+		String sql = "SELECT * FROM reply WHERE id=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		Reply reply = null;
 
 		try {
 			conn = getConnection();
 			System.out.println("connection:" + conn);
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1,reid);
+			pstmt.setInt(1, replyId);
 			ResultSet rs = pstmt.executeQuery();
-			
-			Reply newReply=null;
-			while(rs.next()){
-				int reId = rs.getInt("reid");
-				String contents = rs.getString("content");
-				String creattime = rs.getString("postingtime");
-				int liked = rs.getInt("liked");
-				newReply = new Reply(reId,contents,creattime,liked); 
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String content = rs.getString("content");
+				String createdtime = rs.getString("createdtime");
+				int likes = rs.getInt("likes");
+				reply = new Reply(id, content, createdtime, likes);
 			}
-			return newReply;
+			return reply;
 		} finally {
 			if (pstmt != null) {
 				pstmt.close();
@@ -95,12 +94,12 @@ public class ReplyDAO extends JdbcDaoSupport{
 			}
 		}
 	}
-	
+
 	public ArrayList<Reply> getReplys(int pid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = "SELECT * FROM reply WHERE pid=? ORDER BY postingtime DESC";
+		String sql = "SELECT * FROM reply WHERE post_id=? ORDER BY createdtime DESC";
 		ArrayList<Reply> result = new ArrayList<Reply>();
 
 		try {
@@ -111,11 +110,11 @@ public class ReplyDAO extends JdbcDaoSupport{
 
 			while (rs.next()) {
 
-				int reid = rs.getInt("reid");
+				int id = rs.getInt("id");
 				String content = rs.getString("content");
-				String postingtime = rs.getString("postingtime");
-				int liked = rs.getInt("liked");
-				result.add(new Reply(reid, content, postingtime, liked));
+				String createdtime = rs.getString("createdtime");
+				int likes = rs.getInt("likes");
+				result.add(new Reply(id, content, createdtime, likes));
 			}
 
 			pstmt.close();

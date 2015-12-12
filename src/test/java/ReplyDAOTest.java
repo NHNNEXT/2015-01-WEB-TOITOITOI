@@ -30,8 +30,8 @@ public class ReplyDAOTest {
 	@Test
 	public void testlikeOnReply() throws SQLException {
 		Reply testingRe = TEST_REPLY;
-		testingRe.setReId(1);
+		testingRe.setReplyId(1);
 		assertNotNull(testingRe);
-		replyDAO.plusLike(testingRe.getReId());
+		replyDAO.plusLike(testingRe.getReplyId());
 	}
  }

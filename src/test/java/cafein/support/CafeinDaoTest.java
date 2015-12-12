@@ -27,7 +27,7 @@ public class CafeinDaoTest {
 	@Test
 	public void addReply() throws SQLException {
 		Reply testreply = new Reply(5, "newREE", null, 0);
-		testreply.setPid(2);
+		testreply.setPostId(2);
 		Reply result = replydao.addReply(testreply);
 		logger.debug(result.toString());
 	}

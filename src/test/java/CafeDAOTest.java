@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import cafein.cafe.Cafe;
-import cafein.cafe.CafeDAO;
+import cafein.cafe.Place;
 import cafein.cafe.Nudge;
 import cafein.cafe.NudgeDAO;
+import cafein.cafe.placeDAO;
 
 public class CafeDAOTest {
-	private CafeDAO cafeDAO;
+	private placeDAO cafeDAO;
 	private NudgeDAO nudgeDAOTest;
 	
 	@Before
 	public void setup() {
-		cafeDAO = new CafeDAO();
+		cafeDAO = new placeDAO();
 	}
 	
 	@Before
@@ -27,14 +27,14 @@ public class CafeDAOTest {
 
 	@Test
 	public void getCafeTest() {
-		ArrayList<Cafe> cafeList = cafeDAO.getCafeList();
+		ArrayList<Place> cafeList = cafeDAO.getCafeList();
 		System.out.println(cafeList.get(0));
 		assertNotNull(cafeList.get(0));
 	}
 	
 	@Test
 	public void getCafeListOrderByPostsTest() {
-		ArrayList<Cafe> cafeList = cafeDAO.getCafeList(true);
+		ArrayList<Place> cafeList = cafeDAO.getCafeList(true);
 		System.out.println(cafeList.get(0));
 		System.out.println(cafeList.get(1));
 		assertNotNull(cafeList.get(0));

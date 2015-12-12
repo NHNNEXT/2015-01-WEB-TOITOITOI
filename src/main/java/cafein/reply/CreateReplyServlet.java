@@ -37,7 +37,7 @@ public class CreateReplyServlet {
 		}
 		try {
 			Reply reply = new Reply(pid, contents);
-			logger.debug("Reply:pid,content:"+reply.getPid()+reply.getReplyContent());
+			logger.debug("Reply:pid,content:"+reply.getPostId()+reply.getContent());
 			return (replydao.addReply(reply));
 		} catch (SQLException e) {
 			e.printStackTrace();
