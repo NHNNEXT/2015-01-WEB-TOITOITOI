@@ -8,15 +8,15 @@ import org.junit.Test;
 import cafein.cafe.Place;
 import cafein.cafe.Nudge;
 import cafein.cafe.NudgeDAO;
-import cafein.cafe.placeDAO;
+import cafein.cafe.PlaceDAO;
 
 public class CafeDAOTest {
-	private placeDAO cafeDAO;
+	private PlaceDAO cafeDAO;
 	private NudgeDAO nudgeDAOTest;
 	
 	@Before
 	public void setup() {
-		cafeDAO = new placeDAO();
+		cafeDAO = new PlaceDAO();
 	}
 	
 	@Before

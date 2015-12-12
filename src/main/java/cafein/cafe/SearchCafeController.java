@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchCafeController {
 	private static final long serialVersionUID = 1L;
 	@Autowired
-	private placeDAO cafedao;
+	private PlaceDAO cafedao;
 	
 	@RequestMapping("/searchcafe")
 	protected List<Place> searchingCafe(@RequestParam(value="keyword",required=false) String keyword)

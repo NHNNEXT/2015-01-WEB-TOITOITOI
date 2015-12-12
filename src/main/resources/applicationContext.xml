@@ -16,7 +16,7 @@
 
 	<bean id="dbInitializer" class="cafein.dao.DBinitializer"
 		p:dataSource-ref="dataSource"></bean>
-	<bean id="cafedao" class="cafein.cafe.CafeDAO" p:dataSource-ref="dataSource"></bean>
+	<bean id="cafedao" class="cafein.cafe.PlaceDAO" p:dataSource-ref="dataSource"></bean>
 	<bean id="postdao" class="cafein.post.PostDAO" p:dataSource-ref="dataSource"></bean>
 	<bean id="replydao" class="cafein.reply.ReplyDAO" p:dataSource-ref="dataSource"></bean>
 	<bean id="nudgedao" class="cafein.cafe.NudgeDAO" p:dataSource-ref="dataSource"></bean>

@@ -96,27 +96,30 @@ public class PostDAO extends JdbcDaoSupport {
 		}
 	}
 
-	public ArrayList<Post> getPosts(int placeid) {
+	public ArrayList<Post> getPosts(int placeid, String dearName, int nPage) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-
-		String sql = "SELECT * FROM post WHERE place_id=? ORDER BY likes DESC";
+		
+		String sql = "SELECT id, dear, LEFT(content, 50), createdtime, likes FROM post WHERE place_id=? AND dear=? ORDER BY createdtime DESC LIMIT ?, 20";
 		ArrayList<Post> result = new ArrayList<Post>();
-
+		int startingRow = (nPage-1)*20;
+		
 		try {
 			logger.debug("placeId:"+placeid);
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, placeid);
+			pstmt.setString(2, dearName);
+			pstmt.setInt(3, startingRow);
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				int pid = rs.getInt("id");
+				int postid = rs.getInt("id");
 				String dear = rs.getString("dear");
-				String contents = rs.getString("content");
+				String contents = rs.getString("LEFT(content, 50)");
 				String createdtime = rs.getString("createdtime");
 				int likes = rs.getInt("likes");
-				result.add(new Post(pid, dear, contents, createdtime, likes));
+				result.add(new Post(postid, dear, contents, createdtime, likes));
 			}
 
 			pstmt.close();

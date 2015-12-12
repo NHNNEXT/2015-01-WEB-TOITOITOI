@@ -3,7 +3,9 @@ package cafein.post;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,9 +15,9 @@ public class APIPostListController {
 	@Autowired
 	private PostDAO postdao;
 	
-	@RequestMapping("/api/postlist")
-	public List<Post> getPostList(@RequestParam(value="cid",required=false)int cid) {
-		return (postdao.getPosts(cid));
-		
+	@RequestMapping(value = "/api/place/{placeId}/dear/{dearName}/post", method = RequestMethod.GET)
+	public List<Post> getPostList(@PathVariable("placeId")Integer placeId, @PathVariable("dearName")String dear,
+			@RequestParam("page")Integer nPage) {
+		return (postdao.getPosts (placeId,dear,nPage));
 	}
 }

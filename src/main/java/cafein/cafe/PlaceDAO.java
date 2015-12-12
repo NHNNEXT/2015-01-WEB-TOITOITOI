@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-public class placeDAO extends JdbcDaoSupport {
+public class PlaceDAO extends JdbcDaoSupport {
 
 	// public Connection getConnection() {
 	// String url = "jdbc:mysql://localhost:3307/cafein";

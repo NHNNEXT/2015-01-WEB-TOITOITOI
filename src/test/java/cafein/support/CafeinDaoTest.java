@@ -32,12 +32,12 @@ public class CafeinDaoTest {
 		logger.debug(result.toString());
 	}
 	
-	@Test 
-	public void getPost() throws SQLException {
-		ArrayList<Post> renew  = postdao.getPosts(1);
-		System.out.println(renew.toString());
-	}
-	
+//	@Test 
+//	public void getPost() throws SQLException {
+//		ArrayList<Post> renew  = postdao.getPosts(1);
+//		System.out.println(renew.toString());
+//	}
+//	
 	
 	
 //	@Test

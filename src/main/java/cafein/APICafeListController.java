@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cafein.cafe.Place;
-import cafein.cafe.placeDAO;
+import cafein.cafe.PlaceDAO;
 import cafein.util.Validation;
 
 @RestController
 public class APICafeListController {
 	
 	@Autowired
-	private placeDAO cafedao;
+	private PlaceDAO cafedao;
 
 	/*@RequestMapping("/api/cafelist")
 	public List<Place> getCafeList(@RequestParam(value = "lat", required = false) String latitude,
