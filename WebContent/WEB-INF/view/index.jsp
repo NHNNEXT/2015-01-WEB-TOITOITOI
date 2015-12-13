@@ -9,24 +9,30 @@
 	<meta charset="utf-8">
 	<title>Dear Here</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
-	<script defer src="${pageContext.request.contextPath}/js/index.js"></script>
+	<link type="text/css" rel="stylesheet" href="/css/index.css">
+	<script defer src="/js/index.js"></script>
 </head>
 <body>
 	<hr>
 	<header>
 		<h1>Dear Here</h1>
-		<p><span class="emphasis">인하대 정문</span>의 무언가에게 편지 한 통 써보세요!</p>
+		<p><span class="emphasis">${place.name}</span>의 무언가에게 편지 한 통 써보세요!</p>
 	</header>
 	<section id="new-letter">
 		<form>
+			<input type="hidden" name="placeId" value="{$place.id}">
 			<label class="dear-label" for="dear-input">Dear.</label>
 			<input id="dear-input" type="text" name="dear">
-			<textarea></textarea>
+			<textarea name="content"></textarea>
 			<button>SEND</button>
 		</form>
 	</section>
 	<section id="letters">
+		<div>
+			<article class="dummy"></article>
+			<article class="dummy"></article>
+			<article class="dummy"></article>
+		</div>
 		<article>
 			<header>샘플</header>
 			<ul>

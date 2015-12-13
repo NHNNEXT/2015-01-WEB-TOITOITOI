@@ -124,8 +124,22 @@ section#letters {
     border-radius: 1em 1em 0 0;
     z-index: 2;
 }
-#letters article:last-child {
+#letters article.dummy {
+    padding-bottom: 0.5em;
+    margin-right: 3em;
+    margin-left: 3em;
+}
+#letters article.dummy:last-child {
+    margin-right: 1em;
+    margin-left: 1em;
+}
+#letters article.dummy:nth-last-child(2) {
+    margin-right: 2em;
+    margin-left: 2em;
+}
+#letters > article:last-child {
     border-radius: 1em;
+    padding-bottom: 1em;
 }
 
 #letters article:nth-child(odd) {
