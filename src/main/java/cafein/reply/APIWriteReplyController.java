@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cafein.post.APIPostController;
+import cafein.util.IllegalAPIPathException;
+import cafein.util.IllegalArgumentLengthException;
 import cafein.util.Validation;
 
 @RestController
@@ -27,14 +29,16 @@ public class APIWriteReplyController {
 	protected @ResponseBody Reply createReply(@PathVariable(value="postId")int postId, 
 			@RequestParam(value="content",required = false)String content) throws IOException {
 		
-		if (!Validation.isValidParameter(content)) {
-			//error상황일 때 어떻게 보여줄지. 클라이언트에 json으로 error메시지를 넘긴다.
-			//json으로 에러상황을 알릴때 어떻게 처리?
-			throw new IllegalArgumentException();
-			// @ControllerAdivce
-			// return "redirect:/cafe";   
-			 // Reply를 JSON으로 반환하는 서블릿에서 리다이렉르트 하려면 어떻게 해야하나?
+		if(!Validation.isValidParameter(postId) || Validation.isValidParameterType(postId)){
+			throw new IllegalAPIPathException();
 		}
+		if (!Validation.isValidParameter(content)) {
+			throw new IllegalArgumentException();
+		}
+		if(!Validation.isValidMaxLenReply(content)){
+			throw new IllegalArgumentLengthException();
+		}
+
 		try {
 			Reply reply = new Reply(postId, content);
 			logger.debug("Reply:pid,content:"+reply.getPostId()+reply.getContent());

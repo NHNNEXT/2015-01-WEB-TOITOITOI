@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cafein.cafe.Place;
 import cafein.cafe.PlaceDAO;
+import cafein.util.IllegalAPIPathException;
+import cafein.util.IllegalArgumentLengthException;
 import cafein.util.Validation;
 
 
@@ -23,6 +25,9 @@ public class PlaceController {
 	
 	@RequestMapping(value="/place/{placeId}", method=RequestMethod.GET)
 	public ModelAndView viewPlace(@PathVariable Integer placeId) {
+		if(!Validation.isValidParameter(placeId) || Validation.isValidParameterType(placeId)){
+			throw new IllegalAPIPathException();
+		}
 		Place place = placeDao.getPlaceById(placeId);
 		return new ModelAndView("index").addObject("place", place);
 	}
