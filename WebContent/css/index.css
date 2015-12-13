@@ -16,10 +16,6 @@ hr {
     top: 0;
     z-index: 3;
 }
-/*body>header, section#new-letter {
-    position: fixed;
-    z-index: 0;
-}*/
 
 body>header {
     width: 100%;
@@ -33,6 +29,7 @@ body>header h1 {
     background-repeat: no-repeat;
     background-image: url('img/logo.gif');
     background-size: auto 100%;
+    background-size: contain;
     background-position: center;
     color: transparent;
     margin: 0 0 0.67em 0;
@@ -63,7 +60,7 @@ section#new-letter {
 section#letters {
     position: relative;
     /*top: 19em;*/
-    margin-top: 4em;
+    margin-top: 2em;
 }
 
 #new-letter form {
@@ -92,6 +89,7 @@ section#letters {
     padding: 0 0 0 4em;
     border: none;
     border-bottom: 0.2em solid rgba(0,0,0,0.2);
+    border-radius: 0;/* for safari */
 }
 #new-letter textarea {
     border: none;
@@ -99,10 +97,10 @@ section#letters {
     resize: none;
     width: 100%;
     height: 5em;
-    background-image: linear-gradient(white, white 1em, black 1.1em, black 1.1em);
-    background-size: 100% 1.1em;
+    background-image: linear-gradient(white, white 16px, black 17px, black 17px);
+    background-size: 100% 17px;
     line-height: 17px;
-    height: calc(100vh - 30em);
+    height: calc(100vh - 27em);
 }
 #new-letter button {
     background-color: orange;
@@ -111,15 +109,16 @@ section#letters {
     border-radius: 1em;
     margin: 0 auto;
     line-height: 1.6em;
+    /*
     position: absolute;
     left: 0;
     right: 0;
-    /* top: 9.5em; */
     bottom: -4.5em;
+    */
 }
 
 #letters article {
-    margin: -1em 0; /* why this makes his parent also go up? */
+    margin: -1em 0;/* why this makes his parent also go up? */
     padding: 1em 1em 2em 1em;
     border-radius: 1em 1em 0 0;
     z-index: 2;
@@ -155,9 +154,9 @@ section#letters {
 #letters header::before {
     content: "Dear. ";
 }
-#letters header.on ul {
+#letters header.on ~ ul {
     display: block;
 }
-#letters header ul {
+#letters header ~ ul {
     display: none;
 }
