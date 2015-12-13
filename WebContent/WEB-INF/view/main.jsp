@@ -18,8 +18,8 @@
 	<div class="the-letter">
 		<div>
 			<label class="dear-label" for="dear-input">Dear.</label>
-			<input id="dear-input" readonly>
-			<textarea name="content" readonly>넌,&#10;필요할 때 내 곁에&#10;없어.</textarea>
+			<input id="dear-input" readonly value="${post.dear}">
+			<textarea name="content" readonly>${post.content}</textarea>
 		</div>
 	</section>
 </body>
