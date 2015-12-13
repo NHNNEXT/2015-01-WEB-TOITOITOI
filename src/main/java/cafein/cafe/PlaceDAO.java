@@ -24,28 +24,54 @@ public class PlaceDAO extends JdbcDaoSupport {
 	// }
 	// }
 
-	private String getCafeListSQL(boolean keywordSearch, boolean sortByPostNum) {
+	private String getPlaceListSQL(boolean keywordSearch, boolean sortByPostNum) {
 		String searchQuery = (keywordSearch) ? " WHERE c.name LIKE ? " : "";
 		String orderQuery = (sortByPostNum) ? " ORDER BY posts DESC " : "";
 
 		String result = "SELECT c.cid AS cid, c.name AS name, count(p.pid) AS posts "
-				+ " FROM cafe c LEFT JOIN post p ON p.cid = c.cid " + searchQuery + " GROUP BY c.cid " + orderQuery;
+				+ " FROM place p LEFT JOIN post p ON p.cid = c.cid " + searchQuery + " GROUP BY c.cid " + orderQuery;
 
 		return result;
 	}
 
-	public ArrayList<Place> getCafeList() {
-		return getCafeList(false);
+	public Place getPlaceById (int placeId) {
+		String sql = "SELECT * FROM place WHERE id=?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		Place place = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, placeId);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()){
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				place = new Place(id, name);
+			}
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e){
+			logger.error("Can not get place date from DB");
+			e.printStackTrace();
+		}
+		return place;
+	}
+	
+	public ArrayList<Place> getPlaceList() {
+		return getPlaceList(false);
 	}
 
-	public ArrayList<Place> getCafeList(boolean sort) {
+	public ArrayList<Place> getPlaceList(boolean sort) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = getCafeListSQL(false, sort);
+		String sql = getPlaceListSQL(false, sort);
 		System.out.println("result query : " + sql);
 
-		ArrayList<Place> cafeList = new ArrayList<Place>();
+		ArrayList<Place> placeList = new ArrayList<Place>();
 
 		try {
 			conn = getConnection();
@@ -54,22 +80,22 @@ public class PlaceDAO extends JdbcDaoSupport {
 			while (rs.next()) {
 				int placeid = rs.getInt("id");
 				String name = rs.getString("name");
-				cafeList.add(new Place(placeid,name));
+				placeList.add(new Place(placeid,name));
 			}
 			pstmt.close();
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return cafeList;
+		return placeList;
 	}
 
-	public ArrayList<Place> searchCafe(String keyword) {
+	public ArrayList<Place> searchPlace(String keyword) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = getCafeListSQL(true, false);
-		ArrayList<Place> cafeList = new ArrayList<Place>();
+		String sql = getPlaceListSQL(true, false);
+		ArrayList<Place> placeList = new ArrayList<Place>();
 
 		try {
 			conn = getConnection();
@@ -81,7 +107,7 @@ public class PlaceDAO extends JdbcDaoSupport {
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
-				cafeList.add(new Place(id, name));
+				placeList.add(new Place(id, name));
 			}
 			pstmt.close();
 			conn.close();
@@ -89,7 +115,7 @@ public class PlaceDAO extends JdbcDaoSupport {
 			//
 			e.printStackTrace();
 		}
-		return cafeList;
+		return placeList;
 	}
 
 	public String getName(int cid) {
@@ -97,7 +123,7 @@ public class PlaceDAO extends JdbcDaoSupport {
 		PreparedStatement pstmt = null;
 
 		String sql = "SELECT * FROM place WHERE id=?";
-		String cafeName = null;
+		String placeName = null;
 
 		try {
 			conn = getConnection();
@@ -106,13 +132,13 @@ public class PlaceDAO extends JdbcDaoSupport {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				cafeName = rs.getString("name");
+				placeName = rs.getString("name");
 			}
 			pstmt.close();
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return cafeName;
+		return placeName;
 	}
 }

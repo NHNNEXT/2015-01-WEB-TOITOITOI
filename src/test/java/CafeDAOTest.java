@@ -27,14 +27,14 @@ public class CafeDAOTest {
 
 	@Test
 	public void getCafeTest() {
-		ArrayList<Place> cafeList = cafeDAO.getCafeList();
+		ArrayList<Place> cafeList = cafeDAO.getPlaceList();
 		System.out.println(cafeList.get(0));
 		assertNotNull(cafeList.get(0));
 	}
 	
 	@Test
 	public void getCafeListOrderByPostsTest() {
-		ArrayList<Place> cafeList = cafeDAO.getCafeList(true);
+		ArrayList<Place> cafeList = cafeDAO.getPlaceList(true);
 		System.out.println(cafeList.get(0));
 		System.out.println(cafeList.get(1));
 		assertNotNull(cafeList.get(0));
@@ -42,7 +42,7 @@ public class CafeDAOTest {
 
 	@Test
 	public void searchCafeTest() {
-		System.out.println(cafeDAO.searchCafe("test"));
+		System.out.println(cafeDAO.searchPlace("test"));
  	}
 	
 	@Test
