@@ -70,8 +70,8 @@ public class PostDAO extends JdbcDaoSupport {
 
 		try {
 			conn = getConnection();
-			System.out.println("connection:" + conn);
-			System.out.println(sql+postId);
+			logger.debug("connection:" + conn);
+			logger.debug(sql+postId);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, postId);
 			ResultSet rs = pstmt.executeQuery();
@@ -79,11 +79,12 @@ public class PostDAO extends JdbcDaoSupport {
 			Post post = null;
 			while (rs.next()) {
 				int id = rs.getInt("id");
+				int placeId = rs.getInt("place_id");
 				String dear = rs.getString("dear");
 				String contents = rs.getString("content");
 				String createdtime = rs.getString("createdtime");
 				int likes = rs.getInt("likes");
-				post = new Post(postId, contents, createdtime, likes);
+				post = new Post(id, placeId, dear, contents, createdtime, likes);
 			}
 			return post;
 		} finally {
@@ -146,11 +147,12 @@ public class PostDAO extends JdbcDaoSupport {
 
 			while (rs.next()) {
 				int postid = rs.getInt("id");
+				int placeId = rs.getInt("place_id");
 				String dear = rs.getString("dear");
 				String contents = rs.getString("LEFT(content, 50)");
 				String createdtime = rs.getString("createdtime");
 				int likes = rs.getInt("likes");
-				result.add(new Post(postid, dear, contents, createdtime, likes));
+				result.add(new Post(postid, placeId, dear, contents, createdtime, likes));
 			}
 
 			pstmt.close();
