@@ -25,7 +25,7 @@ a {
 
 .top-bar {
     width: 100%;
-    background-color: #7B6D68;
+    background-color: #6B615E;
     margin: 0;
     border: none;
     position: fixed;
@@ -57,7 +57,7 @@ nav.top-bar #go-back {
 
 hr.top-bar + header {
     width: 100%;
-    margin-top: 1.5em;
+    margin-top: 4.3em;
     margin-bottom: 1em;
 }
 hr.top-bar + header * {
@@ -70,13 +70,13 @@ hr.top-bar + header h1 {
     background-size: contain;
     background-position: center;
     color: transparent;
-    margin: 0 0 0.67em 0;
-    font-size: 2em;
+    margin: 1.5em 0 0.67em 0;
+    font-size: 1.7em;
 }
 hr.top-bar + header p {
     color: rgba(85, 51, 45, 0.77);
     margin: 0;
-    font-size: 1em;
+    font-size: 0.9em;
 }
 hr.top-bar + header p .emphasis {
     font-weight: bold;
@@ -87,10 +87,11 @@ nav.top-bar + * {
     margin-top: 3.5em;
 }
 
-.top-bar ~ *:not(header) {
-    margin-right: 1em;
-    margin-bottom: 3em;
-    margin-left: 1em;
+.top-bar ~ *:not(header) {margin: 3em 1em;box-sizing: border-box;}
+
+#new-letter{
+	margin: 2.7em auto;
+	width: 83%;
 }
 
 .the-letter {
@@ -103,7 +104,7 @@ nav.top-bar + * {
 }
 #letters {
     position: relative;
-    margin-top: 2em;
+    margin-top: 1.8em;
 }
 
 #stamp {
@@ -153,10 +154,10 @@ nav.top-bar + * {
     outline: none;
     resize: none;
     width: 100%;
-    background-image: url('img/line.png');
+    background-image: url('http://i67.tinypic.com/jhq7pk.png');
     background-repeat: repeat;
-    line-height: 17px;
-    min-height: 5em;
+    background-size: contain;
+    line-height: 4.7vmax;
     font-size: 14px;
 }
 #new-letter > * > textarea {
@@ -164,35 +165,59 @@ nav.top-bar + * {
     min-height: calc(100vh - 27em);
 }
 #new-letter button {
-    background-color: orange;
+    background-color: #E89702;
     border: none;
-    width: 40%;
+    width: 27%;
     border-radius: 1em;
     margin: 0 auto;
-    line-height: 1.6em;
+    line-height: 2em;
+    color: white;
+    font-size: 0.8em;
 }
 
 
 #letters > * {
     margin: -1em 0;/* why this makes his parent also go up? */
     padding: 1em 1em 2em 1em;
-    border-radius: 1em 1em 0 0;
+    border-radius: 0.7em 0.7em 0 0;
     z-index: 2;
+    box-sizing: border-box;
 }
-#letters > *:nth-child(even) {
-    background-color: rgb(94, 87, 88);
-    border: 1px solid rgba(255,255,255,0.7);
+.dummy {
+    background-color: rgb(68, 65, 65);
+    border: 1px solid rgba(255, 255, 255, 0.64);
     color: white;
 }
-#letters > *:nth-child(odd) {
+#letters > .dummy:nth-child(even) {
     background-color: rgb(234, 230, 216);
-    border: 1px solid rgba(13,13,13,0.7);
+    border: 1px solid rgba(13,13,13,0.2);
 }
-#letters > *:nth-child(even) li {
-    background-color: rgba(255,255,255,0.4);
+#letters > article:nth-child(odd) {
+    background-color: rgb(68, 65, 65);
+    border: 1px solid rgba(255, 255, 255, 0.64);
+    color: white;
+    padding: 1.5em 1.2em;
 }
-#letters > *:nth-child(odd) li {
-    background-color: rgba(0,0,0,0.4);
+#letters > article:nth-child(even) {
+    background-color: rgb(234, 230, 216);
+    border: 1px solid rgba(13,13,13,0.2);
+    padding: 1.5em 1.2em;
+}
+#letters > article:nth-child(odd) li {
+    background-color: rgba(255,255,255,0.22);
+    margin-bottom: 0.7em;
+    border-radius: 0.4em;
+    padding: 0.4em 1.3em;
+    font-size: 0.8em;
+    font-weight: 100;
+}
+#letters > article:nth-child(even) li {
+    background-color: rgba(255,255,255,0.52);
+    margin-bottom: 0.7em;
+    border-radius: 0.4em;
+    padding: 0.4em 1.3em;
+    font-size: 0.8em;
+    font-weight: 200;
 }
 #letters > *:last-child {
     border-radius: 1em;
@@ -200,24 +225,24 @@ nav.top-bar + * {
 }
 
 #letters > div.dummy {
-    padding-bottom: 0.5em;
-    margin-right: 3em;
-    margin-left: 3em;
+    padding-bottom: 0.3em;
+    margin-right: 1.4em;
+    margin-left: 1.4em;
 }
 #letters > div.dummy:last-of-type {
-    margin-right: 1em;
-    margin-left: 1em;
+    margin-right: 0.3em;
+    margin-left: 0.3em;
 }
 #letters > div.dummy:nth-last-of-type(2) {
-    margin-right: 2em;
-    margin-left: 2em;
+    margin-right: 0.8em;
+    margin-left: 0.8em;
 }
 #letters > article > *:last-child {
     margin-bottom: 0;
 }
 
 #letters h3 {
-    font-weight: normal;
+    font-weight: 200;
     margin: 0;
 }
 #letters h3::before {

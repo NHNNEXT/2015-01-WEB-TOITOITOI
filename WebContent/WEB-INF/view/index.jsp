@@ -13,6 +13,7 @@
 	<link type="text/css" rel="stylesheet" href="/css/index.css">
 	<script defer src="/js/index.js"></script>
 	<script defer src="/js/elastic.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 	<hr class="top-bar">
@@ -22,7 +23,7 @@
 	</header>
 	<section id="new-letter" class="the-letter">
 		<h2 class="hidden-heading">new letter</h2>
-		<form action="/api/place/${place.placeId}/post">
+		<form id="write-letter" action="/api/place/${place.placeId}/post">
 			<input type="hidden" name="placeId" value="${place.placeId}">
 			<label class="dear-label" for="dear-input">Dear.</label>
 			<input id="dear-input" type="text" name="dear">

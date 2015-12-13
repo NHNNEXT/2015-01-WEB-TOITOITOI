@@ -27,10 +27,10 @@ public class APIDearListController {
 	public Map<String, List<Post>> getDearList(@PathVariable("placeId") Integer placeId,
 			@RequestParam("page") Integer nPage) {
 
-		if (!Validation.isValidParameter(placeId) || Validation.isValidParameterType(placeId)) {
+		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
-		if (!Validation.isValidParameter(nPage) || Validation.isValidParameterType(nPage)) {
+		if (!Validation.isValidParameter(nPage) || !Validation.isValidParameterType(nPage)) {
 			throw new IllegalArgumentException();
 		}
 

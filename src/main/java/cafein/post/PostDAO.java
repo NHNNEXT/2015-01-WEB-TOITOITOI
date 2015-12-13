@@ -88,6 +88,7 @@ public class PostDAO extends JdbcDaoSupport {
 				int likes = rs.getInt("likes");
 				post = new Post(id, placeId, dear, contents, createdtime, likes);
 			}
+			logger.debug(post.toString());
 			return post;
 		} finally {
 			if (pstmt != null) {

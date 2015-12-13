@@ -31,7 +31,7 @@ public class Validation {
 	}
 	
 	public static boolean isValidParameterType(Integer number) {
-		return (number > 1) && (number == (Integer)number);
+		return (number >= 1) && (number == (Integer)number);
 	}
 	
 	

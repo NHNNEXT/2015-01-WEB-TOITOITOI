@@ -13,7 +13,7 @@
 	<link type="text/css" rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-	<nav class="top-bar"><a id="go-back" href="#" onclick="history.back();">뒤로가기</a></nav>
+	<nav class="top-bar"><a id="go-back" href="/place/${post.placeId}">뒤로가기</a></nav>
 	<section class="the-letter">
 		<div>
 			<label class="dear-label" for="dear-input">Dear.</label>

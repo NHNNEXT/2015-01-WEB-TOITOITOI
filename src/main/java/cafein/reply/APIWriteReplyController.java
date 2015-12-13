@@ -28,7 +28,7 @@ public class APIWriteReplyController {
 	protected @ResponseBody Reply createReply(@PathVariable(value="postId")int postId, 
 			@RequestParam(value="content",required = false)String content) throws IOException {
 		
-		if(!Validation.isValidParameter(postId) || Validation.isValidParameterType(postId)){
+		if(!Validation.isValidParameter(postId) || !Validation.isValidParameterType(postId)){
 			throw new IllegalAPIPathException();
 		}
 		if (!Validation.isValidParameter(content)) {

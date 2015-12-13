@@ -15,6 +15,7 @@ var data = {};
 // };
 var matches = document.body.matchesSelector || document.body.webkitMatchesSelector || document.body.mozMatchesSelector || document.body.msMatchesSelector || document.body.webkitMatchesSelector || document.body.matchesSelector;
 
+
 function renderDearList (dataList) {
 	var dataLen = dataList.length;
 	var codes = '';
@@ -114,3 +115,34 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	});
 });
+
+
+function updateReplies(reply){
+	console.log(reply);
+	var code = '<article class="reply">re : '+reply.content+'</article>'
+	document.querySelector('#replies').insertAdjacentHTML('afterbegin', code);
+}
+
+$(document).ready(function() {
+	  var form = $('#write-letter'); // contact form
+	  var submit = $('#write-letter button');  // submit button
+
+	  // form submit event
+	  form.on('submit', function(e) {
+	    e.preventDefault(); // prevent default form submit
+
+	    $.ajax({
+	      url : '/api/place/1/post', // form action url
+	      type: 'POST', // form submit method get/post
+	      dataType: 'x-www-form-urlencoded',
+	      data: form.serialize(), // serialize form data
+	      success: function(data) {
+	        //updateReplies(data);
+	        form.trigger('reset'); // reset form
+	      },
+	      error: function(e) {
+	        console.log(e)
+	      }
+	    });
+	  });
+	});
