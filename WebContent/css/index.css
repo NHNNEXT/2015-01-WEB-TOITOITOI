@@ -1,192 +1,149 @@
-/* body */
-body{
-	background-image: url(http://i60.tinypic.com/2zno21x.png);
-	background-size: 101%;
-	height: 79vmax;
-}
-@viewport{
-	orientation : portrait;
+html,body { height: 100%; margin: 0px; padding: 0px; }
+
+body {
+    font-family: sans-serif;
+    background-color: rgb(242, 242, 242);
+    position: relative;
 }
 
-/* header */
-.logo{
-	position: relative;
-	display: block;
-	height: 16vmax;
-	margin: 19vmax auto 5vmax auto;
+hr {
+    height: 0.5em;
+    width: 100%;
+    background-color: #7B6D68;
+    margin: 0;
+    border: none;
+    position: fixed;
+    top: 0;
+    z-index: 3;
+}
+/*body>header, section#new-letter {
+    position: fixed;
+    z-index: 0;
+}*/
+
+body>header {
+    width: 100%;
+    margin-top: 1.5em;
 }
 
+body>header * {
+    text-align: center;
+}
+body>header h1 {
+    background-repeat: no-repeat;
+    background-image: url('img/logo.gif');
+    background-size: auto 100%;
+    background-position: center;
+    color: transparent;
+    margin: 0 0 0.67em 0;
+    font-size: 2em;
+}
+body>header p {
+    color: rgba(85, 51, 45, 0.77);
+    margin: 0;
+    font-size: 1em;
+}
+body>header p .emphasis {
+    font-weight: bold;
+    color: rgb(181, 73, 37);
+}
 
-/* search */
-.search .textbox{
-    display: block;
-    width: 87vmin;
-    height: 6vmax;
-    margin: 0 auto;
-    padding-left: 7vmin;
-    outline-style: none;
+section {
+    margin: 1em;
+}
+
+section#new-letter {
+    padding: 1em;
+    background-color: white;
+    border-radius: 1em;
+    width: calc(100% - 2em);
     box-sizing: border-box;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 100px;
-    color: #FFFFFF;
-    text-shadow: 1px 1px rgba(0,0,0,0.7);
-    font-size: 3vmax;
-    font-family: "AppleSDGothicNeo-Medium",arial, sans-serif;
-    background-color: rgba(0, 0, 0, 0.28);
+    top: 7.5em;
 }
-.search #search-button{
-	display: none;
-}
-.search label{
-    background-image: url(http://i58.tinypic.com/2mevhqv.png);
-    background-size: cover;
-    height: 3.5vmax;
-    width: 3.5vmax;
+section#letters {
     position: relative;
-    float: right;
-    top: -5vmax;
-    right: 10vmin;
-    -webkit-filter: drop-shadow(2px 1px 3px black);
-    filter: drop-shadow(2px 2px 3px black);
-}
-.search-bg{
-    background-image: url(http://i61.tinypic.com/29fyvbo.png);
-    background-attachment: fixed;
-    background-size: cover;
-    filter: url('blur.svg#blur');
-    filter: blur(10px);
-    position: relative;
-    width: 87vmin;
-    height: 6vmax;
-    border-radius: 100px;
-    top: -6vmax;
-    margin: 0 auto;
-    z-index: -1;
-}
-.search .textbox::-webkit-input-placeholder{
-    color: rgba(255, 255, 255, 0.65);
-    vertical-align: middle;
-    font-size: 2.8vh;
-    font-weight: 300;
-    font-style: italic;
-    text-shadow: none;
-}
-.search .textbox:-moz-placeholder{
-    color: rgba(0, 0, 0, 0.55);
-    line-height: 5vh;
-    font-size: 12pt;
-    font-weight: 300;
-    font-style: italic;
-    text-shadow: none;
-}
-.search .textbox::-moz-placeholder{
-    color: rgba(0, 0, 0, 0.55);
-    line-height: 5vh;
-    font-size: 12pt;
-    font-weight: 300;
-    font-style: italic;
-    text-shadow: none;
-}
-.search .textbox:-ms-input-placeholder{
-    color: rgba(0, 0, 0, 0.55);
-    line-height: 5vh;
-    font-size: 12pt;
-    font-weight: 300;
-    font-style: italic;
-    text-shadow: none;
+    /*top: 19em;*/
+    margin-top: 4em;
 }
 
-/* cafe-list */
-.cafe-list {
-    list-style-type: none;
-    border: 1px solid rgba(243, 202, 197, 0.35);
-    border-radius: 17px;
-    box-sizing: border-box;
-    padding: 0 1.4vmin;
-    background-color: rgba(26, 17, 9, 0.6);
+#new-letter form {
     position: relative;
-    top: -2vmax;
-    width: 88vmin;
-    height: 44vmax;
-    margin: 0 auto;
-    color: rgba(255,255,255,0.8);
-    overflow: scroll;
-    clear: right;
 }
-.cafe-list-bg{
-    position: relative;
-    top: -46vh;
-    margin: 0 auto;
-    width: 88vmin;
-    height: 44vh;
-    border-radius: 22px;
-    background-size: cover;
-    background-image: url(http://i60.tinypic.com/6z8tut.jpg);
-    background-attachment: fixed;
-    z-index: -1;
-}
-.cafe-list li{
-    clear: left;
-    height: 15.8vh;
-    padding: 2.7vw 1.2vw;
-    border-bottom: 1px solid rgba(255,255,255,0.5);
-}
-.cafe-list .info {
-    color: white;
-    text-decoration: none;
-    float: right;
-    width: 45vmin;
-    margin-right: 5vmin;
-    /* box-sizing: border-box; */
-    padding: 0.9vmax 0 1vmax 0;
-    height: 15vmax;
-    /* vertical-align: middle; */
-}
-.cafe-list .info .left-column{
-	display: inline-block;
-	width: 35vw;
-}
-.cafe-list .info .right-column{
-	display: inline-block;
-	width: 15vw;
-}
-.cafe-list img {
-    display: inline-block;
-    border-radius: 15px;
-    width: 15vmax;
-    height: 15vmax;
-    background-color: rgba(0,0,0,1);
-    border: 1px solid rgba(255,255,255,0.7);
-    /* vertical-align: -1.2vmax; */
-}
-.cafe-list .name {
+#new-letter form > * {
+    margin: 0;
+    padding: 0;
     display: block;
-    font-family: "AppleSDGothicNeo-thick", arial, sans-serif;
-    font-size: 3.2vmax;
-    line-height: 3.2vmax;
-    height: 2em;
-    margin-bottom: 2.2vmax;
 }
-.cafe-list .post-num {
+#new-letter label {
     display: inline-block;
-    line-height: 110%;
-    font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-    font-size: 2.5vh;
+    width: 6em;
+    position: absolute;
+    top: 1px;
+    z-index: 2;
+    text-transform: uppercase;
+    font-weight: bold;
 }
-.cafe-list .address {
-    display: inline-block;
-    font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-    font-size: 2.2vh;
-    width: 21.5vw;
-    margin-top: 0.0em;
-    margin-left: 7vmin;
+#new-letter input {
+    font-size: 1em;
+    width: 40%;
+    max-width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    padding: 0 0 0 4em;
+    border: none;
+    border-bottom: 0.2em solid rgba(0,0,0,0.2);
 }
-.cafe-list .distance {
-	font-family: "AppleSDGothicNeo-Thin", arial, sans-serif;
-	font-size: 1.7vmax;
-	display: inline-block;
-	position: absolute;
-	line-height: 2.5em;
-	right: 4vmin;
-	padding-top: 2.2vmax;
+#new-letter textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    width: 100%;
+    height: 5em;
+    background-image: linear-gradient(white, white 16px, black 17px, black 17px);
+    background-size: 100% 17px;
+    line-height: 17px;
+    height: calc(100vh - 30em);
+}
+#new-letter button {
+    background-color: orange;
+    border: none;
+    width: 40%;
+    border-radius: 1em;
+    margin: 0 auto;
+    line-height: 1.6em;
+    position: absolute;
+    left: 0;
+    right: 0;
+    /* top: 9.5em; */
+    bottom: -4.5em;
+}
+
+#letters article {
+    margin: -1em 0; /* why this makes his parent also go up? */
+    padding: 1em 1em 2em 1em;
+    border-radius: 1em 1em 0 0;
+    z-index: 2;
+}
+#letters article:last-child {
+    border-radius: 1em;
+}
+
+#letters article:nth-child(odd) {
+    background-color: brown;
+}
+#letters article:nth-child(even) {
+    background-color: pink;
+}
+#letters article > *:last-child {
+    margin-bottom: 0;
+}
+
+#letters header::before {
+    content: "Dear. ";
+}
+#letters header.on ul {
+    display: block;
+}
+#letters header ul {
+    display: none;
 }
