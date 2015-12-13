@@ -22,7 +22,7 @@ public class PostController extends HttpServlet {
 	
 	@RequestMapping(value="/place/{placeId}/dear/{dearName}/post/{postId}", method=RequestMethod.GET)
 	public ModelAndView viewPost(@PathVariable Integer postId) throws SQLException {
-		if(!Validation.isValidParameter(postId) || Validation.isValidParameterType(postId)){
+		if(!Validation.isValidParameter(postId) || !Validation.isValidParameterType(postId)){
 			throw new IllegalAPIPathException();
 		}
 		return new ModelAndView("main").addObject("post", postDao.getPostByPostId(postId));
