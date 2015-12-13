@@ -34,9 +34,10 @@ public class Post {
 	}
 	
 	
-	public Post(int postId, String dear, String content, String createdtime, int likes) {
+	public Post(int postId, int placeId, String dear, String content, String createdtime, int likes) {
 		super();
 		this.postId = postId;
+		this.placeId = placeId;
 		this.dear = dear;
 		this.content = content;
 		this.createdtime = createdtime;
