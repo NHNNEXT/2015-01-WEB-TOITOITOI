@@ -145,8 +145,8 @@ nav.top-bar + * {
     line-height: 17px;
 }
 #new-letter > * > textarea {
-    height: 5em;
-    height: calc(100vh - 27em);
+    min-height: 5em;
+    min-height: calc(100vh - 27em);
 }
 #new-letter button {
     background-color: orange;
