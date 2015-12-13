@@ -30,7 +30,8 @@ public class PostDAO extends JdbcDaoSupport {
 
 	public Post addPost(Post post) throws SQLException {
 		String sql = "INSERT INTO post (place_id, dear, content) VALUES(?, ?, ?)";
-		//String query = "SELECT pid FROM post ORDER BY postingtime desc limit 1";
+		// String query = "SELECT pid FROM post ORDER BY postingtime desc limit
+		// 1";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -38,18 +39,18 @@ public class PostDAO extends JdbcDaoSupport {
 			conn = getConnection();
 			System.out.println("connection:" + conn);
 			System.out.println(sql);
-			pstmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, post.getPlaceId());
 			pstmt.setString(2, post.getDear());
 			pstmt.setString(3, post.getContent());
 			pstmt.executeUpdate();
 			logger.debug(pstmt.toString());
-			
-			//pre = conn.prepareStatement(query);
-			//pre.setInt(1, post.getCid());
+
+			// pre = conn.prepareStatement(query);
+			// pre.setInt(1, post.getCid());
 			ResultSet re = pstmt.getGeneratedKeys();
 			int last_insert_pid = 0;
-			if(re.next()){
+			if (re.next()) {
 				last_insert_pid = re.getInt(1);
 			}
 			return getPostByPostId(last_insert_pid);
@@ -131,13 +132,14 @@ public class PostDAO extends JdbcDaoSupport {
 	public ArrayList<Post> getPreviews(int placeid, String dearName, int nPage) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		
-		String sql = "SELECT id, dear, LEFT(content, 50), createdtime, likes FROM post WHERE place_id=? AND dear=? ORDER BY createdtime DESC LIMIT ?, 20";
+
+		String sql = "SELECT p.id, p.dear, LEFT(p.content, 50), p.createdtime, p.likes " + "FROM post p JOIN reply r ON p.id = r.post_id "
+				+ "WHERE p.place_id=? AND p.dear=? group by p.id ORDER BY COUNT(r.id) DESC LIMIT ?, 20";
 		ArrayList<Post> result = new ArrayList<Post>();
-		int startingRow = (nPage-1)*20;
-		
+		int startingRow = (nPage - 1) * 20;
+
 		try {
-			logger.debug("placeId:"+placeid);
+			logger.debug("placeId:" + placeid);
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, placeid);
@@ -149,7 +151,7 @@ public class PostDAO extends JdbcDaoSupport {
 				int postid = rs.getInt("id");
 				int placeId = rs.getInt("place_id");
 				String dear = rs.getString("dear");
-				String contents = rs.getString("LEFT(content, 50)");
+				String contents = rs.getString("LEFT(p.content, 50)");
 				String createdtime = rs.getString("createdtime");
 				int likes = rs.getInt("likes");
 				result.add(new Post(postid, placeId, dear, contents, createdtime, likes));
