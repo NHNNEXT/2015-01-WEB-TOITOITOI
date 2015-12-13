@@ -15,7 +15,10 @@ li {
     overflow: hidden;
     white-space: nowrap;
 }
-
+a {
+    text-decoration: none;
+    color: inherit;
+}
 .hidden-heading {
     display: none;
 }
@@ -185,6 +188,12 @@ nav.top-bar + * {
     background-color: rgb(234, 230, 216);
     border: 1px solid rgba(13,13,13,0.7);
 }
+#letters > *:nth-child(even) li {
+    background-color: rgba(255,255,255,0.4);
+}
+#letters > *:nth-child(odd) li {
+    background-color: rgba(0,0,0,0.4);
+}
 #letters > *:last-child {
     border-radius: 1em;
     padding-bottom: 1em;
@@ -256,4 +265,13 @@ nav.top-bar + * {
 	border-radius: 9px;
 	height: 27px;
 	color: white;
+
+#letters ul li, #letters ul a {
+    display: block;
+}
+
+#letters ul li {
+    margin: 0.5em 0 0.5em 0;
+    padding: 0.5em;
+    border-radius: 0.4em;
 }

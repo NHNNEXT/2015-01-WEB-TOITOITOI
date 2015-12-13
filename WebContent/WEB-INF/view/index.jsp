@@ -22,8 +22,8 @@
 	</header>
 	<section id="new-letter" class="the-letter">
 		<h2 class="hidden-heading">new letter</h2>
-		<form>
-			<input type="hidden" name="placeId" value="{$place.id}">
+		<form action="/api/place/${place.placeId}/post">
+			<input type="hidden" name="placeId" value="${place.placeId}">
 			<label class="dear-label" for="dear-input">Dear.</label>
 			<input id="dear-input" type="text" name="dear">
 			<textarea name="content"></textarea>

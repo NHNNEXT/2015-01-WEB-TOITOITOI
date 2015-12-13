@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", function() {
 	window.addEventListener('resize', resizeVertical);
 	if (!textarea.readOnly) {
 		textarea.addEventListener('change', resizeVertical);
-		textarea.addEventListener('keydown', function (e) { window.setTimeout(resizeVertical); });
-		textarea.addEventListener('paste', function (e) { window.setTimeout(resizeVertical); });
-		textarea.addEventListener('cut', function (e) { window.setTimeout(resizeVertical); });
-		textarea.addEventListener('drop', function (e) { window.setTimeout(resizeVertical); });
+		textarea.addEventListener('keydown', function (e) { window.setTimeout(resizeVertical, 0); });
+		textarea.addEventListener('paste', function (e) { window.setTimeout(resizeVertical, 0); });
+		textarea.addEventListener('cut', function (e) { window.setTimeout(resizeVertical, 0); });
+		textarea.addEventListener('drop', function (e) { window.setTimeout(resizeVertical, 0); });
 	}
 });

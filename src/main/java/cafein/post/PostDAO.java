@@ -103,13 +103,15 @@ public class PostDAO extends JdbcDaoSupport {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "SELECT p.dear, p.id, LEFT(p.content, 50), p.createdtime, p.likes "
+		String sql = "SELECT * FROM ("
+					+ "SELECT p.dear AS dear, p.id AS id, LEFT(p.content, 50) AS content, p.createdtime AS createdtime, p.likes AS likes, COUNT(r.id) AS replies "
 					+ "FROM post AS p LEFT JOIN reply AS r "
 					+ "ON p.id = r.post_id "
 					+ "WHERE place_id=? "
 					+ "GROUP BY p.id "
 					+ "ORDER BY COUNT(r.id) "
-					+ "DESC LIMIT ?, 20";
+					+ "DESC) AS dears LIMIT ?, 20";
+		logger.debug(sql);
 		Map<String, List<Post>> result = new HashMap<String, List<Post>>(); 
 		int startRow = (nPage-1)*10;
 		
@@ -138,11 +140,11 @@ public class PostDAO extends JdbcDaoSupport {
 		int inputCount = 3;
 		
 		while (rs.next()){
-			String dearName = rs.getString("p.dear");
-			int id = rs.getInt("p.id");
-			String content = rs.getString("LEFT(p.content, 50)");
-			String createdtime = rs.getString("p.createdtime");
-			int likes = rs.getInt("p.likes");
+			String dearName = rs.getString("dear");
+			int id = rs.getInt("id");
+			String content = rs.getString("content");
+			String createdtime = rs.getString("createdtime");
+			int likes = rs.getInt("likes");
 			Post post = new Post(id, placeId, dearName, content, createdtime, likes);
 			logger.debug(post.toString());
 			if(inputCount<=0 || dearName.equals(currentDearGroup)==false){
