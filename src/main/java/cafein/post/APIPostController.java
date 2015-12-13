@@ -21,7 +21,8 @@ public class APIPostController extends HttpServlet{
 	private PostDAO postdao;
 	
 	@RequestMapping(value ="/api/place/{placeId}/dear/{dearName}/post/{postId}", method = RequestMethod.GET)
-	public Post viewPost(@PathVariable int postId) {
+	public Post viewPost(@PathVariable Integer postId) {
+
 			Post post = null;
 /*			if (check postId) {
 				// error message

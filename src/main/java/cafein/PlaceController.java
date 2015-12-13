@@ -27,7 +27,7 @@ public class PlaceController {
 		return new ModelAndView("index").addObject("place", place);
 	}
 	
-	@RequestMapping("/api/cafelist")
+	/*@RequestMapping("/api/cafelist")
 	public List<Place> getCafeList(@RequestParam(value = "lat", required = false) String latitude,
 			@RequestParam(value = "long", required = false) String longtitude,
 			@RequestParam(value = "sort", required = true, defaultValue = "postNum") String filter) {
@@ -38,7 +38,7 @@ public class PlaceController {
 			boolean sortByPostNum = "postNum".equals(filter);
 			return placeDao.getPlaceList(sortByPostNum);
 		}
-	}
+	}*/
 	
 	
 }

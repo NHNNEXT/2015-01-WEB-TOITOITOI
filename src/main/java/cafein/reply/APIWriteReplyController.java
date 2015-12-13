@@ -27,8 +27,7 @@ public class APIWriteReplyController {
 	protected @ResponseBody Reply createReply(@PathVariable(value="postId")int postId, 
 			@RequestParam(value="content",required = false)String content) throws IOException {
 		
-		if (!Validation.isValidParameter (content)) {
-			//resp.sendRedirect("/cafe?cid=" + cid);
+		if (!Validation.isValidParameter(content)) {
 			//error상황일 때 어떻게 보여줄지. 클라이언트에 json으로 error메시지를 넘긴다.
 			//json으로 에러상황을 알릴때 어떻게 처리?
 			throw new IllegalArgumentException();
