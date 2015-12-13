@@ -15,16 +15,6 @@ var data = {};
 // };
 var matches = document.body.matchesSelector || document.body.webkitMatchesSelector || document.body.mozMatchesSelector || document.body.msMatchesSelector || document.body.webkitMatchesSelector || document.body.matchesSelector;
 
-function getKeys (data) {
-	var keys = [];
-	for (var key in data) {
-		if (data.hasOwnProperty(key)) {
-			keys.push(key);
-		}
-	}
-	return keys;
-}
-
 function renderDearList (dataList) {
 	var dataLen = dataList.length;
 	var codes = '';
@@ -62,7 +52,8 @@ function addPreview (dataList, header) {
 	var dataLen = dataList.length;
 	var codes = '<ul>';
 	for (var i = 0; i < dataLen; i++) {
-		codes += '<li>'+dataList[i]+'</li>';
+		var data = dataList[i];
+		codes += '<li><a href="'+window.location.pathname+'/dear/'+data.dear+'/post/'+data.postId+'">'+data.preview+'</a></li>';
 	}
 	codes += '</ul>';
 	header.insertAdjacentHTML('afterend', codes);
@@ -75,7 +66,8 @@ function findPreview (data, dear) {
 	}
 	var result = [];
 	for (var i = 0; i < posts.length; i++) {
-		result.push(posts[i].content);
+		var post = posts[i];
+		result.push({'dear':post.dear, 'preview':post.content, 'postId':post.postId});
 	}
 	return result;
 }
@@ -89,7 +81,7 @@ function getDearListDone () {
 	httpRequest.onreadystatechange = function(){
 	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			data = JSON.parse(httpRequest.response);
-			renderDearList(getKeys(data));
+			renderDearList(Object.keys(data));
 	    }
 	};
 	httpRequest.open('GET', '/api/place/1/dear?page=1', true);
@@ -102,7 +94,12 @@ document.addEventListener("DOMContentLoaded", function() {
 	document.querySelector('#letters').addEventListener('click', function (e) {
 		var header = e.target;
 		if (!header.matches('h3')) {
-			return;
+			if (header.matches('article')) {
+				header = header.querySelector('h3');
+				console.log(header);
+			} else {
+				return;
+			}
 		}
 		var prevOn = this.querySelector('.on');
 		removeClass(prevOn, 'on');
