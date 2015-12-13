@@ -29,7 +29,7 @@ function renderDearList (dataList) {
 	var dataLen = dataList.length;
 	var codes = '';
 	for (var i = 0; i < dataLen; i++) {
-		codes += '<article><header>'+dataList[i]+'</header></article>';
+		codes += '<article><h3>'+dataList[i]+'</h3></article>';
 	}
 	document.querySelector('#letters').insertAdjacentHTML('beforeend', codes);
 }
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		// if this has no data, append.
 		var header = e.target;
-		if (!header.matches('header')) {
+		if (!header.matches('h3')) {
 			return;
 		}
 		var prevOn = this.querySelector('.on');

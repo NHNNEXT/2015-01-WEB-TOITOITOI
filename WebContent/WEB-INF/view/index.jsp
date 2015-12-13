@@ -2,6 +2,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="cafein.cafe.Place"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% request.setCharacterEncoding("UTF-8"); %>
 
 <!DOCTYPE html>
 <html>
@@ -13,12 +14,13 @@
 	<script defer src="/js/index.js"></script>
 </head>
 <body>
-	<hr>
+	<hr class="top-bar">
 	<header>
 		<h1>Dear Here</h1>
 		<p><span class="emphasis">${place.name}</span>의 무언가에게 편지 한 통 써보세요!</p>
 	</header>
-	<section id="new-letter">
+	<section id="new-letter" class="the-letter">
+		<h2 class="hidden-heading">new letter</h2>
 		<form>
 			<input type="hidden" name="placeId" value="{$place.id}">
 			<label class="dear-label" for="dear-input">Dear.</label>
@@ -28,20 +30,10 @@
 		</form>
 	</section>
 	<section id="letters">
-		<div>
-			<article class="dummy"></article>
-			<article class="dummy"></article>
-			<article class="dummy"></article>
-		</div>
-		<article>
-			<header>샘플</header>
-			<ul>
-				<li>2샘플아 안녕..?ㅂㅈㄷㄹㅂㅈ대렂ㄷㄹㄹ</li>
-				<li>1샘플아 안녕..?ㅂㅈㄷㄹㅂㅈ대렂ㄷㄹㄹ</li>
-				<li>3샘4플아 안녕..?ㅂㅈㄷㄹㅂㅈ대렂ㄷㄹㄹ</li>
-				<li>5샘2플아 안녕..?ㅂㅈㄷㄹㅂㅈ대렂ㄷㄹㄹ</li>
-			</ul>
-		</article>
+		<h2 class="hidden-heading">letters</h2>
+		<div class="dummy"></div>
+		<div class="dummy"></div>
+		<div class="dummy"></div>
 	</section>
 </body>
 </html>
