@@ -20,7 +20,7 @@ public class APIDearListController {
 	@Autowired
 	private PostDAO postdao;
 	
-	@RequestMapping(value = "/api/place/{placeId}/dear", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/place/{placeId}/dear", method = RequestMethod.GET)
 	public Map<String, List<Post>> getDearList(@PathVariable("placeId")Integer placeId, @RequestParam("page")Integer nPage) {
 		
 		Map<String, List<Post>> dearsWithPosts = new HashMap<String, List<Post>>();
