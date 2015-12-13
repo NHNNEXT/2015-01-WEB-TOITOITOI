@@ -117,7 +117,8 @@ public class PostDAO extends JdbcDaoSupport {
 		
 		try {
 			conn = getConnection();
-			pstmt = getConnection().prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
+			logger.debug("here");
 			pstmt.setInt(1, placeId);
 			pstmt.setInt(2, startRow);
 			ResultSet rs = pstmt.executeQuery();
@@ -145,14 +146,16 @@ public class PostDAO extends JdbcDaoSupport {
 			String createdtime = rs.getString("p.createdtime");
 			int likes = rs.getInt("p.likes");
 			Post post = new Post(id, placeId, dearName, content, createdtime, likes);
-			
+			logger.debug(post.toString());
 			if(inputCount<=0 || dearName.equals(currentDearGroup)==false){
 				if(currentDearGroup != null){
 					result.put(currentDearGroup, previews);
 				}
 				currentDearGroup = dearName;
 				inputCount=3;
-				previews = new ArrayList<Post>();
+				for(int i=0; i<previews.size() ; i++){
+					previews.remove(i);
+				}
 			}
 			previews.add(post);
 			inputCount--;

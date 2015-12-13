@@ -1,7 +1,6 @@
 package cafein.reply;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +9,8 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
 
 import com.mysql.jdbc.Statement;
-
-import cafein.post.Post;
 
 public class ReplyDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(ReplyDAO.class);
@@ -81,7 +77,8 @@ public class ReplyDAO extends JdbcDaoSupport {
 				String content = rs.getString("content");
 				String createdtime = rs.getString("createdtime");
 				int likes = rs.getInt("likes");
-				reply = new Reply(id, content, createdtime, likes);
+				int postId = rs.getInt("post_id");
+				reply= new Reply(id, content, createdtime, likes, postId);
 			}
 			return reply;
 		} finally {
@@ -113,7 +110,8 @@ public class ReplyDAO extends JdbcDaoSupport {
 				String content = rs.getString("content");
 				String createdtime = rs.getString("createdtime");
 				int likes = rs.getInt("likes");
-				result.add(new Reply(id, content, createdtime, likes));
+				int postId = rs.getInt("post_id");
+				result.add(new Reply(id, content, createdtime, likes, postId));
 			}
 
 			pstmt.close();

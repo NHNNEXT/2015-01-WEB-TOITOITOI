@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import cafein.reply.ReplyDAO;
-import cafein.util.Validation;
 
 @RestController
 public class APIPostController extends HttpServlet{
