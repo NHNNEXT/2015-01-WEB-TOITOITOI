@@ -20,21 +20,13 @@ public class APIDearListController {
 	@Autowired
 	private PostDAO postdao;
 	
-	@RequestMapping(value = "/api/place/{placeId}/dear", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/place/{placeId}/dear", method = RequestMethod.POST)
 	public Map<String, List<Post>> getDearList(@PathVariable("placeId")Integer placeId, @RequestParam("page")Integer nPage) {
 		
 		Map<String, List<Post>> dearsWithPosts = new HashMap<String, List<Post>>();
 
-		List<String> dears = postdao.getDears(placeId, nPage);
-		logger.debug(dears.toString());
-		
-		for(String dear : dears){
-			List<Post> posts = postdao.getPreviews(placeId, dear, 1);
-			for(int i=3 ; i<posts.size() ; i++){
-				posts.remove(i);
-			}
-			dearsWithPosts.put(dear, posts);
-		}
+		dearsWithPosts = postdao.getDearsWithPreviews(placeId, nPage);
+		logger.debug(dearsWithPosts.toString());
 		
 		return dearsWithPosts;
 	}
