@@ -14,7 +14,7 @@
 	<script defer src="/js/elastic.js"></script>
 </head>
 <body>
-	<nav class="top-bar"><a id="go-back" href="#" onclick="history.back();">뒤로가기</a></nav>
+	<nav class="top-bar"><a id="go-back" href="#" onclick="history.back();"><span class="hidden-heading">뒤로가기</span></a></nav>
 	<div class="the-letter">
 		<div>
 			<label class="dear-label" for="dear-input">Dear.</label>
