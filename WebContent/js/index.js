@@ -92,6 +92,30 @@ function getDearListDone () {
 document.addEventListener("DOMContentLoaded", function() {
 	getDearListDone();
 
+	document.querySelector('#new-letter form').addEventListener('submit', function (e) {
+		e.preventDefault();
+		console.log(this);
+		var placeId = this.querySelector('input[name="placeId"]').value;
+		var dear = this.querySelector('input[name="dear"]').value;
+		var content = this.querySelector('textarea[name="content"]').value;
+		var form = this;
+		if (!dear || !content || !placeId) return;
+		var httpRequest = new XMLHttpRequest();
+		httpRequest.onreadystatechange = function(){
+		    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+		    	form.reset();
+				// debugger; // 일단 되기나 해라 으으. 400 404 415 ....
+		    }
+		};
+		httpRequest.open('POST', '/api/place/'+placeId+'/post', true);
+		httpRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+		httpRequest.send(
+			'dear='+encodeURIComponent(dear)
+			+'&content='+encodeURIComponent(content)
+			+'&placeId='+encodeURIComponent(placeId)
+		);
+	});
+
 	document.querySelector('#letters').addEventListener('click', function (e) {
 		var header = e.target;
 		if (!header.matches('h3')) {
@@ -122,27 +146,3 @@ function updateReplies(reply){
 	var code = '<article class="reply">re : '+reply.content+'</article>'
 	document.querySelector('#replies').insertAdjacentHTML('afterbegin', code);
 }
-
-$(document).ready(function() {
-	  var form = $('#write-letter'); // contact form
-	  var submit = $('#write-letter button');  // submit button
-
-	  // form submit event
-	  form.on('submit', function(e) {
-	    e.preventDefault(); // prevent default form submit
-
-	    $.ajax({
-	      url : '/api/place/1/post', // form action url
-	      type: 'POST', // form submit method get/post
-	      dataType: 'x-www-form-urlencoded',
-	      data: form.serialize(), // serialize form data
-	      success: function(data) {
-	        //updateReplies(data);
-	        form.trigger('reset'); // reset form
-	      },
-	      error: function(e) {
-	        console.log(e)
-	      }
-	    });
-	  });
-	});
