@@ -11,9 +11,6 @@ ul {
 }
 li {
     list-style: none;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
 }
 a {
     text-decoration: none;
@@ -203,22 +200,29 @@ nav.top-bar + * {
     border: 1px solid rgba(13,13,13,0.2);
     padding: 1.5em 1.2em;
 }
-#letters > article:nth-child(odd) li {
-    background-color: rgba(255,255,255,0.22);
+#letters li {
     margin-bottom: 0.7em;
     border-radius: 0.4em;
-    padding: 0.4em 1.3em;
     font-size: 0.8em;
+}
+#letters ul a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    width: 100%;
+    padding: 0.4em 1.3em;
+    box-sizing: border-box;
+}
+#letters > article:nth-child(odd) li {
+    background-color: rgba(255,255,255,0.22);
     font-weight: 100;
 }
 #letters > article:nth-child(even) li {
     background-color: rgba(255,255,255,0.52);
-    margin-bottom: 0.7em;
-    border-radius: 0.4em;
-    padding: 0.4em 1.3em;
-    font-size: 0.8em;
     font-weight: 200;
 }
+
 #letters > *:last-child {
     border-radius: 1em;
     padding-bottom: 1em;
