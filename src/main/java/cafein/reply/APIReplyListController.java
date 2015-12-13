@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class APIReplyListController {
+	
 	@Autowired
 	private ReplyDAO replydao;
 	

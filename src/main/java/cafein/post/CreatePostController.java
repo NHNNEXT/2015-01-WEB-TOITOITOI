@@ -26,7 +26,7 @@ public class CreatePostController {
 
 	@RequestMapping(value = "/api/place/{placeId}/post", method = RequestMethod.POST)
 	public @ResponseBody Post createPost(@PathVariable Integer placeId, 
-			@RequestParam String dear, @RequestParam String content) {
+			@RequestParam String content, @RequestParam String dear) {
 		
 		if(!Validation.isValidParameter(placeId) || Validation.isValidParameterType(placeId)){
 			throw new IllegalAPIPathException();

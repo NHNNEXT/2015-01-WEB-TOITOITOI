@@ -21,7 +21,6 @@ import cafein.util.Validation;
 @RestController
 public class APIWriteReplyController {
 	private static final Logger logger = LoggerFactory.getLogger(APIPostController.class);
-	private static final long serialVersionUID = 1L;
 	@Autowired
 	private ReplyDAO replydao;
 	

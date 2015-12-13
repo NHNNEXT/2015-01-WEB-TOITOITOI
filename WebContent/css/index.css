@@ -86,7 +86,7 @@ nav.top-bar + * {
 
 .top-bar ~ *:not(header) {
     margin-right: 1em;
-    margin-bottom: 1em;
+    margin-bottom: 3em;
     margin-left: 1em;
 }
 
@@ -154,6 +154,7 @@ nav.top-bar + * {
     background-repeat: repeat;
     line-height: 17px;
     min-height: 5em;
+    font-size: 14px;
 }
 #new-letter > * > textarea {
     min-height: 5em;
@@ -218,4 +219,41 @@ nav.top-bar + * {
 }
 #letters h3 ~ ul {
     display: none;
+}
+
+#replies .reply{
+	font-weight: 200;
+	font-size: 12px;
+	background-color: rgba(188, 182, 179,0.7);
+	border-radius: 13px;
+	margin-bottom: 12px;
+	/* box-sizing: border-box; */
+	padding: 0.7em 1.3em;
+}
+
+#write-reply{
+	position: fixed;
+	bottom: 0;
+	background-color: rgba(202,182,170,1);
+	width: 100%;
+	margin: 0;
+	padding: 7px 7px;
+	box-sizing: border-box;
+}
+
+#write-reply #reply-input{
+	margin: 0;
+	border-style: none;
+	border-radius: 9px;
+	height: 26px;
+	width: 82%;
+}
+
+#write-reply button{
+	background-color: rgba(191,68,56,1);
+	float: right;
+	border-style: none;
+	border-radius: 9px;
+	height: 27px;
+	color: white;
 }

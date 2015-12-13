@@ -105,7 +105,6 @@ public class ReplyDAO extends JdbcDaoSupport {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-
 				int id = rs.getInt("id");
 				String content = rs.getString("content");
 				String createdtime = rs.getString("createdtime");
@@ -122,7 +121,7 @@ public class ReplyDAO extends JdbcDaoSupport {
 		}
 		return result;
 	}
-
+	
 	public void plusLike(int replyId) throws SQLException {
 
 		String sql = "UPDATE reply SET liked = liked+1 WHERE reid = ?";
