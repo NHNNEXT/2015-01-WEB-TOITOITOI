@@ -55,6 +55,10 @@ function toggleClass (el, name) {
 }
 
 function addPreview (dataList, header) {
+	if (!dataList || !header || !dataList.length) {
+		return;
+	}
+
 	var dataLen = dataList.length;
 	var codes = '<ul>';
 	for (var i = 0; i < dataLen; i++) {
@@ -67,7 +71,6 @@ function addPreview (dataList, header) {
 function findPreview (data, dear) {
 	var posts;
 	if (!data || !(posts = data[dear]) || !posts.length) {
-		debugger;
 		return null;
 	}
 	var result = [];
@@ -97,26 +100,18 @@ document.addEventListener("DOMContentLoaded", function() {
 	getDearListDone();
 
 	document.querySelector('#letters').addEventListener('click', function (e) {
-		// nothing on -> anything on
-		// this on -> this goes off
-		// not this on -> on goes off, this goes on
-		// ---> previousOn(null, other, this)=off, currentOn(if different w/previousOn)=on
-
-		// if this has no data, append.
 		var header = e.target;
 		if (!header.matches('h3')) {
 			return;
 		}
 		var prevOn = this.querySelector('.on');
 		removeClass(prevOn, 'on');
-		console.log('compare', header, prevOn);
 		if (header === prevOn) { return; }
 
 		addClass(header, 'on');
 		var list = header.parentNode.querySelector('ul');
 		if (!list) {
 			var dear = header.textContent;
-			console.log('appending list', dear);
 			var previews = findPreview(data, dear);
 			addPreview(previews, header);
 		}
