@@ -25,12 +25,12 @@ public class Reply {
 		this.content = content;
 	}
 	
-	public Reply(int replyId, String replyContent, String createdime, int likes) {
-
+	public Reply(int replyId, String replyContent, String createdime, int likes, int postId) {
 		this.replyId = replyId;
 		this.content = replyContent;
 		this.createdtime = createdime;
 		this.likes = likes;
+		this.postId = postId;
 	}
 
 	public int getReplyId() {

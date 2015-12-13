@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cafein.cafe.Place;
 import cafein.cafe.PlaceDAO;
+import cafein.util.IllegalAPIPathException;
+import cafein.util.IllegalArgumentLengthException;
 import cafein.util.Validation;
 
 
@@ -23,11 +25,14 @@ public class PlaceController {
 	
 	@RequestMapping(value="/place/{placeId}", method=RequestMethod.GET)
 	public ModelAndView viewPlace(@PathVariable Integer placeId) {
+		if(!Validation.isValidParameter(placeId) || Validation.isValidParameterType(placeId)){
+			throw new IllegalAPIPathException();
+		}
 		Place place = placeDao.getPlaceById(placeId);
 		return new ModelAndView("index").addObject("place", place);
 	}
 	
-	@RequestMapping("/api/cafelist")
+	/*@RequestMapping("/api/cafelist")
 	public List<Place> getCafeList(@RequestParam(value = "lat", required = false) String latitude,
 			@RequestParam(value = "long", required = false) String longtitude,
 			@RequestParam(value = "sort", required = true, defaultValue = "postNum") String filter) {
@@ -38,7 +43,7 @@ public class PlaceController {
 			boolean sortByPostNum = "postNum".equals(filter);
 			return placeDao.getPlaceList(sortByPostNum);
 		}
-	}
+	}*/
 	
 	
 }

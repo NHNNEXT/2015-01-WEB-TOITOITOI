@@ -11,29 +11,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import cafein.reply.ReplyDAO;
+import cafein.util.IllegalAPIPathException;
 import cafein.util.Validation;
 
+
 @RestController
-public class APIPostController extends HttpServlet{
+public class APIPostController extends HttpServlet {
 	@Autowired
 	private ReplyDAO replydao;
 	@Autowired
 	private PostDAO postdao;
-	
-	@RequestMapping(value ="/api/place/{placeId}/dear/{dearName}/post/{postId}", method = RequestMethod.GET)
-	public Post viewPost(@PathVariable int postId) {
-			Post post = null;
-/*			if (check postId) {
-				// error message
-			}*/
-			try {
-				post = postdao.getPostByPostId(postId);
-				post.setReplyList(replydao.getReplys(postId));
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return post;
+
+	@RequestMapping(value = "/api/place/{placeId}/dear/{dearName}/post/{postId}", method = RequestMethod.GET)
+	public Post viewPost(@PathVariable Integer postId) {
+		Post post = null;
+		
+		if(!Validation.isValidParameter(postId) || Validation.isValidParameterType(postId)){
+			throw new IllegalAPIPathException();
+		}
+		try {
+			post = postdao.getPostByPostId(postId);
+			post.setReplyList(replydao.getReplys(postId));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return post;
 	}
 }

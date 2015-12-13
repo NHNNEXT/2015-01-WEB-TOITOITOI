@@ -156,6 +156,7 @@ nav.top-bar + * {
     background-image: url('img/line.png');
     background-repeat: repeat;
     line-height: 17px;
+    min-height: 5em;
 }
 #new-letter > * > textarea {
     min-height: 5em;
