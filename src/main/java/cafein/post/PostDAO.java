@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,42 +101,70 @@ public class PostDAO extends JdbcDaoSupport {
 		}
 	}
 
-	public ArrayList<String> getDears(Integer placeId, Integer nPage) {
+	public Map<String, List<Post>> getDearsWithPreviews(Integer placeId, Integer nPage) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
-		String sql = "SELECT dear FROM post WHERE place_id=? ORDER BY createdtime DESC LIMIT ?, ?";
-		ArrayList<String> result = new ArrayList<String>();
+		String sql = "SELECT p.dear, p.id, LEFT(p.content, 50), p.createdtime, p.likes "
+					+ "FROM post AS p LEFT JOIN reply AS r "
+					+ "ON p.id = r.post_id "
+					+ "WHERE place_id=? "
+					+ "GROUP BY p.id "
+					+ "ORDER BY COUNT(r.id) "
+					+ "DESC LIMIT ?, 20";
+		Map<String, List<Post>> result = new HashMap<String, List<Post>>(); 
 		int startRow = (nPage-1)*10;
-		int endRow = (nPage)*10;
 		
 		try {
-			logger.debug("placeId : " + placeId);
-			logger.debug("nPage : " + nPage);
 			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
+			pstmt = getConnection().prepareStatement(sql);
 			pstmt.setInt(1, placeId);
 			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
 			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()){
-				result.add(rs.getString("dear"));
-			}
+			
+			result = getDearsWithPreviewsByResultSet(rs, result, placeId);
+
 			pstmt.close();
 			conn.close();
 		} catch (SQLException e) {
 			logger.error("Can not get dear list from DB");
 			e.printStackTrace();
 		}
-		
 		return result;
 	}	
 	
+	private Map<String, List<Post>> getDearsWithPreviewsByResultSet(ResultSet rs, Map<String, List<Post>> result, int placeId) throws SQLException {
+		ArrayList<Post> previews = new ArrayList<Post>();
+		String currentDearGroup = null; 
+		int inputCount = 3;
+		
+		while (rs.next()){
+			String dearName = rs.getString("p.dear");
+			int id = rs.getInt("p.id");
+			String content = rs.getString("LEFT(p.content, 50)");
+			String createdtime = rs.getString("p.createdtime");
+			int likes = rs.getInt("p.likes");
+			Post post = new Post(id, placeId, dearName, content, createdtime, likes);
+			
+			if(inputCount<=0 || dearName.equals(currentDearGroup)==false){
+				if(currentDearGroup != null){
+					result.put(currentDearGroup, previews);
+				}
+				currentDearGroup = dearName;
+				inputCount=3;
+				previews = new ArrayList<Post>();
+			}
+			previews.add(post);
+			inputCount--;
+		}
+		return result;
+	}
+
 	public ArrayList<Post> getPreviews(int placeid, String dearName, int nPage) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = "SELECT p.id, p.dear, LEFT(p.content, 50), p.createdtime, p.likes " + "FROM post p JOIN reply r ON p.id = r.post_id "
+		String sql = "SELECT p.id, p.dear, LEFT(p.content, 50), p.createdtime, p.likes " + "FROM post p LEFT JOIN reply r ON p.id = r.post_id "
 				+ "WHERE p.place_id=? AND p.dear=? group by p.id ORDER BY COUNT(r.id) DESC LIMIT ?, 20";
 		ArrayList<Post> result = new ArrayList<Post>();
 		int startingRow = (nPage - 1) * 20;
@@ -148,10 +179,10 @@ public class PostDAO extends JdbcDaoSupport {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				int postid = rs.getInt("id");
-				String contents = rs.getString("LEFT(content, 50)");
-				String createdtime = rs.getString("createdtime");
-				int likes = rs.getInt("likes");
+				int postid = rs.getInt("p.id");
+				String contents = rs.getString("LEFT(p.content, 50)");
+				String createdtime = rs.getString("p.createdtime");
+				int likes = rs.getInt("p.likes");
 				result.add(new Post(postid, placeid, dearName, contents, createdtime, likes));
 			}
 
