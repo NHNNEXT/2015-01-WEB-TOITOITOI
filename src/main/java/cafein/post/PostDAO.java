@@ -147,12 +147,10 @@ public class PostDAO extends JdbcDaoSupport {
 
 			while (rs.next()) {
 				int postid = rs.getInt("id");
-				int placeId = rs.getInt("place_id");
-				String dear = rs.getString("dear");
 				String contents = rs.getString("LEFT(content, 50)");
 				String createdtime = rs.getString("createdtime");
 				int likes = rs.getInt("likes");
-				result.add(new Post(postid, placeId, dear, contents, createdtime, likes));
+				result.add(new Post(postid, placeid, dearName, contents, createdtime, likes));
 			}
 
 			pstmt.close();

@@ -20,7 +20,7 @@ public class SearchCafeController {
 	@RequestMapping("/searchcafe")
 	protected List<Place> searchingCafe(@RequestParam(value="keyword",required=false) String keyword)
 			throws ServletException, IOException {
-		return (cafedao.searchCafe(keyword));
+		return (cafedao.searchPlace(keyword));
 		
 	}
 
