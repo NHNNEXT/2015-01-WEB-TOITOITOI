@@ -16,7 +16,7 @@ data = [
 	{'dear':'인하대후문3', 'preview':['lrem imp789', 'ㅈipsrem islern 6789', 'ㅈㄷqwefqwefwqef wefsdaㅇ']}
 ];
 
-function addHeaders (dataList) {
+function renderDearList (dataList) {
 	var dataLen = dataList.length;
 	var codes = '';
 	for (var i = 0; i < dataLen; i++) {
@@ -67,17 +67,27 @@ function cloneElement (el) {
 	return JSON.parse(JSON.stringify(el));
 }
 
+function getDearListDone () {
+	var httpRequest = new XMLHttpRequest();
+	httpRequest.onreadystatechange = function(){
+	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+	    	var data = JSON.parse(httpRequest.response);
+	    	var dears = [];
+	    	for (var key in data) {
+				if (data.hasOwnProperty(key)) {
+					dears.push(key);
+				}
+			}
+	    	renderDearList(dears);
+	    }
+	};
+	httpRequest.open('GET', '/api/place/1/dear?page=1', true);
+	httpRequest.send(null);
+}
+
 document.addEventListener("DOMContentLoaded", function() {
-	// document.addEventListener("scroll", function (event) {
-	// 	var hr = document.querySelector('hr');
-	// 	var newletter = document.querySelector('#new-letter');
-	// 	var top = parseInt(newletter.offsetTop);
-	// 	newletter.style.top = (top - 16)+'px';
-	// 	addClass(hr, 'fix');
-	// });
-	addHeaders(data.map(function (item, index, array) {
-		return item.dear;
-	}));
+	getDearListDone();
+
 	document.querySelector('#letters').addEventListener('click', function (e) {
 		var header = e.target;
 		if (!header.matches('header')) {
