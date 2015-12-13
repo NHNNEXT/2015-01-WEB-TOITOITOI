@@ -49,8 +49,6 @@ public class PostDAO extends JdbcDaoSupport {
 			pstmt.executeUpdate();
 			logger.debug(pstmt.toString());
 
-			// pre = conn.prepareStatement(query);
-			// pre.setInt(1, post.getCid());
 			ResultSet re = pstmt.getGeneratedKeys();
 			int last_insert_pid = 0;
 			if (re.next()) {

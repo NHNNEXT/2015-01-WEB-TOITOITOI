@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import cafein.util.IllegalAPIPathException;
+import cafein.util.IllegalArgumentLengthException;
+import cafein.util.Validation;
+
 @Controller
 public class PostController extends HttpServlet {
 	@Autowired
@@ -18,6 +22,9 @@ public class PostController extends HttpServlet {
 	
 	@RequestMapping(value="/place/{placeId}/dear/{dearName}/post/{postId}", method=RequestMethod.GET)
 	public ModelAndView viewPost(@PathVariable Integer postId) throws SQLException {
+		if(!Validation.isValidParameter(postId) || Validation.isValidParameterType(postId)){
+			throw new IllegalAPIPathException();
+		}
 		return new ModelAndView("main").addObject("post", postDao.getPostByPostId(postId));
 	}	
 }
