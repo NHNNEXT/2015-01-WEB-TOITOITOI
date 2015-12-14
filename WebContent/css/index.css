@@ -151,20 +151,19 @@ nav.top-bar + * {
     outline: none;
     resize: none;
     width: 100%;
-    background-image: url('http://i67.tinypic.com/jhq7pk.png');
+    background-image: url('img/line.png');
     background-repeat: repeat;
-    background-size: contain;
-    line-height: 4.7vmax;
+    line-height: 40px;
     font-size: 14px;
 }
 #new-letter > * > textarea {
-    min-height: 5em;
     min-height: calc(100vh - 27em);
 }
 #new-letter button {
     background-color: #E89702;
     border: none;
     width: 27%;
+    min-width: 5em;
     border-radius: 1em;
     margin: 0 auto;
     line-height: 2em;
