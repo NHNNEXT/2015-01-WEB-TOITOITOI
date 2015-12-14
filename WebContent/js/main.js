@@ -1,10 +1,7 @@
 var data = [];
 var matches = document.body.matchesSelector || document.body.webkitMatchesSelector || document.body.mozMatchesSelector || document.body.msMatchesSelector || document.body.webkitMatchesSelector || document.body.matchesSelector;
 
-var placeId = 1;
-var dearName = "toitoi";
-var postId = 1;
-
+var replyPath = '/api'+window.location.pathname+'/reply';
 
 function getRepliesContent(data) {
 	var repliesContent= [];
@@ -32,7 +29,7 @@ function getDearListDone () {
 			renderDearList(getRepliesContent(data));
 	    }
 	};
-	httpRequest.open('GET', '/api/place/'+placeId+'/dear/'+dearName+'/post/'+postId+'/reply', true);
+	httpRequest.open('GET', replyPath, true);
 	httpRequest.send(null);
 }
 
@@ -56,7 +53,7 @@ $(document).ready(function() {
 	    e.preventDefault(); // prevent default form submit
 
 	    $.ajax({
-	      url : '/api/post/'+postId+'/reply', // form action url
+	      url : replyPath, // form action url
 	      type: 'POST', // form submit method get/post
 	      dataType: 'json',
 	      data: form.serialize(), // serialize form data
