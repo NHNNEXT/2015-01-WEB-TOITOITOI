@@ -1,5 +1,7 @@
 package cafein.util;
 
+import java.sql.SQLException;
+
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -48,7 +50,7 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
 				request);
 	}
 
-	@ExceptionHandler({ NullPointerException.class, IllegalArgumentException.class, IllegalStateException.class })
+	@ExceptionHandler({ NullPointerException.class, IllegalArgumentException.class, IllegalStateException.class, SQLException.class})
 	public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
 		logger.error("500 Status Code", ex);
 		final String bodyOfResponse = "Empty message";

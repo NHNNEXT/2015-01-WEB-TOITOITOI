@@ -11,19 +11,6 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 public class NudgeDAO extends JdbcDaoSupport{
 	 
-//	public Connection getConnection() {
-//		String url = "jdbc:mysql://localhost:3307/cafein";
-//		String id = "root";
-//		String pw = "db1004";
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//			return DriverManager.getConnection(url, id, pw);
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//			return null;
-//		}
-//	}
-	 
 	public ArrayList<Nudge> getNudgeList(int cid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

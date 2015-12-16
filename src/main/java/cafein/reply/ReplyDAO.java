@@ -15,19 +15,6 @@ import com.mysql.jdbc.Statement;
 public class ReplyDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(ReplyDAO.class);
 
-	// public Connection getConnection() {
-	// String url = "jdbc:mysql://localhost:3307/cafein";
-	// String id = "root";
-	// String pw = "db1004";
-	// try {
-	// Class.forName("com.mysql.jdbc.Driver");
-	// return DriverManager.getConnection(url, id, pw);
-	// } catch (Exception e) {
-	// System.out.println(e.getMessage());
-	// return null;
-	// }
-	// }
-
 	public Reply addReply(Reply reply) throws SQLException {
 
 		String sql = "INSERT INTO reply (post_id,content) VALUES(?,?)";
@@ -59,7 +46,7 @@ public class ReplyDAO extends JdbcDaoSupport {
 	}
 
 	public Reply getReplyJustInserted(int replyId) throws SQLException {
-		// 다른사람이 같은 post
+
 		String sql = "SELECT * FROM reply WHERE id=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;

@@ -18,23 +18,8 @@ import com.mysql.jdbc.Statement;
 public class PostDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
 
-	// public Connection getConnection() {
-	// String url = "jdbc:mysql://localhost:3307/cafein";
-	// String id = "root";
-	// String pw = "db1004";
-	// try {
-	// Class.forName("com.mysql.jdbc.Driver");
-	// return DriverManager.getConnection(url, id, pw);
-	// } catch (Exception e) {
-	// System.out.println(e.getMessage());
-	// return null;
-	// }
-	// }
-
 	public Post addPost(Post post) throws SQLException {
 		String sql = "INSERT INTO post (place_id, dear, content) VALUES(?, ?, ?)";
-		// String query = "SELECT pid FROM post ORDER BY postingtime desc limit
-		// 1";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 

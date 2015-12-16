@@ -25,25 +25,6 @@ public class CafeDAOTest {
 		nudgeDAOTest = new NudgeDAO();
 	}
 
-	@Test
-	public void getCafeTest() {
-		ArrayList<Place> cafeList = cafeDAO.getPlaceList();
-		System.out.println(cafeList.get(0));
-		assertNotNull(cafeList.get(0));
-	}
-	
-	@Test
-	public void getCafeListOrderByPostsTest() {
-		ArrayList<Place> cafeList = cafeDAO.getPlaceList(true);
-		System.out.println(cafeList.get(0));
-		System.out.println(cafeList.get(1));
-		assertNotNull(cafeList.get(0));
-	}
-
-	@Test
-	public void searchCafeTest() {
-		System.out.println(cafeDAO.searchPlace("test"));
- 	}
 	
 	@Test
 	public void getNudegeListTest() {

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,11 +20,13 @@ public class PostController extends HttpServlet {
 	@Autowired
 	private PostDAO postDao;
 	
+	//post/{postId}부터 시작해도 되지 않을까?
 	@RequestMapping(value="/place/{placeId}/dear/{dearName}/post/{postId}", method=RequestMethod.GET)
-	public ModelAndView viewPost(@PathVariable Integer postId) throws SQLException {
+	public String viewPost(@PathVariable Integer postId, Model model) throws SQLException {
 		if(!Validation.isValidParameter(postId) || !Validation.isValidParameterType(postId)){
 			throw new IllegalAPIPathException();
 		}
-		return new ModelAndView("main").addObject("post", postDao.getPostByPostId(postId));
+		model.addAttribute("post", postDao.getPostByPostId(postId));
+		return "main";
 	}	
 }

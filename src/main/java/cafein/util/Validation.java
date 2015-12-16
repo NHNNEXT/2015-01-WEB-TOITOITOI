@@ -2,7 +2,7 @@ package cafein.util;
 
 public class Validation {
 	
-	//null,empty,띄어쓰기한칸" ","" 체크(앗 잠깐 "    "는 어떻게되는거지...)
+	//null,empty,띄어쓰기한칸" ","" 체크
 	public static boolean isValidParameter(String string) {
 		boolean status;
 		

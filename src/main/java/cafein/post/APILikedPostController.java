@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cafein.util.Result;
 
 @RestController
-public class LikedOnPostServlet {
+public class APILikedPostController {
 	@Autowired 
 	PostDAO postdao;
 
