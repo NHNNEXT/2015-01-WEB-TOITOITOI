@@ -11,14 +11,18 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.mysql.jdbc.Statement;
 
 public class PostDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
-
-	public Post addPost(Post post) throws SQLException {
+	@Autowired JdbcTemplate jdbcTmeplate;
+	
+	public Post addPost(Post post) {
 		String sql = "INSERT INTO post (place_id, dear, content) VALUES(?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -40,114 +44,45 @@ public class PostDAO extends JdbcDaoSupport {
 				last_insert_pid = re.getInt(1);
 			}
 			return getPostByPostId(last_insert_pid);
-		} finally {
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		}
-	}
-
-	public Post getPostByPostId(int postId) throws SQLException {
-		String sql = "SELECT * FROM post WHERE id=?";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			conn = getConnection();
-			logger.debug("connection:" + conn);
-			logger.debug(sql+postId);
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, postId);
-			ResultSet rs = pstmt.executeQuery();
-
-			Post post = null;
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				int placeId = rs.getInt("place_id");
-				String dear = rs.getString("dear");
-				String contents = rs.getString("content");
-				String createdtime = rs.getString("createdtime");
-				int likes = rs.getInt("likes");
-				post = new Post(id, placeId, dear, contents, createdtime, likes);
-			}
-			logger.debug(post.toString());
-			return post;
-		} finally {
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		}
-	}
-
-	public Map<String, List<Post>> getDearsWithPreviews(Integer placeId, Integer nPage) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		
-		String sql = "SELECT * FROM ("
-					+ "SELECT p.dear AS dear, p.id AS id, LEFT(p.content, 50) AS content, p.createdtime AS createdtime, p.likes AS likes, COUNT(r.id) AS replies "
-					+ "FROM post AS p LEFT JOIN reply AS r "
-					+ "ON p.id = r.post_id "
-					+ "WHERE place_id=? "
-					+ "GROUP BY p.id "
-					+ "ORDER BY COUNT(r.id) "
-					+ "DESC) AS dears LIMIT ?, 20";
-		logger.debug(sql);
-		Map<String, List<Post>> result = new HashMap<String, List<Post>>(); 
-		int startRow = (nPage-1)*10;
-		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			logger.debug("here");
-			pstmt.setInt(1, placeId);
-			pstmt.setInt(2, startRow);
-			ResultSet rs = pstmt.executeQuery();
-			
-			result = getDearsWithPreviewsByResultSet(rs, result, placeId);
-
-			pstmt.close();
-			conn.close();
 		} catch (SQLException e) {
-			logger.error("Can not get dear list from DB");
 			e.printStackTrace();
+			throw new RuntimeException();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
-		return result;
+	}
+
+	public Post getPostByPostId(int postId) {
+		String sql = "SELECT * FROM post WHERE id=?";
+		
+		return jdbcTmeplate.queryForObject(sql, new BeanPropertyRowMapper<Post>(Post.class),postId);
+	}
+
+	public List<Map<String, Object>> getDearList(Integer placeId, Integer nPage) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = "SELECT dear, count(post.id) FROM post RIGHT JOIN place ON post.place_id = ?"
+				+" group by dear ORDER BY COUNT(post.id) DESC LIMIT ?, 10";
+		
+		return jdbcTmeplate.queryForList(sql, placeId, (nPage-1)*10);
 	}	
 	
-	private Map<String, List<Post>> getDearsWithPreviewsByResultSet(ResultSet rs, Map<String, List<Post>> result, int placeId) throws SQLException {
-		ArrayList<Post> previews = new ArrayList<Post>();
-		String currentDearGroup = null; 
-		int inputCount = 3;
-		
-		while (rs.next()){
-			String dearName = rs.getString("dear");
-			int id = rs.getInt("id");
-			String content = rs.getString("content");
-			String createdtime = rs.getString("createdtime");
-			int likes = rs.getInt("likes");
-			Post post = new Post(id, placeId, dearName, content, createdtime, likes);
-			logger.debug(post.toString());
-			if(inputCount<=0 || dearName.equals(currentDearGroup)==false){
-				if(currentDearGroup != null){
-					result.put(currentDearGroup, previews);
-				}
-				currentDearGroup = dearName;
-				inputCount=3;
-				for(int i=0; i<previews.size() ; i++){
-					previews.remove(i);
-				}
-			}
-			previews.add(post);
-			inputCount--;
-		}
-		return result;
-	}
 
 	public ArrayList<Post> getPreviews(int placeid, String dearName, int nPage) {
 		Connection conn = null;
@@ -178,13 +113,13 @@ public class PostDAO extends JdbcDaoSupport {
 			pstmt.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new RuntimeException();
 		}
 		return result;
 	}
 
-	public void plusLike(int pid) throws SQLException {
+	public void plusLike(int pid) {
 		String sql = "UPDATE post SET liked = liked+1 WHERE pid = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -195,35 +130,25 @@ public class PostDAO extends JdbcDaoSupport {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pid);
 			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException();
 		} finally {
 			if (pstmt != null) {
-				pstmt.close();
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			if (conn != null) {
-				conn.close();
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
-
-	public void minusLike(int pid) throws SQLException {
-		String sql = "UPDATE post SET liked = liked-1 WHERE pid = ?";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			conn = getConnection();
-			logger.debug("connection:" + conn);
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pid);
-			pstmt.executeUpdate();
-		} finally {
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		}
-	}
-
 }

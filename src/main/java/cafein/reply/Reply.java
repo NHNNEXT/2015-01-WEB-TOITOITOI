@@ -2,7 +2,7 @@ package cafein.reply;
 
 public class Reply {
 	
-	private int replyId;
+	private int id;
 	private String content;
 	private String createdtime;
 	private int likes;
@@ -13,7 +13,7 @@ public class Reply {
 	}
 	
 	public Reply(int replyId) {
-		this.replyId = replyId;
+		this.id = replyId;
 	}
 	
 	public Reply(String content) {
@@ -26,7 +26,7 @@ public class Reply {
 	}
 	
 	public Reply(int replyId, String replyContent, String createdime, int likes, int postId) {
-		this.replyId = replyId;
+		this.id = replyId;
 		this.content = replyContent;
 		this.createdtime = createdime;
 		this.likes = likes;
@@ -34,11 +34,11 @@ public class Reply {
 	}
 
 	public int getReplyId() {
-		return replyId;
+		return id;
 	}
 
 	public void setReplyId(int replyId) {
-		this.replyId = replyId;
+		this.id = replyId;
 	}
 
 	public String getContent() {
@@ -81,7 +81,7 @@ public class Reply {
 		result = prime * result + ((createdtime == null) ? 0 : createdtime.hashCode());
 		result = prime * result + likes;
 		result = prime * result + postId;
-		result = prime * result + replyId;
+		result = prime * result + id;
 		return result;
 	}
 
@@ -108,14 +108,14 @@ public class Reply {
 			return false;
 		if (postId != other.postId)
 			return false;
-		if (replyId != other.replyId)
+		if (id != other.id)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Reply [replyId=" + replyId +"content=" + content + ", createdtime=" + createdtime
+		return "Reply [replyId=" + id +"content=" + content + ", createdtime=" + createdtime
 				+ ", likes=" + likes + ", postId=" + postId + "]";
 	}
 

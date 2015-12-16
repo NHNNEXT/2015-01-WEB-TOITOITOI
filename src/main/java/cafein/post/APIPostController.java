@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cafein.reply.ReplyDAO;
 import cafein.util.IllegalAPIPathException;
 import cafein.util.IllegalArgumentLengthException;
+import cafein.util.Result;
 import cafein.util.Validation;
 
 @RestController
@@ -32,7 +33,7 @@ public class APIPostController {
 	private PostDAO postdao;
 
 	@RequestMapping(value = "/dear", method = RequestMethod.GET)
-	public Map<String, List<Post>> getDearList(@PathVariable("placeId") Integer placeId,
+	public Result getDearList(@PathVariable("placeId") Integer placeId,
 			@RequestParam("page") Integer nPage) {
 
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
@@ -42,51 +43,39 @@ public class APIPostController {
 			throw new IllegalArgumentException();
 		}
 
-		Map<String, List<Post>> dearsWithPosts = new HashMap<String, List<Post>>();
-
-		dearsWithPosts = postdao.getDearsWithPreviews(placeId, nPage);
-		logger.debug(dearsWithPosts.toString());
-
-		return dearsWithPosts;
+		return Result.success(postdao.getDearList(placeId, nPage));
 	}
 
 	@RequestMapping(value = "/dear/{dearName}/post", method = RequestMethod.GET)
-	public List<Post> getPostList(@PathVariable("placeId") Integer placeId, @PathVariable("dearName") String dear,
+	public Result getPostList(@PathVariable("placeId") Integer placeId, @PathVariable("dearName") String dear,
 			@RequestParam("page") Integer nPage) {
-		if (!Validation.isValidParameter(placeId) || Validation.isValidParameterType(placeId)) {
+		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
 		if (!Validation.isValidParameter(dear)) {
 			throw new IllegalAPIPathException();
 		}
-		if (!Validation.isValidParameter(nPage) || Validation.isValidParameterType(nPage)) {
+		if (!Validation.isValidParameter(nPage) || !Validation.isValidParameterType(nPage)) {
 			throw new IllegalArgumentException();
 		}
 
-		return (postdao.getPreviews(placeId, dear, nPage));
+		return Result.success(postdao.getPreviews(placeId, dear, nPage));
 	}
 
 	@RequestMapping(value = "/dear/{dearName}/post/{postId}", method = RequestMethod.GET)
-	public Post viewPost(@PathVariable Integer postId) {
+	public Result viewPost(@PathVariable Integer postId) {
 		Post post = null;
 
-		if (!Validation.isValidParameter(postId) || Validation.isValidParameterType(postId)) {
+		if (!Validation.isValidParameter(postId) || !Validation.isValidParameterType(postId)) {
 			throw new IllegalAPIPathException();
 		}
-		try {
 			post = postdao.getPostByPostId(postId);
 			post.setReplyList(replydao.getReplys(postId));
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			// 사용자에게 줄 error "시스템장애"
-		}
-		return post;
+			return Result.success(post);
 	}
 
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
-	public @ResponseBody Post createPost(@PathVariable Integer placeId, @RequestParam String content,
+	public Result createPost(@PathVariable Integer placeId, @RequestParam String content,
 			@RequestParam String dear) throws SQLException {
 
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
@@ -101,6 +90,6 @@ public class APIPostController {
 
 		Post newPost = new Post(dear, content, placeId);
 		logger.debug(newPost.toString());
-		return postdao.addPost(newPost);
+		return Result.success(postdao.addPost(newPost));
 	}
 }

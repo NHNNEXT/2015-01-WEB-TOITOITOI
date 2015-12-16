@@ -2,6 +2,7 @@ package cafein;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,12 +21,13 @@ public class PlaceController {
 	private PlaceDAO placeDao;
 	
 	@RequestMapping(value="/place/{placeId}", method=RequestMethod.GET)
-	public ModelAndView viewPlace(@PathVariable Integer placeId) {
+	public String viewPlace(@PathVariable Integer placeId, Model model) {
 		if(!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)){
 			throw new IllegalAPIPathException();
 		}
 		Place place = placeDao.getPlaceById(placeId);
-		return new ModelAndView("index").addObject("place", place);
+		model.addAttribute("place", place);
+		return "index";
 	}
 	
 }

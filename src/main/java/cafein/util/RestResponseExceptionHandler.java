@@ -32,7 +32,12 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
 		final String bodyOfResponse = "Failed to DataAccess cause of long Data";
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
-
+	@ExceptionHandler({ RuntimeException.class })
+	public ResponseEntity<Object> handleRunRequest(final DataIntegrityViolationException ex, final WebRequest request) {
+		final String bodyOfResponse = "Failed to  Data";
+		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+	}
+	
 	// 500
 	@ExceptionHandler({ IllegalAPIPathException.class })
 	public ResponseEntity<Object> handlPathError(final RuntimeException ex, final WebRequest request) {
@@ -50,7 +55,7 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
 				request);
 	}
 
-	@ExceptionHandler({ NullPointerException.class, IllegalArgumentException.class, IllegalStateException.class, SQLException.class})
+	@ExceptionHandler({ NullPointerException.class, IllegalArgumentException.class, IllegalStateException.class})
 	public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
 		logger.error("500 Status Code", ex);
 		final String bodyOfResponse = "Empty message";
