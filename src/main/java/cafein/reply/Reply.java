@@ -2,17 +2,17 @@ package cafein.reply;
 
 public class Reply {
 	
-	private int id;
+	private Integer id;
 	private String content;
 	private String createdtime;
-	private int likes;
-	private int postId;
+	private Integer likes;
+	private Integer postId;
 	
 	public Reply () {
 		
 	}
 	
-	public Reply(int replyId) {
+	public Reply(Integer replyId) {
 		this.id = replyId;
 	}
 	
@@ -20,25 +20,25 @@ public class Reply {
 		this.content = content;
 	}
 	
-	public Reply(int postId, String content) {
+	public Reply(Integer postId, String content) {
 		this.postId = postId;
 		this.content = content;
 	}
 	
-	public Reply(int replyId, String replyContent, String createdime, int likes, int postId) {
+	public Reply(Integer replyId, String replyContent, String createdime, Integer likes, Integer postId) {
 		this.id = replyId;
 		this.content = replyContent;
 		this.createdtime = createdime;
 		this.likes = likes;
 		this.postId = postId;
 	}
-
-	public int getReplyId() {
+	
+	public Integer getId() {
 		return id;
 	}
 
-	public void setReplyId(int replyId) {
-		this.id = replyId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getContent() {
@@ -57,31 +57,31 @@ public class Reply {
 		this.createdtime = createdtime;
 	}
 
-	public int getLikes() {
+	public Integer getLikes() {
 		return likes;
 	}
 
-	public void setLikes(int likes) {
+	public void setLikes(Integer likes) {
 		this.likes = likes;
 	}
 
-	public int getPostId() {
+	public Integer getPostId() {
 		return postId;
 	}
 
-	public void setPostId(int postId) {
+	public void setPostId(Integer postId) {
 		this.postId = postId;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((createdtime == null) ? 0 : createdtime.hashCode());
-		result = prime * result + likes;
-		result = prime * result + postId;
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((likes == null) ? 0 : likes.hashCode());
+		result = prime * result + ((postId == null) ? 0 : postId.hashCode());
 		return result;
 	}
 
@@ -104,11 +104,20 @@ public class Reply {
 				return false;
 		} else if (!createdtime.equals(other.createdtime))
 			return false;
-		if (likes != other.likes)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
-		if (postId != other.postId)
+		if (likes == null) {
+			if (other.likes != null)
+				return false;
+		} else if (!likes.equals(other.likes))
 			return false;
-		if (id != other.id)
+		if (postId == null) {
+			if (other.postId != null)
+				return false;
+		} else if (!postId.equals(other.postId))
 			return false;
 		return true;
 	}

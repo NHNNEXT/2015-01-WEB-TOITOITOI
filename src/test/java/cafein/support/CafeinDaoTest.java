@@ -28,21 +28,52 @@ public class CafeinDaoTest {
 	@Test
 	public void addReply() throws SQLException {
 		Reply result = null;
-		Reply testreply = new Reply(1, "토이토이가 뭡니까?");
+		Reply testreply = new Reply(1, "우리는회의를해!");
 		result = replydao.addReply(testreply);
 		logger.debug(result.toString());
 	}
 
 	@Test
-	public void getPostById() throws SQLException {
-		int postId = 2;
-		Post test = postdao.getPostByPostId(postId);
+	public void getReplys() {
+		Integer postId = 1;
+		logger.debug(replydao.getReplys(postId).toString());
+
+	}
+	@Test
+	public void getReplyById() {
+		int id = 5;
+		Reply test = replydao.getReplyJustInserted(id);
 		logger.debug(test.toString());
+		logger.debug("id"+test.getId());
+	}
+	@Test 
+	public void liked() {
+		replydao.plusLike(1);
+		logger.debug(replydao.getReplyJustInserted(1).toString());
+	}
+	//PostDAO test
+	
+	@Test
+	public void addPost() {
+		Post test;
+		logger.debug(postdao.addPost(new Post("toitoi","shine",1)).toString());
 	}
 	
 	@Test
-	public void getReplys() {
-		int postId = 2;
-		logger.debug(replydao.getReplys(postId).toString());
+	public void getPostbyId() {
+		Post test;
+		Integer pid = 1;
+		test = postdao.getPostByPostId(pid);
+		logger.debug("ID:"+test.toString());
+	}
+	
+	@Test
+	public void getDearList(){
+		logger.debug(postdao.getDearList(1, 1).toString());
+	}
+	
+	@Test
+	public void getPrivews() {
+		logger.debug(postdao.getPreviews(1, "뷰티토이", 1).toString());
 	}
 }

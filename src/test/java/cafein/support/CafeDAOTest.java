@@ -1,3 +1,5 @@
+package cafein.support;
+
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;

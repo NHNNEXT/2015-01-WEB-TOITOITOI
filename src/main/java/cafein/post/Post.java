@@ -6,37 +6,37 @@ import cafein.reply.Reply;
 
 public class Post {
 
-	private int postId;
+	private Integer id;
 	private String dear;
 	private String content;
 	private String createdtime;
 	private List<Reply> replyList;
-	private int placeId;
-	private int likes;
+	private Integer placeId;
+	private Integer likes;
 
 	public Post() {
 
 	}
 
-	public Post(String dear, String content, int placeId) {
+	public Post(String dear, String content, Integer placeId) {
 		super();
 		this.dear = dear;
 		this.content = content;
 		this.placeId = placeId;
 	}
 
-	public Post(int postId, String dear, String content, int placeId) {
+	public Post(int postId, String dear, String content, Integer placeId) {
 		super();
-		this.postId = postId;
+		this.id = postId;
 		this.dear = dear;
 		this.content = content;
 		this.placeId = placeId;
 	}
 	
 	
-	public Post(int postId, int placeId, String dear, String content, String createdtime, int likes) {
+	public Post(int postId, int placeId, String dear, String content, String createdtime, Integer likes) {
 		super();
-		this.postId = postId;
+		this.id = postId;
 		this.placeId = placeId;
 		this.dear = dear;
 		this.content = content;
@@ -44,12 +44,12 @@ public class Post {
 		this.likes = likes;
 	}
 
-	public int getPostId() {
-		return postId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setPostId(int postId) {
-		this.postId = postId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getDear() {
@@ -84,19 +84,19 @@ public class Post {
 		this.replyList = replyList;
 	}
 
-	public int getPlaceId() {
+	public Integer getPlaceId() {
 		return placeId;
 	}
 
-	public void setPlaceId(int placeId) {
+	public void setPlaceId(Integer placeId) {
 		this.placeId = placeId;
 	}
 
-	public int getLikes() {
+	public Integer getLikes() {
 		return likes;
 	}
 
-	public void setLikes(int likes) {
+	public void setLikes(Integer likes) {
 		this.likes = likes;
 	}
 
@@ -109,7 +109,7 @@ public class Post {
 		result = prime * result + ((dear == null) ? 0 : dear.hashCode());
 		result = prime * result + likes;
 		result = prime * result + placeId;
-		result = prime * result + postId;
+		result = prime * result + id;
 		result = prime * result + ((replyList == null) ? 0 : replyList.hashCode());
 		return result;
 	}
@@ -142,7 +142,7 @@ public class Post {
 			return false;
 		if (placeId != other.placeId)
 			return false;
-		if (postId != other.postId)
+		if (id != other.id)
 			return false;
 		if (replyList == null) {
 			if (other.replyList != null)
@@ -154,11 +154,9 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post [postId=" + postId + ", dear=" + dear + ", content=" + content + ", createdtime=" + createdtime
+		return "Post [postId=" + id + ", dear=" + dear + ", content=" + content + ", createdtime=" + createdtime
 				+ ", replyList=" + replyList + ", placeId=" + placeId + ", likes=" + likes + "]";
 	}
-	
-	
 	
 
 }
