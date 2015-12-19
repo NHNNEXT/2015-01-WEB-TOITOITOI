@@ -21,6 +21,7 @@ function renderDearList (dataList) {
 	var codes = '';
 	for (var i = 0; i < dataLen; i++) {
 		codes += '<article><h3>'+dataList[i]+'</h3></article>';
+		
 	}
 	document.querySelector('#letters').insertAdjacentHTML('beforeend', codes);
 }

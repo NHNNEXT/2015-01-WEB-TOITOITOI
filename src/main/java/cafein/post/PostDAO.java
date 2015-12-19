@@ -28,6 +28,9 @@ public class PostDAO extends JdbcDaoSupport {
 	JdbcTemplate jdbcTemplate;
 	
 	public Post addPost(Post post) {
+		Integer dearId;
+		//기존에 있던 dear인지 체크 ->가져 온 dearId값을 적용해 post에 insertp place_id, dear_id, content해야함.
+		dearId = getDearId(post.getDear());
 		String sql = "INSERT INTO post (place_id, dear, content) VALUES(?, ?, ?)";
 		final PreparedStatementCreator psc = new PreparedStatementCreator() {
 			@Override
@@ -45,7 +48,32 @@ public class PostDAO extends JdbcDaoSupport {
 		Integer key = holder.getKey().intValue();
 		logger.debug("key:"+key);
 		return getPostByPostId(key);
-		
+	}
+	public Integer getDearId(String dear) {
+		String sql = "SELECT id from dear where name = ?";
+		Integer id = null;
+		id = jdbcTemplate.queryForObject(sql, new Object[] {dear}, Integer.class);
+		if(id != null){
+			return id;
+		}
+		//null인경우 56번째 줄에서 EmptyResultDataAccessException발생후 프로그램 종료됨...
+		return addDear(dear);
+	}
+	//새로Dear에게 쓸때만 
+	public Integer addDear(String dear) {
+		String sql = "INSERT INTO dear (name) VALUES(?)";
+		final PreparedStatementCreator psc = new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(final Connection connection) throws SQLException {
+				final PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1, dear);
+				return ps;
+			}
+		};
+		KeyHolder holder = new GeneratedKeyHolder();
+		jdbcTemplate.update(psc, holder);	
+		Integer key = holder.getKey().intValue();
+		return key;
 	}
 
 	public Post getPostByPostId(Integer id) {
@@ -60,7 +88,7 @@ public class PostDAO extends JdbcDaoSupport {
 		String sql = "SELECT dear, count(post.id) FROM post RIGHT JOIN place ON post.place_id = ?"
 				+" group by dear ORDER BY COUNT(post.id) DESC LIMIT ?, 10";
 		
-		return jdbcTemplate.queryForList(sql, placeId, (nPage-1)*10);
+		return jdbcTemplate.queryForList(sql, new Object[] {placeId, (nPage-1)*10});
 	}	
 	
 

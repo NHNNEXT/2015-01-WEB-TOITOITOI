@@ -31,7 +31,7 @@ public class APIPostController {
 	private ReplyDAO replydao;
 	@Autowired
 	private PostDAO postdao;
-
+	//왜안되징...
 	@RequestMapping(value = "/dear", method = RequestMethod.GET)
 	public Result getDearList(@PathVariable("placeId") Integer placeId,
 			@RequestParam("page") Integer nPage) {

@@ -76,4 +76,12 @@ public class CafeinDaoTest {
 	public void getPrivews() {
 		logger.debug(postdao.getPreviews(1, "뷰티토이", 1).toString());
 	}
+	@Test
+	public void hasDear() {
+		logger.debug(postdao.getDearId("송희").toString());
+	}
+	@Test
+	public void addDear() {
+		logger.debug(postdao.addDear("송").toString());
+	}
 }
