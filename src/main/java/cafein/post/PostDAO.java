@@ -28,16 +28,16 @@ public class PostDAO extends JdbcDaoSupport {
 	JdbcTemplate jdbcTemplate;
 	
 	public Post addPost(Post post) {
+		//기존에 있던 dear인지 체크 ->가져 온 dearId값을 적용해 post에 insert place_id, dear_id, content해야함.
 		Integer dearId;
-		//기존에 있던 dear인지 체크 ->가져 온 dearId값을 적용해 post에 insertp place_id, dear_id, content해야함.
-		dearId = getDearId(post.getDear());
+		dearId = getDearId(post.getName());
 		String sql = "INSERT INTO post (place_id, dear, content) VALUES(?, ?, ?)";
 		final PreparedStatementCreator psc = new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(final Connection connection) throws SQLException {
 				final PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				ps.setInt(1, post.getPlaceId());
-				ps.setString(2, post.getDear());
+				ps.setString(2, post.getName());
 				ps.setString(3, post.getContent());
 				return ps;
 			}
@@ -75,9 +75,9 @@ public class PostDAO extends JdbcDaoSupport {
 		Integer key = holder.getKey().intValue();
 		return key;
 	}
-
+	//Query바꾼 후 Test완료
 	public Post getPostByPostId(Integer id) {
-		String sql = "SELECT * FROM post WHERE id=?";
+		String sql = "SELECT * FROM post RIGHT JOIN dear ON post.dear_id = dear.id WHERE post.id=?";
 		Post test = null;
 		test = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Post>(Post.class),id);
 		return test;
