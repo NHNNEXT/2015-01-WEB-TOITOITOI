@@ -20,11 +20,7 @@ public class APILikedReplyController {
 	@RequestMapping(value = "/likedOnReply", method = RequestMethod.POST)
 	protected Result like(@RequestParam(value = "reid") int replyId, @RequestParam String status) {
 
-		if (status.equals("plus")) {
-			replydao.plusLike(replyId);
-		} else {
-			replydao.minusLike(replyId);
-		}
+		replydao.plusLike(replyId);
 		return Result.success();
 	}
 }

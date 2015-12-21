@@ -64,38 +64,6 @@ public class ReplyDAO extends JdbcDaoSupport {
 		jdbcTemplate.update(sql, replyId);
 	}
 
-	public void minusLike(int replyId) {
-		String sql = "UPDATE reply SET liked = liked-1 WHERE reid = ?";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			conn = getConnection();
-			logger.debug("connection:" + conn);
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, replyId);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException();
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 
 	public int getLikedOnReply(int replyId) {
 		Connection conn = null;

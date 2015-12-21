@@ -55,6 +55,12 @@ public class Post {
 		this.likes = likes;
 	}
 
+	public Post(int id, String content, int likes) {
+		this.id = id;
+		this.content = content;
+		this.likes = likes;
+	}
+
 	public Integer getId() {
 		return id;
 	}

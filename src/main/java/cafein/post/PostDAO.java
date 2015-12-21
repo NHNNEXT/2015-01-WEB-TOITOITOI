@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,8 +30,7 @@ public class PostDAO extends JdbcDaoSupport {
 	public Post addPost(Post post) {
 		// 기존에 있던 dear인지 체크 ->가져 온 dearId값을 적용해 post에 insert place_id, dear_id,
 		// content해야함.
-		Integer dearId;
-		dearId = getDearId(post.getName());
+		Integer dearId = getDearId(post.getName());
 		String sql = "INSERT INTO post (place_id, dear_id, content) VALUES(?, ?, ?)";
 		final PreparedStatementCreator psc = new PreparedStatementCreator() {
 			@Override
@@ -88,35 +85,34 @@ public class PostDAO extends JdbcDaoSupport {
 
 	// Query바꾼 후 Test완료
 	public Post getPostByPostId(Integer id) {
-		String sql = "SELECT * FROM post LEFT JOIN dear ON post.dear_id = dear.id WHERE post.id=?";
-		Post test = null;
-		test = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Post>(Post.class), id);
-		return test;
+		String sql = "SELECT * FROM post WHERE post.id=?";
+		Post post = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Post>(Post.class), id);
+		return post;
 	}
 
 	// dear테이블과 join필요 place는 join 불필
 	public List<Map<String, Object>> getDearList(Integer placeId, Integer nPage) {
 
-		String sql = "SELECT dear, count(post.id) FROM post RIGHT JOIN place ON post.place_id = ?"
-				+ " group by dear ORDER BY COUNT(post.id) DESC LIMIT ?, 10";
+		String sql = "SELECT post.dear_id, dear.name, COUNT(post.id) "
+				+ "FROM post LEFT JOIN dear ON post.dear_id = dear.id "
+				+ "WHERE post.place_id = ? "
+				+ "GROUP BY post.dear_id ORDER BY COUNT(post.id) DESC LIMIT ?, 10";
 
 		return jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 });
 	}
 
 	// dearId를 parameter로 받는다면 dear join없이 가능.
-	public List<Post> getPreviews(Integer placeid, String dearName, int nPage) {
+	public List<Post> getPreviews(Integer placeid, Integer dearId, int nPage) {
 		int startingRow = (nPage - 1) * 20;
-		String sql = "SELECT p.id, p.dear, LEFT(p.content, 50), p.createdtime, p.likes "
-				+ "FROM post p LEFT JOIN reply r ON p.id = r.post_id "
-				+ "WHERE p.place_id=? AND p.dear=? group by p.id ORDER BY COUNT(r.id) DESC LIMIT ?, 20";
-		List<Post> result;
-		result = jdbcTemplate.query(sql, new Object[] { placeid, dearName, startingRow }, new RowMapper<Post>() {
+		String sql = "SELECT id, LEFT(content, 50), likes FROM post "
+				+ "WHERE place_id = ? AND dear_id = ? "
+				+ "ORDER BY likes DESC LIMIT ?, 20";
+		List<Post> result = jdbcTemplate.query(sql, new Object[] { placeid, dearId, startingRow }, new RowMapper<Post>() {
 			public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
-				int postid = rs.getInt("p.id");
-				String contents = rs.getString("LEFT(p.content, 50)");
-				String createdtime = rs.getString("p.createdtime");
-				int likes = rs.getInt("p.likes");
-				return new Post(postid, placeid, dearName, contents, createdtime, likes);
+				int postid = rs.getInt("id");
+				String contents = rs.getString("LEFT(content, 50)");
+				int likes = rs.getInt("likes");
+				return new Post(postid, contents, likes);
 			}
 		});
 		return result;

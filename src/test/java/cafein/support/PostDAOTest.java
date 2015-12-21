@@ -22,7 +22,7 @@ public class PostDAOTest {
 	
 	@Test
 	public void getPostlist() {
-		List<Post> postlist = postdao.getPreviews(1, "toitoi", 1);
+		List<Post> postlist = postdao.getPreviews(1, 1, 1);
 		logger.debug(postlist.toString());
 	}
 
