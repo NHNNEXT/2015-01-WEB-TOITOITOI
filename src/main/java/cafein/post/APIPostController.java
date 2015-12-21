@@ -45,23 +45,23 @@ public class APIPostController {
 		return Result.success(postdao.getDearList(placeId, nPage));
 	}
 	//dearID로 변경
-	@RequestMapping(value = "/dear/{dearName}/post", method = RequestMethod.GET)
-	public Result getPostList(@PathVariable("placeId") Integer placeId, @PathVariable("dearName") String dear,
+	@RequestMapping(value = "/dear/{dearId}/post", method = RequestMethod.GET)
+	public Result getPostList(@PathVariable("placeId") Integer placeId, @PathVariable("dearId") Integer dearId,
 			@RequestParam("page") Integer nPage) {
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
-		if (!Validation.isValidParameter(dear)) {
+		if (!Validation.isValidParameter(dearId)) {
 			throw new IllegalAPIPathException();
 		}
 		if (!Validation.isValidParameter(nPage) || !Validation.isValidParameterType(nPage)) {
 			throw new IllegalArgumentException();
 		}
 
-		return Result.success(postdao.getPreviews(placeId, dear, nPage));
+		return Result.success(postdao.getPreviews(placeId, dearId, nPage));
 	}
 
-	@RequestMapping(value = "/dear/{dearName}/post/{postId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/dear/{dearId}/post/{postId}", method = RequestMethod.GET)
 	public Result viewPost(@PathVariable Integer postId) {
 		Post post = null;
 
