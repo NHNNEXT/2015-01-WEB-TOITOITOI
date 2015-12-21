@@ -91,7 +91,7 @@ public class PostDAO extends JdbcDaoSupport {
 		return jdbcTemplate.queryForList(sql, new Object[] {placeId, (nPage-1)*10});
 	}	
 	
-
+	//dearId를 parameter로 받는다면 dear join없이 가능.
 	public List<Post> getPreviews(Integer placeid, String dearName, int nPage) {
 		int startingRow = (nPage - 1) * 20;
 		String sql = "SELECT p.id, p.dear, LEFT(p.content, 50), p.createdtime, p.likes " + "FROM post p LEFT JOIN reply r ON p.id = r.post_id "
