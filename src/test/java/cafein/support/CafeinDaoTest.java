@@ -78,10 +78,10 @@ public class CafeinDaoTest {
 	}
 	@Test
 	public void hasDear() {
-		logger.debug(postdao.getDearId("송희").toString());
+		logger.debug(postdao.getDearId("김기범").toString());
 	}
 	@Test
 	public void addDear() {
-		logger.debug(postdao.addDear("송").toString());
+		logger.debug(postdao.addDear("김기범").toString());
 	}
 }

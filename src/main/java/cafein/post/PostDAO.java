@@ -12,6 +12,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -26,40 +28,44 @@ public class PostDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-	
+
 	public Post addPost(Post post) {
-		//기존에 있던 dear인지 체크 ->가져 온 dearId값을 적용해 post에 insert place_id, dear_id, content해야함.
+		// 기존에 있던 dear인지 체크 ->가져 온 dearId값을 적용해 post에 insert place_id, dear_id,
+		// content해야함.
 		Integer dearId;
 		dearId = getDearId(post.getName());
-		String sql = "INSERT INTO post (place_id, dear, content) VALUES(?, ?, ?)";
+		String sql = "INSERT INTO post (place_id, dear_id, content) VALUES(?, ?, ?)";
 		final PreparedStatementCreator psc = new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(final Connection connection) throws SQLException {
 				final PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				ps.setInt(1, post.getPlaceId());
-				ps.setString(2, post.getName());
+				ps.setInt(2, dearId);
 				ps.setString(3, post.getContent());
 				return ps;
 			}
 		};
-		
+
 		KeyHolder holder = new GeneratedKeyHolder();
-		jdbcTemplate.update(psc, holder);	
+		jdbcTemplate.update(psc, holder);
 		Integer key = holder.getKey().intValue();
-		logger.debug("key:"+key);
+		logger.debug("key:" + key);
 		return getPostByPostId(key);
 	}
+
 	public Integer getDearId(String dear) {
 		String sql = "SELECT id from dear where name = ?";
 		Integer id = null;
-		id = jdbcTemplate.queryForObject(sql, new Object[] {dear}, Integer.class);
-		if(id != null){
+
+		try {
+			id = jdbcTemplate.queryForObject(sql, new Object[] { dear }, Integer.class);
 			return id;
+		} catch (EmptyResultDataAccessException e) {
+			return addDear(dear);
 		}
-		//null인경우 56번째 줄에서 EmptyResultDataAccessException발생후 프로그램 종료됨...
-		return addDear(dear);
 	}
-	//새로Dear에게 쓸때만 
+
+	// 새로Dear에게 쓸때만
 	public Integer addDear(String dear) {
 		String sql = "INSERT INTO dear (name) VALUES(?)";
 		final PreparedStatementCreator psc = new PreparedStatementCreator() {
@@ -71,35 +77,41 @@ public class PostDAO extends JdbcDaoSupport {
 			}
 		};
 		KeyHolder holder = new GeneratedKeyHolder();
-		jdbcTemplate.update(psc, holder);	
-		Integer key = holder.getKey().intValue();
-		return key;
+		try {
+			jdbcTemplate.update(psc, holder);
+			Integer key = holder.getKey().intValue();
+			return key;
+		} catch (DuplicateKeyException DuplicateE) {
+			return getDearId(dear);
+		}
 	}
-	//Query바꾼 후 Test완료
+
+	// Query바꾼 후 Test완료
 	public Post getPostByPostId(Integer id) {
-		String sql = "SELECT * FROM post RIGHT JOIN dear ON post.dear_id = dear.id WHERE post.id=?";
+		String sql = "SELECT * FROM post LEFT JOIN dear ON post.dear_id = dear.id WHERE post.id=?";
 		Post test = null;
-		test = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Post>(Post.class),id);
+		test = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Post>(Post.class), id);
 		return test;
 	}
 
+	// dear테이블과 join필요 place는 join 불필
 	public List<Map<String, Object>> getDearList(Integer placeId, Integer nPage) {
-		
+
 		String sql = "SELECT dear, count(post.id) FROM post RIGHT JOIN place ON post.place_id = ?"
-				+" group by dear ORDER BY COUNT(post.id) DESC LIMIT ?, 10";
-		
-		return jdbcTemplate.queryForList(sql, new Object[] {placeId, (nPage-1)*10});
-	}	
-	
-	//dearId를 parameter로 받는다면 dear join없이 가능.
+				+ " group by dear ORDER BY COUNT(post.id) DESC LIMIT ?, 10";
+
+		return jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 });
+	}
+
+	// dearId를 parameter로 받는다면 dear join없이 가능.
 	public List<Post> getPreviews(Integer placeid, String dearName, int nPage) {
 		int startingRow = (nPage - 1) * 20;
-		String sql = "SELECT p.id, p.dear, LEFT(p.content, 50), p.createdtime, p.likes " + "FROM post p LEFT JOIN reply r ON p.id = r.post_id "
+		String sql = "SELECT p.id, p.dear, LEFT(p.content, 50), p.createdtime, p.likes "
+				+ "FROM post p LEFT JOIN reply r ON p.id = r.post_id "
 				+ "WHERE p.place_id=? AND p.dear=? group by p.id ORDER BY COUNT(r.id) DESC LIMIT ?, 20";
 		List<Post> result;
-		result = jdbcTemplate.query(sql,new Object[]{placeid, dearName, startingRow},
-			new RowMapper<Post>(){
-			public Post mapRow(ResultSet rs, int rowNum) throws SQLException{
+		result = jdbcTemplate.query(sql, new Object[] { placeid, dearName, startingRow }, new RowMapper<Post>() {
+			public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
 				int postid = rs.getInt("p.id");
 				String contents = rs.getString("LEFT(p.content, 50)");
 				String createdtime = rs.getString("p.createdtime");
