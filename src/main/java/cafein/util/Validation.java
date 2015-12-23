@@ -16,13 +16,13 @@ public class Validation {
 	
 	//dear < 25,post < 20000, reply <  min/max 체크
 	public static boolean isValidMaxLenDear(String dear) {
-		return (dear.length() < 25);
+		return (dear.length() <= 25);
 	}
 	public static boolean isValidMaxLenPost(String post) {
-		return (post.length() < 20000);
+		return (post.length() <= 20000);
 	}
 	public static boolean isValidMaxLenReply(String reply) {
-		return (reply.length() < 2000);
+		return (reply.length() <= 2000);
 	}
 	
 	//@PathVariable의 EntityId와 pageNumber체크

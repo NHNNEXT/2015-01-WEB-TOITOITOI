@@ -105,12 +105,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	document.querySelector('#new-letter form').addEventListener('submit', function (e) {
 		e.preventDefault();
-		console.log(this);
 		var placeId = this.querySelector('input[name="placeId"]').value;
 		var dear = this.querySelector('input[name="dear"]').value;
 		var content = this.querySelector('textarea[name="content"]').value;
 		var form = this;
-		if (!dear || !content || !placeId) return;
+		if (!placeId) {
+			console.error('no placeId');
+			return;
+		}
+
+		if (!dear) {
+			alert("input dear"); // after alert, focus on input.
+			return;
+		}
+		if (!content) {
+			alert("input content"); // after alert, focus on input.
+			return;
+		}
+		if (content.length > 20000) {
+			alert("it\'s too long"); // after alert, focus on input.
+			return;
+		}
 		var httpRequest = new XMLHttpRequest();
 		httpRequest.onreadystatechange = function(){
 		    if (httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -151,4 +166,20 @@ document.addEventListener("DOMContentLoaded", function() {
 		// 	addPreview(previews, header);
 		// }
 	});
+
+	// make component
+	var textarea = document.querySelector('#new-letter textarea');
+	var remainNotifier = document.querySelector('#new-letter .remain-length');
+	function changeRemainLength () {
+		var remainLength = 20000 - textarea.value.length;
+		remainNotifier.textContent = remainLength;
+		((remainLength < 0) ? addClass : removeClass)(remainNotifier, 'over');
+	}
+	if (!textarea.readOnly) {
+		textarea.addEventListener('change', changeRemainLength);
+		textarea.addEventListener('keydown', function (e) { window.setTimeout(changeRemainLength, 0); });
+		textarea.addEventListener('paste', function (e) { window.setTimeout(changeRemainLength, 0); });
+		textarea.addEventListener('cut', function (e) { window.setTimeout(changeRemainLength, 0); });
+		textarea.addEventListener('drop', function (e) { window.setTimeout(changeRemainLength, 0); });
+	}
 });

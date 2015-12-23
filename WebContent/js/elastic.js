@@ -1,6 +1,5 @@
-	var textarea = document.querySelector('textarea');
-	console.log(textarea);
 document.addEventListener("DOMContentLoaded", function() {
+	var textarea = document.querySelector('textarea');
 	function resizeVertical () {
 		var x = window.scrollX, y = window.scrollY;
 		textarea.style.height = 'auto';

@@ -118,7 +118,7 @@ nav.top-bar + * {
     padding: 0;
     display: block;
 }
-.the-letter > * > label {
+.the-letter > * > label.dear-label {
     display: inline-block;
     height: 0.4em;
     width: 8em;
@@ -160,6 +160,7 @@ nav.top-bar + * {
     min-height: calc(100vh - 27em);
 }
 #new-letter button {
+    display: block;
     background-color: #E89702;
     border: none;
     width: 27%;
@@ -170,7 +171,19 @@ nav.top-bar + * {
     color: white;
     font-size: 0.8em;
 }
-
+#new-letter div {
+    position: relative;
+}
+#new-letter .remain-length {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: inline-block;
+    opacity: 0.3;
+}
+#new-letter .remain-length.over {
+    color: red;
+}
 
 #letters > * {
     margin: -1em 0;/* why this makes his parent also go up? */

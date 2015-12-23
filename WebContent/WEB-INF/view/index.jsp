@@ -27,8 +27,11 @@
 			<input type="hidden" name="placeId" value="${place.placeId}">
 			<label class="dear-label" for="dear-input">Dear.</label>
 			<input id="dear-input" type="text" name="dear">
-			<textarea name="content"></textarea>
-			<button>SEND</button>
+			<textarea id="post-content" name="content"></textarea>
+			<div>
+				<button>SEND</button>
+				<label class="remain-length" for="post-content">20000</label>
+			</div>
 		</form>
 	</section>
 	<section id="letters">
