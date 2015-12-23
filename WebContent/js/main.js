@@ -49,6 +49,10 @@ $(document).ready(function() {
 	  // form submit event
 	  form.on('submit', function(e) {
 	    e.preventDefault(); // prevent default form submit
+	    if (!$('#reply-input').val()) {
+	    	console.log('입력 좀 해주시죠');
+	    	return;
+	    }
 
 	    $.ajax({
 	      url : replyPath, // form action url
