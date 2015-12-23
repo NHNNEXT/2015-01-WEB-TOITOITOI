@@ -1,18 +1,48 @@
-var data = {};
-// var example = {
-// 	"뷰티토이" : [
-// 		{"postId":6,"dear":"뷰티토이","content":"슈테판이 간단한 사용법을 알려주었는데 , 일단은 SAP 언어셋팅을 영어로 바꾸는 것부터 해","createdtime":"2015-12-13 14:07:26.0","placeId":0,"likes":0},
-// 		{"postId":7,"dear":"뷰티토이","content":"해외에서 한국인 혹은 한국과 조금이라도 관련된 일을 하게 된다면 반갑지 않은 일을 만나게","createdtime":"2015-12-13 14:07:26.0","placeId":0,"likes":0}
-// 	], "깃토이" : [
-// 		{"postId":9,"dear":"깃토이","content":"잘 되나요?","createdtime":"2015-12-13 14:48:02.0","placeId":0,"likes":0},
-// 		{"postId":4,"dear":"깃토이","content":"깃 마스터 짱짱","createdtime":"2015-12-13 14:07:26.0","placeId":0,"likes":0},
-// 		{"postId":5,"dear":"깃토이","content":"프론트 대장님","createdtime":"2015-12-13 14:07:26.0","placeId":0,"likes":0}
-// 	], "toitoi" : [
-// 		{"postId":1,"dear":"toitoi","content":"깃토이, 뷰티토이, 플토이,소토이","createdtime":"2015-12-13 14:07:26.0","placeId":0,"likes":0},
-// 		{"postId":2,"dear":"toitoi","content":"윙가르디움 레비오우사","createdtime":"2015-12-13 14:07:26.0","placeId":0,"likes":0},
-// 		{"postId":3,"dear":"toitoi","content":"해리포터","createdtime":"2015-12-13 14:07:26.0","placeId":0,"likes":0}
-// 	]
-// };
+var data = {
+	dears: []
+};
+/*
+{
+  "success": true,
+  "result": [
+    {
+      "dear_id": 1,
+      "name": "toitoi",
+      "COUNT(post.id)": 3
+    },
+    {
+      "dear_id": 2,
+      "name": "깃토이",
+      "COUNT(post.id)": 3
+    },
+    {
+      "dear_id": 6,
+      "name": "산타",
+      "COUNT(post.id)": 1
+    },
+    {
+      "dear_id": 4,
+      "name": "뷰티토이",
+      "COUNT(post.id)": 1
+    },
+    {
+      "dear_id": 7,
+      "name": "산타할아버지는 알고 계신대 누가 착한앤지",
+      "COUNT(post.id)": 1
+    },
+    {
+      "dear_id": 5,
+      "name": "소토이",
+      "COUNT(post.id)": 1
+    },
+    {
+      "dear_id": 3,
+      "name": "플토이",
+      "COUNT(post.id)": 1
+    }
+  ]
+}
+*/
 var matches = document.body.matchesSelector || document.body.webkitMatchesSelector || document.body.mozMatchesSelector || document.body.msMatchesSelector || document.body.webkitMatchesSelector || document.body.matchesSelector;
 
 
@@ -80,13 +110,22 @@ function cloneElement (el) {
 
 function getDearListDone () {
 	var httpRequest = new XMLHttpRequest();
+	var requestURL = '/api/place/1/dear?page=1';
 	httpRequest.onreadystatechange = function(){
 	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-			data = JSON.parse(httpRequest.response);
-			renderDearList(Object.keys(data));
+			var received = JSON.parse(httpRequest.response);
+			if (!received.success) {
+				console.error('something went wrong @'+requestURL);
+				debugger;
+				return;
+			}
+			data.dears = received.result;
+			renderDearList(data.dears.map(function (el, index, array) {
+				return el.name;
+			}));
 	    }
 	};
-	httpRequest.open('GET', '/api/place/1/dear?page=1', true);
+	httpRequest.open('GET', requestURL, true);
 	httpRequest.send(null);
 }
 
