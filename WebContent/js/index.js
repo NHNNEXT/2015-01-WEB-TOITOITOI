@@ -1,60 +1,63 @@
-var data = {
-	dears: []
-};
-/*
-{
-  "success": true,
-  "result": [
-    {
-      "dear_id": 1,
-      "name": "toitoi",
-      "COUNT(post.id)": 3
-    },
-    {
-      "dear_id": 2,
-      "name": "깃토이",
-      "COUNT(post.id)": 3
-    },
-    {
-      "dear_id": 6,
-      "name": "산타",
-      "COUNT(post.id)": 1
-    },
-    {
-      "dear_id": 4,
-      "name": "뷰티토이",
-      "COUNT(post.id)": 1
-    },
-    {
-      "dear_id": 7,
-      "name": "산타할아버지는 알고 계신대 누가 착한앤지",
-      "COUNT(post.id)": 1
-    },
-    {
-      "dear_id": 5,
-      "name": "소토이",
-      "COUNT(post.id)": 1
-    },
-    {
-      "dear_id": 3,
-      "name": "플토이",
-      "COUNT(post.id)": 1
-    }
-  ]
+function Dear (dearDataObject) {
+	this.dearId = dearDataObject.dear_id;
+	this.name = dearDataObject.name;
+	this.maxPostNum = dearDataObject['COUNT(post.id)']; // change property name
+	this.currentPage = 0;
+	this.posts = [];
 }
-*/
+
+function DearList (placeId, maxDearNum) {
+	this.placeId = placeId;
+	this.maxDearNum = maxDearNum;
+	this.currentPage = 0;
+	this.dears = []; // which is sorted by postNum DESC
+}
+DearList.prototype.render = function () {
+	debugger;
+	var dataLen = this.dears.length;
+	var codes = '';
+	for (var i = 0; i < dataLen; i++) {
+		codes += '<article><h3 data-index="'+i+'">'+this.dears[i].name+'</h3></article>';
+	}
+	document.querySelector('#letters').insertAdjacentHTML('beforeend', codes);
+};
+DearList.prototype.getNextPageDears = function () {
+	if (this.currentPage > 0 && this.dears.length >= this.maxDearNum) {
+		console.log('all dears loaded');
+		return;
+	}
+
+	var httpRequest = new XMLHttpRequest();
+	var requestURL = '/api/place/'+this.placeId+'/dear?page='+ ++(this.currentPage);
+	httpRequest.onreadystatechange = function () {
+	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+			var received = JSON.parse(httpRequest.response);
+			if (!received.success) {
+				console.error('something went wrong @'+requestURL);
+				debugger;
+				return;
+			}
+			received.result.forEach(function (item, index, array) {
+				this.dears.push(new Dear(item));
+			}.bind(this));
+			this.render();
+	    }
+	}.bind(this);
+	httpRequest.open('GET', requestURL, true);
+	httpRequest.send(null);
+};
+
 var matches = document.body.matchesSelector || document.body.webkitMatchesSelector || document.body.mozMatchesSelector || document.body.msMatchesSelector || document.body.webkitMatchesSelector || document.body.matchesSelector;
 
 
-function renderDearList (dataList) {
-	var dataLen = dataList.length;
-	var codes = '';
-	for (var i = 0; i < dataLen; i++) {
-		codes += '<article><h3>'+dataList[i]+'</h3></article>';
-		
-	}
-	document.querySelector('#letters').insertAdjacentHTML('beforeend', codes);
-}
+// function renderDearList (dataList) {
+// 	var dataLen = dataList.length;
+// 	var codes = '';
+// 	for (var i = 0; i < dataLen; i++) {
+// 		codes += '<article><h3>'+dataList[i]+'</h3></article>';
+// 	}
+// 	document.querySelector('#letters').insertAdjacentHTML('beforeend', codes);
+// }
 
 function hasClass (el, name, reg) {
 	if (!el) { return false; }
@@ -108,29 +111,31 @@ function cloneElement (el) {
 	return JSON.parse(JSON.stringify(el));
 }
 
-function getDearListDone () {
-	var httpRequest = new XMLHttpRequest();
-	var requestURL = '/api/place/1/dear?page=1';
-	httpRequest.onreadystatechange = function(){
-	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-			var received = JSON.parse(httpRequest.response);
-			if (!received.success) {
-				console.error('something went wrong @'+requestURL);
-				debugger;
-				return;
-			}
-			data.dears = received.result;
-			renderDearList(data.dears.map(function (el, index, array) {
-				return el.name;
-			}));
-	    }
-	};
-	httpRequest.open('GET', requestURL, true);
-	httpRequest.send(null);
-}
+// function getDearListDone () {
+// 	var httpRequest = new XMLHttpRequest();
+// 	var requestURL = '/api/place/1/dear?page=1';
+// 	httpRequest.onreadystatechange = function(){
+// 	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+// 			var received = JSON.parse(httpRequest.response);
+// 			if (!received.success) {
+// 				console.error('something went wrong @'+requestURL);
+// 				debugger;
+// 				return;
+// 			}
+// 			data.dears = received.result;
+// 			renderDearList(data.dears.map(function (el, index, array) {
+// 				return el.name;
+// 			}));
+// 	    }
+// 	};
+// 	httpRequest.open('GET', requestURL, true);
+// 	httpRequest.send(null);
+// }
+
+var dearList = new DearList (1, 10);
 
 document.addEventListener("DOMContentLoaded", function() {
-	getDearListDone();
+	dearList.getNextPageDears();
 
 	document.querySelector('#new-letter form').addEventListener('submit', function (e) {
 		e.preventDefault();
@@ -144,7 +149,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		httpRequest.onreadystatechange = function(){
 		    if (httpRequest.readyState === XMLHttpRequest.DONE) {
 		    	form.reset();
-				// debugger; // 일단 되기나 해라 으으. 400 404 415 ....
 		    }
 		};
 		httpRequest.open('POST', '/api/place/'+placeId+'/post', true);
@@ -174,6 +178,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		var list = header.parentNode.querySelector('ul');
 		if (!list) {
 			var dear = header.textContent;
+			getDearListDone();
 			var previews = findPreview(data, dear);
 			addPreview(previews, header);
 		}
