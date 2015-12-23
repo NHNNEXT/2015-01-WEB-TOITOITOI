@@ -7,10 +7,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- deardeardear : post.dear, occurs 2 times. -->
 	<meta charset="utf-8">
-	<title>Dear. ${post.dear}</title>
+	<title>Dear. deardeardear</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<link type="text/css" rel="stylesheet" href="/css/index.css">
+	<script defer src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script defer src="/js/util.js"></script>
+	<script defer src="/js/main.js"></script>
+	<script defer src="/js/elastic.js"></script>
 </head>
 <body>
 	<nav class="top-bar"><a id="go-back" href="/place/${post.placeId}">뒤로가기</a></nav>
@@ -18,19 +23,16 @@
 		<div>
 			<label class="dear-label" for="dear-input">Dear.</label>
 			<img id="stamp" src="http://i64.tinypic.com/2v33m9l.png">
-			<input id="dear-input" readonly value="${post.dear}">
+			<input id="dear-input" readonly value="deardeardear">
 			<textarea name="content" readonly>${post.content}</textarea>
 		</div>
 	</section>
 	<section id="replies">
 	</section>
 	<form id="write-reply">
-		<input type="hidden" name="postId" value="${post.postId}">
+		<input type="hidden" name="postId" value="${post.id}">
 		<input id="reply-input" type="text" name="content">
 		<button>댓글쓰기</button>
 	</form>
-	<script defer src="/js/elastic.js"></script>
-	<script defer src="/js/main.js"></script>
-	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 </body>
 </html>
