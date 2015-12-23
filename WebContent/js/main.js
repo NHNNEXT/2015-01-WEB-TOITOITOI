@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 function updateReplies(reply){
-	console.log(reply);
 	var code = '<article class="reply">re : '+reply.content+'</article>'
 	document.querySelector('#replies').insertAdjacentHTML('afterbegin', code);
 }
@@ -57,7 +56,11 @@ $(document).ready(function() {
 	      dataType: 'json',
 	      data: form.serialize(), // serialize form data
 	      success: function(data) {
-	        updateReplies(data);
+	      	if (!data.success) {
+	      		console.error('something went wrong @'+replyPath);
+	      		return;
+	      	}
+	        updateReplies(data.result);
 	        form.trigger('reset'); // reset form
 	      },
 	      error: function(e) {

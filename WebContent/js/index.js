@@ -43,7 +43,6 @@ Dear.prototype.getNextPagePosts = function () {
 			var received = JSON.parse(httpRequest.response);
 			if (!received.success) {
 				console.error('something went wrong @'+requestURL);
-				debugger;
 				return;
 			}
 			received.result.forEach(function (item, index, array) {
