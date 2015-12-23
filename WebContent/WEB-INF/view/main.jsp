@@ -18,7 +18,7 @@
 	<script defer src="/js/elastic.js"></script>
 </head>
 <body>
-	<nav class="top-bar"><a id="go-back" href="/place/${post.placeId}">뒤로가기</a></nav>
+	<nav class="top-bar"><a id="go-back" href="/place/${post.placeId}"><span style="display:none;">뒤로가기</span></a></nav>
 	<section class="the-letter">
 		<div>
 			<label class="dear-label" for="dear-input">Dear.</label>
@@ -31,7 +31,7 @@
 	</section>
 	<form id="write-reply">
 		<input type="hidden" name="postId" value="${post.id}">
-		<input id="reply-input" type="text" name="content">
+		<input id="reply-input" type="text" name="content" maxlength="2000">
 		<button>댓글쓰기</button>
 	</form>
 </body>
