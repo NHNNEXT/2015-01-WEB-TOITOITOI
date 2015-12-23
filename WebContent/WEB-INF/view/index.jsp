@@ -26,7 +26,7 @@
 		<form action="/api/place/${place.placeId}/post">
 			<input type="hidden" name="placeId" value="${place.placeId}">
 			<label class="dear-label" for="dear-input">Dear.</label>
-			<input id="dear-input" type="text" name="dear">
+			<input id="dear-input" type="text" name="dear" maxlength="25">
 			<textarea id="post-content" name="content"></textarea>
 			<div>
 				<button>SEND</button>
