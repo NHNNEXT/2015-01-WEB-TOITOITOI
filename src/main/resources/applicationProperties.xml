@@ -3,7 +3,7 @@
 <properties>
 	<comment>applicationProperties</comment>
 
-	<entry key="database.driverClassName">org.h2.Driver</entry>
+	<entry key="database.driverClassName">com.mysql.jdbc.Driver</entry>
 	<entry key="database.url">jdbc:mysql://localhost:3306/dearhere</entry>
 	<entry key="database.username">root</entry>
 	<entry key="database.password">Toi%Tree7</entry>
