@@ -16,21 +16,22 @@ USE `dearhere` ;
 -- Table `dearhere`.`place`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dearhere`.`place` (
-  `id` INT unsigned NOT NULL AUTO_INCREMENT,
+  `id` INT unsigned NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `dearhere`.` dear`
+-- Table `dearhere`.`dear`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dearhere`.`dear` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(25) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `dearIdx` (`name` ASC))
-ENGINE = InnoDB;
+  INDEX `dearIdx` (`name` ASC),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
+ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -41,12 +42,12 @@ CREATE TABLE IF NOT EXISTS `dearhere`.`post` (
   `createdtime` TIMESTAMP NOT NULL,
   `content` TEXT NOT NULL,
   `imageurl` VARCHAR(255) NULL,
-  `likes` INT unsigned NOT NULL DEFAULT '0' COMMENT 'UNSIGNED\n',
+  `likes` INT NOT NULL DEFAULT '0' COMMENT 'UNSIGNED\n',
   `place_id` INT unsigned NOT NULL,
   `dear_id` INT unsigned NOT NULL,
   PRIMARY KEY (`id`, `dear_id`),
   INDEX `fk_post_place_idx` (`place_id` ASC),
-  INDEX `fk_post_dear1_idx` (`dear_id` ASC),
+  INDEX `fk_post_ dear1_idx` (`dear_id` ASC),
   CONSTRAINT `fk_post_place`
     FOREIGN KEY (`place_id`)
     REFERENCES `dearhere`.`place` (`id`)
@@ -57,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `dearhere`.`post` (
     REFERENCES `dearhere`.`dear` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -67,8 +68,8 @@ CREATE TABLE IF NOT EXISTS `dearhere`.`reply` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT 'unsigned',
   `createdtime` TIMESTAMP NOT NULL,
   `content` TEXT NOT NULL,
-  `likes` INT unsigned NOT NULL DEFAULT '0',
-  `post_id` INT unsigned NULL,
+  `likes` INT NOT NULL DEFAULT '0',
+  `post_id` INT NULL,
   PRIMARY KEY (`id`, `post_id`),
   INDEX `fk_reply_post1_idx` (`post_id` ASC),
   CONSTRAINT `fk_reply_post1`
@@ -76,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `dearhere`.`reply` (
     REFERENCES `dearhere`.`post` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
@@ -92,13 +93,7 @@ CREATE TABLE IF NOT EXISTS `dearhere`.`candidate` (
     REFERENCES `dearhere`.`place` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
+ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 select * from post;
 select * from dear;
 insert into place (name) values ('test');
