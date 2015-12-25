@@ -26,7 +26,9 @@ public class PlaceController {
 			throw new IllegalAPIPathException();
 		}
 		Place place = placeDao.getPlaceById(placeId);
+		Integer id = placeId;
 		model.addAttribute("place", place);
+		model.addAttribute("placeId", id);
 		return "index";
 	}
 	
