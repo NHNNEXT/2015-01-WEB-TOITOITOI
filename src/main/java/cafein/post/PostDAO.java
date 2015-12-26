@@ -93,29 +93,22 @@ public class PostDAO extends JdbcDaoSupport {
 	// dear테이블과 join필요 place는 join 불필
 	public List<Map<String, Object>> getDearList(Integer placeId, Integer nPage) {
 
-		String sql = "SELECT post.dear_id, dear.name, COUNT(post.id) "
+		String sql = "SELECT post.dear_id AS id, dear.name AS name, COUNT(post.id) AS totalPostNum "
 				+ "FROM post LEFT JOIN dear ON post.dear_id = dear.id "
 				+ "WHERE post.place_id = ? "
-				+ "GROUP BY post.dear_id ORDER BY COUNT(post.id) DESC LIMIT ?, 10";
+				+ "GROUP BY post.dear_id ORDER BY totalPostNum DESC LIMIT ?, 10";
 
 		return jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 });
 	}
 
 	// dearId를 parameter로 받는다면 dear join없이 가능.
-	public List<Post> getPreviews(Integer placeid, Integer dearId, int nPage) {
+	public List<Map<String, Object>> getPreviews(Integer placeid, Integer dearId, int nPage) {
 		int startingRow = (nPage - 1) * 20;
-		String sql = "SELECT id, LEFT(content, 50), likes FROM post "
+		String sql = "SELECT id, LEFT(content, 50) AS preview, likes FROM post "
 				+ "WHERE place_id = ? AND dear_id = ? "
 				+ "ORDER BY likes DESC LIMIT ?, 20";
-		List<Post> result = jdbcTemplate.query(sql, new Object[] { placeid, dearId, startingRow }, new RowMapper<Post>() {
-			public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
-				int postid = rs.getInt("id");
-				String contents = rs.getString("LEFT(content, 50)");
-				int likes = rs.getInt("likes");
-				return new Post(postid, contents, likes);
-			}
-		});
-		return result;
+		
+		return jdbcTemplate.queryForList(sql, new Object[] { placeid, dearId, startingRow });
 	}
 
 	public void plusLike(int pid) {

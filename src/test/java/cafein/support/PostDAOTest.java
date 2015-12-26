@@ -22,8 +22,8 @@ public class PostDAOTest {
 	
 	@Test
 	public void getPostlist() {
-		List<Post> postlist = postdao.getPreviews(1, 1, 1);
-		logger.debug(postlist.toString());
+//		List<Post> postlist = postdao.getPreviews(1, 1, 1);
+//		logger.debug(postlist.toString());
 	}
 
 }

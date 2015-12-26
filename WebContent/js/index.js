@@ -1,15 +1,15 @@
 function Post (postDataObject) {
 	this.postId = postDataObject.id;
-	this.preview = postDataObject.content;
+	this.preview = postDataObject.preview;
 	this.likes = postDataObject.likes;
 }
 
 // Post, Dear, PostList, DearList 로 나눠야겠다.
 
 function Dear (dearDataObject, placeId, listElementSelector) {
-	this.dearId = dearDataObject.dear_id;
+	this.dearId = dearDataObject.id;
 	this.name = dearDataObject.name;
-	this.maxPostNum = dearDataObject['COUNT(post.id)']; // change property name
+	this.maxPostNum = dearDataObject.totalPostNum; // change property name
 	this.currentPage = 0;
 	this.posts = [];
 	this.placeId = placeId;

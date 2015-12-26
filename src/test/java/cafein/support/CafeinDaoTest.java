@@ -74,7 +74,7 @@ public class CafeinDaoTest {
 	
 	@Test
 	public void getPrivews() {
-		logger.debug(postdao.getPreviews(1, 1, 1).toString());
+//		logger.debug(postdao.getPreviews(1, 1, 1).toString());
 	}
 //	@Test
 //	public void hasDear() {
