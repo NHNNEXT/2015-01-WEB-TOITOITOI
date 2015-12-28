@@ -1,6 +1,5 @@
 package cafein.support;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cafein.cafe.CandidateDAO;
 import cafein.cafe.Place;
 import cafein.cafe.PlaceDAO;
 import cafein.post.Post;
@@ -29,6 +29,9 @@ public class CafeinDaoTest {
 	
 	@Autowired
 	private PlaceDAO placedao;
+	
+	@Autowired
+	private CandidateDAO candidatedao;
 	
 	@Test
 	public void getPlaceById() {
@@ -80,6 +83,12 @@ public class CafeinDaoTest {
 	@Test
 	public void getDearList(){
 		logger.debug(postdao.getDearList(1, 1).toString());
+	}
+	
+	@Test
+	public void getRecommend() {
+		Integer test = 1;
+		logger.debug(candidatedao.getRecommendedDears(test).toString());
 	}
 	
 /*	@Test

@@ -45,9 +45,7 @@ public class ReplyDAO extends JdbcDaoSupport {
 
 	public Reply getReplyJustInserted(Integer id) {
 		String sql = "SELECT * FROM reply WHERE id=?";
-		Reply test;
-		test = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Reply>(Reply.class), id);
-		return test;
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Reply>(Reply.class), id);
 	}
 
 	public List<Reply> getReplys(Integer pid) {
