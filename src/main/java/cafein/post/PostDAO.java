@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,13 +93,18 @@ public class PostDAO extends JdbcDaoSupport {
 
 	// dear테이블과 join필요 place는 join 불필
 	public List<Map<String, Object>> getDearList(Integer placeId, Integer nPage) {
-
+		
 		String sql = "SELECT post.dear_id, dear.name, COUNT(post.id) "
 				+ "FROM post LEFT JOIN dear ON post.dear_id = dear.id "
 				+ "WHERE post.place_id = ? "
 				+ "GROUP BY post.dear_id ORDER BY COUNT(post.id) DESC LIMIT ?, 10";
 
-		return jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 });
+		List<Map<String,Object>> result = jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 });
+		Integer totalDearN = result.size();
+		Map<String,Object> totalDearNum = new HashMap<String,Object>();
+		totalDearNum.put("totalDearNum", totalDearN);
+		result.add(totalDearNum);
+		return result;
 	}
 
 	// dearId를 parameter로 받는다면 dear join없이 가능.
