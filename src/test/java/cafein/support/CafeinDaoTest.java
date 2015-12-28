@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import cafein.cafe.Place;
+import cafein.cafe.PlaceDAO;
 import cafein.post.Post;
 import cafein.post.PostDAO;
 import cafein.reply.Reply;
@@ -25,6 +27,14 @@ public class CafeinDaoTest {
 	@Autowired
 	private ReplyDAO replydao;
 	
+	@Autowired
+	private PlaceDAO placedao;
+	
+	@Test
+	public void getPlaceById() {
+		placedao.getPlaceById(3);	
+		//logger.debug(placedao.getPlaceById(3).toString());
+	}
 //	@Test
 //	public void addReply() throws SQLException {
 //		Reply result = null;
@@ -72,10 +82,10 @@ public class CafeinDaoTest {
 		logger.debug(postdao.getDearList(1, 1).toString());
 	}
 	
-	@Test
+/*	@Test
 	public void getPrivews() {
-//		logger.debug(postdao.getPreviews(1, 1, 1).toString());
-	}
+		logger.debug(postdao.getPreviews(1, 1, 1).toString());
+	}*/
 //	@Test
 //	public void hasDear() {
 //		logger.debug(postdao.getDearId("김기범").toString());

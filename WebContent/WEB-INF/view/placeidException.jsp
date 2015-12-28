@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>DearHere</title>
 </head>
 <body>
 	<div>
-		없는 장소입니다.
+		앗! 없는 장소입니다.
 	</div>
 </body>
 </html>

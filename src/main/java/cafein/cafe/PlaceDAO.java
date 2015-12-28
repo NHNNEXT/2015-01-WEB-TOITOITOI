@@ -6,58 +6,30 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import cafein.post.PostDAO;
+
 public class PlaceDAO extends JdbcDaoSupport {
+	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 
-	public Place getPlaceById (int placeId) {
+	public Place getPlaceById(int placeId) {
 		String sql = "SELECT * FROM place WHERE id=?";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		Place place = null;
-		
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, placeId);
-			ResultSet rs = pstmt.executeQuery();
-			
-			while (rs.next()){
-				int id = rs.getInt("id");
-				String name = rs.getString("name");
-				place = new Place(id, name);
-			}
-			pstmt.close();
-			conn.close();
-		} catch (SQLException e){
-			logger.error("Can not get place date from DB");
-			e.printStackTrace();
+			Place place = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Place>(Place.class), placeId);
+			return place;
+		} catch (EmptyResultDataAccessException e) {
+			return null;
 		}
-		return place;
 	}
 
-	public String getName(int placeId) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		String sql = "SELECT * FROM place WHERE id=?";
-		String placeName = null;
-
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, placeId);
-			ResultSet rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				placeName = rs.getString("name");
-			}
-			pstmt.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return placeName;
-	}
 }
