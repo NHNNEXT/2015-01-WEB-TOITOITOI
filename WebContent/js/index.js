@@ -100,11 +100,18 @@ DearList.prototype.getNextPageDears = function () {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-	var dearList = new DearList (1, 10, document.querySelector('#letters'));
+	var placeId = document.querySelector('#place-id').value;
+	document.querySelector('#new-letter form').addEventListener('submit', function (e) {
+		e.preventDefault();
+	});
+	if (!placeId) {
+		console.error('why no placeId?!');
+		return;
+	}
+	var dearList = new DearList (placeId, 10, document.querySelector('#letters'));
 	dearList.getNextPageDears();
 
 	document.querySelector('#new-letter form').addEventListener('submit', function (e) {
-		e.preventDefault();
 		var placeId = this.querySelector('input[name="placeId"]').value;
 		var dear = this.querySelector('input[name="dear"]').value;
 		var content = this.querySelector('textarea[name="content"]').value;
