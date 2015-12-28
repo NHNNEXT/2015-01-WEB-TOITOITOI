@@ -4,7 +4,7 @@
 	<comment>applicationProperties</comment>
 
 	<entry key="database.driverClassName">com.mysql.jdbc.Driver</entry>
-	<entry key="database.url">jdbc:mysql://localhost:3306/dearhere</entry>
+	<entry key="database.url">jdbc:mysql://localhost:3307/dearhere</entry>
 	<entry key="database.username">root</entry>
-	<entry key="database.password">Toi%Tree7</entry>
+	<entry key="database.password">db1004</entry>
 </properties> 
