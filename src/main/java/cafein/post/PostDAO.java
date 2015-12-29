@@ -100,10 +100,6 @@ public class PostDAO extends JdbcDaoSupport {
 				+ "GROUP BY post.dear_id ORDER BY totalPostNum DESC LIMIT ?, 10";
 
 		List<Map<String,Object>> result = jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 });
-		Integer totalDearN = result.size();
-		Map<String,Object> totalDearNum = new HashMap<String,Object>();
-		totalDearNum.put("totalDearNum", totalDearN);
-		result.add(totalDearNum);
 		return result;
 	}
 

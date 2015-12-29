@@ -1,5 +1,8 @@
 package cafein.post;
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +39,12 @@ public class APIPostController {
 		if (!Validation.isValidParameter(nPage) || !Validation.isValidParameterType(nPage)) {
 			throw new IllegalArgumentException();
 		}
-
+		
+		List<Map<String,Object>> result = postdao.getDearList(placeId, nPage);
+		if(result.isEmpty()){
+			logger.debug(result.toString());
+			return Result.failed("No more data.");
+		}
 		return Result.success(postdao.getDearList(placeId, nPage));
 	}
 

@@ -1,6 +1,8 @@
 package cafein.support;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 
 import cafein.cafe.CandidateDAO;
 import cafein.cafe.Place;
@@ -82,7 +85,12 @@ public class CafeinDaoTest {
 	
 	@Test
 	public void getDearList(){
-		logger.debug(postdao.getDearList(1, 1).toString());
+		List<Map<String,Object>> test;
+		test = postdao.getDearList(1, 4);
+		if(test.isEmpty()){
+	 	logger.debug(test.toString());
+	 	logger.debug("test");
+		}
 	}
 	
 	@Test
