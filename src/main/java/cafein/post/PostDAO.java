@@ -106,7 +106,7 @@ public class PostDAO extends JdbcDaoSupport {
 	// dearId를 parameter로 받는다면 dear join없이 가능.
 	public List<Map<String, Object>> getPreviews(Integer placeid, Integer dearId, int nPage) {
 		int startingRow = (nPage - 1) * 20;
-		String sql = "SELECT id, LEFT(content, 50) AS preview, likes FROM post "
+		String sql = "SELECT id, LEFT(content, 80) AS preview, likes FROM post "
 				+ "WHERE place_id = ? AND dear_id = ? "
 				+ "ORDER BY likes DESC LIMIT ?, 20";
 		
