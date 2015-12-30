@@ -13,23 +13,26 @@ import cafein.cafe.PlaceDAO;
 import cafein.util.IllegalAPIPathException;
 import cafein.util.Validation;
 
-
 @Controller
-public class PlaceController {  
-	
+public class PlaceController {
+
 	@Autowired
 	private PlaceDAO placeDao;
-	
-	@RequestMapping(value="/place/{placeId}", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/place/{placeId}", method = RequestMethod.GET)
 	public String viewPlace(@PathVariable Integer placeId, Model model) {
-		if(!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)){
+		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
 		Place place = placeDao.getPlaceById(placeId);
-		Integer id = placeId;
-		model.addAttribute("place", place);
-		model.addAttribute("placeId", id);
-		return "index";
+		if (place != null) {
+			Integer id = placeId;
+			model.addAttribute("place", place);
+			model.addAttribute("placeId", id);
+			return "index";
+		}
+		return"placeidException";
+
 	}
-	
+
 }

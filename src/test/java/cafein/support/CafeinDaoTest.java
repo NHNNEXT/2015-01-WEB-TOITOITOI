@@ -1,7 +1,8 @@
 package cafein.support;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+
+import cafein.cafe.CandidateDAO;
+import cafein.cafe.Place;
+import cafein.cafe.PlaceDAO;
 import cafein.post.Post;
 import cafein.post.PostDAO;
 import cafein.reply.Reply;
@@ -25,6 +30,17 @@ public class CafeinDaoTest {
 	@Autowired
 	private ReplyDAO replydao;
 	
+	@Autowired
+	private PlaceDAO placedao;
+	
+	@Autowired
+	private CandidateDAO candidatedao;
+	
+	@Test
+	public void getPlaceById() {
+		placedao.getPlaceById(3);	
+		//logger.debug(placedao.getPlaceById(3).toString());
+	}
 //	@Test
 //	public void addReply() throws SQLException {
 //		Reply result = null;
@@ -69,13 +85,24 @@ public class CafeinDaoTest {
 	
 	@Test
 	public void getDearList(){
-		logger.debug(postdao.getDearList(1, 1).toString());
+		List<Map<String,Object>> test;
+		test = postdao.getDearList(1, 4);
+		if(test.isEmpty()){
+	 	logger.debug(test.toString());
+	 	logger.debug("test");
+		}
 	}
 	
 	@Test
-	public void getPrivews() {
-//		logger.debug(postdao.getPreviews(1, 1, 1).toString());
+	public void getRecommend() {
+		Integer test = 1;
+		logger.debug(candidatedao.getRecommendedDears(test).toString());
 	}
+	
+/*	@Test
+	public void getPrivews() {
+		logger.debug(postdao.getPreviews(1, 1, 1).toString());
+	}*/
 //	@Test
 //	public void hasDear() {
 //		logger.debug(postdao.getDearId("김기범").toString());

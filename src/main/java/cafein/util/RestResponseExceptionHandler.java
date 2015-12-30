@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,10 +35,11 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
 	}
 	@ExceptionHandler({ RuntimeException.class })
 	public ResponseEntity<Object> handleRunRequest(final DataIntegrityViolationException ex, final WebRequest request) {
-		final String bodyOfResponse = "Failed to  Data";
+		final String bodyOfResponse = "RuntimeException";
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 	
+
 	// 500
 	@ExceptionHandler({ IllegalAPIPathException.class })
 	public ResponseEntity<Object> handlPathError(final RuntimeException ex, final WebRequest request) {
