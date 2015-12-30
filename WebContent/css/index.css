@@ -89,6 +89,7 @@ nav.top-bar + * {
 #new-letter{
 	margin: 2.7em auto;
 	width: 83%;
+    max-width: 46em;
 }
 
 .the-letter {
@@ -102,6 +103,10 @@ nav.top-bar + * {
 #letters {
     position: relative;
     margin-top: 1.8em;
+    width: calc(100% - 2em);
+    max-width: 50em;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #stamp {
@@ -296,7 +301,7 @@ nav.top-bar + * {
 	border-style: none;
 	border-radius: 9px;
 	height: 26px;
-	width: 82%;
+	width: calc(100% - 6em);
 }
 
 #write-reply button{
