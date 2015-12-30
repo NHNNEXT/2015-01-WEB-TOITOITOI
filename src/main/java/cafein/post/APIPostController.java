@@ -45,7 +45,7 @@ public class APIPostController {
 			logger.debug(result.toString());
 			return Result.failed("No more data.");
 		}
-		return Result.success(postdao.getDearList(placeId, nPage));
+		return Result.success(result);
 	}
 
 	// dearID로 변경
