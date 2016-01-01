@@ -2,25 +2,25 @@ package cafein.cafe;
 
 public class Place {
 
-	private int placeId;
+	private int id;
 	private String name;
 	
 	public Place(){
 		
 	}
 
-	public Place(int placeId, String name) {
+	public Place(int id, String name) {
 		super();
-		this.placeId = placeId;
+		this.id = id;
 		this.name = name;
 	}
 
-	public int getPlaceId() {
-		return placeId;
+	public int getId() {
+		return id;
 	}
 
-	public void setPlaceId(int placeId) {
-		this.placeId = placeId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -36,7 +36,7 @@ public class Place {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + placeId;
+		result = prime * result + id;
 		return result;
 	}
 
@@ -54,14 +54,14 @@ public class Place {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (placeId != other.placeId)
+		if (id != other.id)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Place [placeId=" + placeId + ", name=" + name + "]";
+		return "Place [placeId=" + id + ", name=" + name + "]";
 	}
 
 }

@@ -18,7 +18,7 @@ import cafein.util.Validation;
 
 @Controller
 public class PlaceController {
-	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
+	private static final Logger logger = LoggerFactory.getLogger(PlaceController.class);
 	@Autowired
 	private PlaceDAO placeDao;
 
@@ -27,9 +27,10 @@ public class PlaceController {
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
+		logger.debug("placeId : "+placeId);
 		Place place = placeDao.getPlaceById(placeId);
+		model.addAttribute("place", place);
 		if (place != null) {
-			model.addAttribute("place", place);
 			logger.debug(place.toString());
 			return "index";
 		}
