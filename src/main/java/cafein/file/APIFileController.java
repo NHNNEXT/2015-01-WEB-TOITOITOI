@@ -2,18 +2,24 @@ package cafein.file;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import cafein.util.FileUtils;
+import cafein.util.ImageFileUtils;
 import cafein.util.Result;
 
 @RestController
@@ -40,7 +46,7 @@ public class APIFileController {
 
 				String originalFileName = multipartFile.getOriginalFilename();
 				String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-				String storedFileName = FileUtils.getRandomString() + originalFileExtension;
+				String storedFileName = ImageFileUtils.getRandomString() + originalFileExtension;
 
 				file = new File(filePath + storedFileName);
 
@@ -54,9 +60,32 @@ public class APIFileController {
 				filedao.addFileInfo(imageFile);
 				return Result.success(storedFileName);
 			}
-			logger.debug("hohohohoho6");
 		}
-		logger.debug("hohohohoho7");
 		return Result.failed("multipartFile is null");
 	}
+	
+	
+	@RequestMapping(value = "/api/post/{postid}/file", method = RequestMethod.GET)
+	public Result sendFile(@PathVariable(value="postid") Integer postid, HttpServletResponse response) throws UnsupportedEncodingException {
+	    String storedFileName = filedao.getStroedFileNameByPostId(postid);
+	    String originalFileName = filedao.getOriginalFileNameByPostId(postid);
+	    
+	    byte fileByte[];
+		try {
+			fileByte = FileUtils.readFileToByteArray(new File(filePath+storedFileName));
+			response.setContentType("application/octet-stream");
+			response.setContentLength(fileByte.length);
+			response.setHeader("Content-Disposition", "attachment; fileName=/" + URLEncoder.encode(originalFileName,"UTF-8")+"/;");
+			response.setHeader("Content-Transfer-Encoding", "binary");
+			response.getOutputStream().write(fileByte);
+			
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+		} catch (IOException e) {
+			return Result.failed(e.toString());
+		}
+		return Result.success();
+	}
+	
+	
 }
