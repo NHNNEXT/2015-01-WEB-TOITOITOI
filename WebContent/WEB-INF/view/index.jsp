@@ -34,6 +34,7 @@
 				<label class="remain-length" for="post-content">20000</label>
 			</div>
 		</form>
+		<img src="http://localhost:8080/api/post/7/file">
 	</section>
 	<section id="letters">
 		<h2 class="hidden-heading">letters</h2>

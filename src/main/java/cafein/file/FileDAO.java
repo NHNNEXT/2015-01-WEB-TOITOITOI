@@ -19,8 +19,9 @@ public class FileDAO extends JdbcDaoSupport{
 		return imageFile.getStored_filename();
 	}
 
-	public void updatePostId(String storedFileName) {
-		
+	public void updatePostId(Integer postId, String storedFileName) {
+		String sql = "UPDATE imagefile SET post_id=? WHERE stored_filename=?;";
+		jdbcTemplate.update(sql, postId, storedFileName);
 	}
 
 	public String getStroedFileNameByPostId(Integer postid) {

@@ -129,6 +129,11 @@ public class CafeinDaoTest {
 		logger.debug(filedao.addFileInfo(imageFile).toString());
 	}
 	
+	@Test
+	public void updatePostId() {
+		filedao.updatePostId(2,"UDDETYUHJIOKRFTGUDDETYUHJIOKRFTG");
+	}
+	
 /*	@Test
 	public void getPrivews() {
 		logger.debug(postdao.getPreviews(1, 1, 1).toString());
