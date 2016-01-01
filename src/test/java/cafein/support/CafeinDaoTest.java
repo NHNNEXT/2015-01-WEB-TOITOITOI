@@ -43,11 +43,11 @@ public class CafeinDaoTest {
 	@Autowired
 	private FileDAO filedao;
 	
-	@Test
-	public void getPlaceById() {
-		placedao.getPlaceById(1);	
-		
-	}
+//	@Test
+//	public void getPlaceById() {
+//		placedao.getPlaceById(1);	
+//		
+//	}
 //	@Test
 //	public void addReply() throws SQLException {
 //		Reply result = null;
@@ -146,4 +146,5 @@ public class CafeinDaoTest {
 //	public void addDear() {
 //		logger.debug(postdao.addDear("김기범").toString());
 //	}
-}
+
+
