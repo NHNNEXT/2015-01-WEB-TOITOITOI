@@ -69,13 +69,14 @@ public class APIFileController {
 	public Result sendFile(@PathVariable(value="postid") Integer postid, HttpServletResponse response) throws UnsupportedEncodingException {
 	    String storedFileName = filedao.getStroedFileNameByPostId(postid);
 	    String originalFileName = filedao.getOriginalFileNameByPostId(postid);
+	    String originalFileExtension = storedFileName.substring(storedFileName.lastIndexOf("."));
 	    
 	    byte fileByte[];
 		try {
 			fileByte = FileUtils.readFileToByteArray(new File(filePath+storedFileName));
-			response.setContentType("application/octet-stream");
+			response.setContentType("image/" + originalFileExtension);
 			response.setContentLength(fileByte.length);
-			response.setHeader("Content-Disposition", "attachment; fileName=/" + URLEncoder.encode(originalFileName,"UTF-8")+"/;");
+			response.setHeader("Content-Disposition", "attachment; fileName=" + URLEncoder.encode(originalFileName,"UTF-8")+";");
 			response.setHeader("Content-Transfer-Encoding", "binary");
 			response.getOutputStream().write(fileByte);
 			
