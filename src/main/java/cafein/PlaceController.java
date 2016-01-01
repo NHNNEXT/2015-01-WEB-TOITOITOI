@@ -1,5 +1,7 @@
 package cafein;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cafein.cafe.Place;
 import cafein.cafe.PlaceDAO;
+import cafein.post.PostDAO;
 import cafein.util.IllegalAPIPathException;
 import cafein.util.Validation;
 
 @Controller
 public class PlaceController {
-
+	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
 	@Autowired
 	private PlaceDAO placeDao;
 
@@ -26,9 +29,8 @@ public class PlaceController {
 		}
 		Place place = placeDao.getPlaceById(placeId);
 		if (place != null) {
-			Integer id = placeId;
 			model.addAttribute("place", place);
-			model.addAttribute("placeId", id);
+			logger.debug(place.toString());
 			return "index";
 		}
 		return"placeidException";
