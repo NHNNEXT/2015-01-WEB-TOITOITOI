@@ -25,7 +25,7 @@ import cafein.post.PostDAO;
 import cafein.reply.Reply;
 import cafein.reply.ReplyDAO;
 
-@RunWith(SpringJUnit4ClassRunner.class)@ContextConfiguration("classpath:/applicationContext.xml")
+//@RunWith(SpringJUnit4ClassRunner.class)@ContextConfiguration("classpath:/applicationContext.xml")
 public class CafeinDaoTest {
 	private static final Logger logger = LoggerFactory.getLogger(CafeinDaoTest.class);
 	@Autowired
