@@ -45,8 +45,8 @@ public class CafeinDaoTest {
 	
 	@Test
 	public void getPlaceById() {
-		placedao.getPlaceById(3);	
-		//logger.debug(placedao.getPlaceById(3).toString());
+		placedao.getPlaceById(1);	
+		
 	}
 //	@Test
 //	public void addReply() throws SQLException {

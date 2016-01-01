@@ -168,8 +168,8 @@ document.addEventListener("DOMContentLoaded", function() {
 				debugger;
 		    }
 		};
-		httpRequest.open('POST', '/api/place/'+placeId+'/post', true);
-		httpRequest.setRequestHeader("Content-Type","multipart/form-data;charset=UTF-8");
+		httpRequest.open('POST', '/api/post/file',true);
+		//httpRequest.setRequestHeader("Content-Type","multipart/form-data;charset=UTF-8");
 		httpRequest.send(data);
 	}
 	var fileElement = document.querySelector('#new-letter form input[type="file"]');
