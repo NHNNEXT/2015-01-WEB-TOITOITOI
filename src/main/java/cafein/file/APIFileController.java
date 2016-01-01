@@ -25,7 +25,7 @@ import cafein.util.Result;
 @RestController
 public class APIFileController {
 	private static final Logger logger = LoggerFactory.getLogger(APIFileController.class);
-	private static final String filePath = "/Users/Thomas/toitoiImage/";
+	private static final String filePath = "/root/images";
 
 	@Autowired
 	private FileDAO filedao;
