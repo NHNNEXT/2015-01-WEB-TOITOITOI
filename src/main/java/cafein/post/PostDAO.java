@@ -2,9 +2,7 @@ package cafein.post;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +14,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -113,36 +110,8 @@ public class PostDAO extends JdbcDaoSupport {
 		return jdbcTemplate.queryForList(sql, new Object[] { placeid, dearId, startingRow });
 	}
 
-	public void plusLike(int pid) {
-		String sql = "UPDATE post SET liked = liked+1 WHERE pid = ?";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			conn = getConnection();
-			logger.debug("connection:" + conn);
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pid);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException();
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
+	public void plusLike(int postid) {
+		String sql = "UPDATE post SET likes = likes+1 WHERE id = ?";
+		jdbcTemplate.update(sql, postid);
 	}
 }

@@ -1,5 +1,7 @@
 package cafein.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +99,19 @@ public class CafeinDaoTest {
 	public void getRecommend() {
 		Integer test = 1;
 		logger.debug(candidatedao.getRecommendedDears(test).toString());
+	}
+	
+	@Test
+	public void plusLike() {
+		Integer postid = 3;
+		Post before = postdao.getPostByPostId(postid);
+		int beforePlus = before.getLikes();
+		
+		postdao.plusLike(postid);
+		Post after = postdao.getPostByPostId(postid);
+		int afterPlus = after.getLikes();
+		
+		assertEquals(new Integer(beforePlus+1), new Integer(afterPlus));
 	}
 	
 /*	@Test
