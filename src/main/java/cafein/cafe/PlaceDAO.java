@@ -14,11 +14,9 @@ public class PlaceDAO extends JdbcDaoSupport {
 	JdbcTemplate jdbcTemplate;
 
 	public Place getPlaceById(int placeId) {
-		logger.debug("placeId : "+placeId);
 		String sql = "SELECT * FROM place WHERE id=?";
 		try {
 			Place place = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Place>(Place.class), placeId);
-			logger.debug("placeId : "+placeId);
 			return place;
 		} catch (EmptyResultDataAccessException e) {
 			return null;

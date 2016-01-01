@@ -27,7 +27,6 @@ public class PlaceController {
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
-		logger.debug("placeId : "+placeId);
 		Place place = placeDao.getPlaceById(placeId);
 		model.addAttribute("place", place);
 		if (place != null) {

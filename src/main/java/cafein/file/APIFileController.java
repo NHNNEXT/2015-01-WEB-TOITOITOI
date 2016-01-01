@@ -26,7 +26,7 @@ public class APIFileController {
 	private FileDAO filedao;
 
 	@RequestMapping(value = "/api/post/file", method = RequestMethod.POST)
-	public Result insertFile(@RequestParam(value = "imagefile", required = true) MultipartHttpServletRequest request) {
+	public Result insertFile(MultipartHttpServletRequest request) {
 		logger.debug("hohohohoho1");
 		Iterator<String> iterator = request.getFileNames();
 		logger.debug("hohohohoho2");

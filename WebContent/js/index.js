@@ -168,7 +168,8 @@ document.addEventListener("DOMContentLoaded", function() {
 				debugger;
 		    }
 		};
-		httpRequest.open('POST', '/api/post/file',true);
+		httpRequest.open('POST','/api/post/file',true);
+		httpRequest.enctype = "multipart/form-data";
 		//httpRequest.setRequestHeader("Content-Type","multipart/form-data;charset=UTF-8");
 		httpRequest.send(data);
 	}
