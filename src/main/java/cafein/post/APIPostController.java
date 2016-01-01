@@ -82,8 +82,6 @@ public class APIPostController {
 
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
 	public Result createPost(@PathVariable Integer placeId, @RequestParam String content, @RequestParam String dear, @RequestParam(required = false) String storedFileName) {
-		boolean isFileUploadSuccess = true;
-
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
@@ -93,16 +91,17 @@ public class APIPostController {
 		if (!Validation.isValidMaxLenPost(content)) {
 			throw new IllegalArgumentLengthException();
 		}
-
-		if (storedFileName != null){
-			filedao.updatePostId(storedFileName);
-		}
 		
 		Post newPost = new Post(dear, content, placeId);
 		logger.debug(newPost.toString());
+		newPost = postdao.addPost(newPost);
+		Integer postId = newPost.getId();
 		
-
-	    return Result.success(postdao.addPost(newPost));
+		if (storedFileName != null){
+			filedao.updatePostId(postId, storedFileName);
+		}
+		
+	    return Result.success(newPost);
 	}
 
 	@RequestMapping(value = "recommend", method = RequestMethod.GET)

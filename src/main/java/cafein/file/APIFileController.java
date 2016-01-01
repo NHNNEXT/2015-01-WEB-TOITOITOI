@@ -2,41 +2,41 @@ package cafein.file;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import cafein.util.FileUtils;
+import cafein.util.ImageFileUtils;
 import cafein.util.Result;
 
 @RestController
 public class APIFileController {
 	private static final Logger logger = LoggerFactory.getLogger(APIFileController.class);
-	private static final String filePath = "/Users/Songhee/toitoiImage";
+	private static final String filePath = "/Users/Thomas/toitoiImage/";
 
 	@Autowired
 	private FileDAO filedao;
-
+	
 	@RequestMapping(value = "/api/post/file", method = RequestMethod.POST)
 	public Result insertFile(MultipartHttpServletRequest request) {
-		logger.debug("hohohohoho1");
 		Iterator<String> iterator = request.getFileNames();
-		logger.debug("hohohohoho2");
 		MultipartFile multipartFile = null;
-		logger.debug("hohohohoho3");
 		while (iterator.hasNext()) {
-			logger.debug("hohohohoho4");
 			multipartFile = request.getFile(iterator.next());
 			if (multipartFile.isEmpty() == false) {
-				logger.debug("hohohohoho5");
 				logger.debug("filename : " + multipartFile.getOriginalFilename());
 
 				File file = new File(filePath);
@@ -46,7 +46,7 @@ public class APIFileController {
 
 				String originalFileName = multipartFile.getOriginalFilename();
 				String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-				String storedFileName = FileUtils.getRandomString() + originalFileExtension;
+				String storedFileName = ImageFileUtils.getRandomString() + originalFileExtension;
 
 				file = new File(filePath + storedFileName);
 
@@ -60,9 +60,33 @@ public class APIFileController {
 				filedao.addFileInfo(imageFile);
 				return Result.success(storedFileName);
 			}
-			logger.debug("hohohohoho6");
 		}
-		logger.debug("hohohohoho7");
 		return Result.failed("multipartFile is null");
 	}
+	
+	
+	@RequestMapping(value = "/api/post/{postid}/file", method = RequestMethod.GET)
+	public Result sendFile(@PathVariable(value="postid") Integer postid, HttpServletResponse response) throws UnsupportedEncodingException {
+	    String storedFileName = filedao.getStroedFileNameByPostId(postid);
+	    String originalFileName = filedao.getOriginalFileNameByPostId(postid);
+	    String originalFileExtension = storedFileName.substring(storedFileName.lastIndexOf("."));
+	    
+	    byte fileByte[];
+		try {
+			fileByte = FileUtils.readFileToByteArray(new File(filePath+storedFileName));
+			response.setContentType("image/" + originalFileExtension);
+			response.setContentLength(fileByte.length);
+			response.setHeader("Content-Disposition", "attachment; fileName=" + URLEncoder.encode(originalFileName,"UTF-8")+";");
+			response.setHeader("Content-Transfer-Encoding", "binary");
+			response.getOutputStream().write(fileByte);
+			
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+		} catch (IOException e) {
+			return Result.failed(e.toString());
+		}
+		return Result.success();
+	}
+	
+	
 }

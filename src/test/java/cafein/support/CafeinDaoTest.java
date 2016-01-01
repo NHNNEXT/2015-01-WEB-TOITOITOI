@@ -56,7 +56,7 @@ public class CafeinDaoTest {
 //		logger.debug(result.toString());
 //	}
 
-	@Test
+	/*@Test
 	public void getReplys() {
 		Integer postId = 1;
 		logger.debug(replydao.getReplys(postId).toString());
@@ -67,7 +67,7 @@ public class CafeinDaoTest {
 		int id = 1;
 		Reply test = replydao.getReplyJustInserted(id);
 		logger.debug(test.toString());
-		logger.debug("id"+test.getId());
+		logger.debug("id"+test.getId());*/
 	}
 //	@Test 
 //	public void liked() {
@@ -81,7 +81,7 @@ public class CafeinDaoTest {
 //		Post test;
 //		logger.debug(postdao.addPost(new Post("toitoi","shine",1)).toString());
 //	}
-	
+	/*
 	@Test
 	public void getPostbyId() {
 		Post test;
@@ -129,6 +129,11 @@ public class CafeinDaoTest {
 		logger.debug(filedao.addFileInfo(imageFile).toString());
 	}
 	
+	@Test
+	public void updatePostId() {
+		filedao.updatePostId(2,"UDDETYUHJIOKRFTGUDDETYUHJIOKRFTG");
+	}
+*/	
 /*	@Test
 	public void getPrivews() {
 		logger.debug(postdao.getPreviews(1, 1, 1).toString());

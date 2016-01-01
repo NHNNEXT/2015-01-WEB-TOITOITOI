@@ -153,6 +153,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 
 	function uploadFile (e) {
+		
 		var fileInput = this.files[0];
 		if (!fileInput) {
 			return;
@@ -165,12 +166,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		httpRequest.onreadystatechange = function(){
 			if (httpRequest.readyState === XMLHttpRequest.DONE) {
 				console.log('good!');
-				debugger;
 		    }
 		};
-		httpRequest.open('POST','/api/post/file',true);
-		httpRequest.enctype = "multipart/form-data";
-		//httpRequest.setRequestHeader("Content-Type","multipart/form-data;charset=UTF-8");
+		httpRequest.open('POST', '/api/post/file', true);
 		httpRequest.send(data);
 	}
 	var fileElement = document.querySelector('#new-letter form input[type="file"]');

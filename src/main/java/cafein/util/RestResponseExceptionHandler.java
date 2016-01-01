@@ -1,17 +1,15 @@
 package cafein.util;
 
-import java.sql.SQLException;
-
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
@@ -61,6 +59,14 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
 	public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
 		logger.error("500 Status Code", ex);
 		final String bodyOfResponse = "Empty message";
+		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR,
+				request);
+	}
+	
+	@ExceptionHandler({MaxUploadSizeExceededException.class})
+	public ResponseEntity<Object> maxSizeExceededHandler(final RuntimeException ex, final WebRequest request) {
+		logger.error("500 Status Code", ex);
+		final String bodyOfResponse = "File size exceeded 10mb";
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR,
 				request);
 	}
