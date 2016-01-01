@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		var placeId = form.querySelector('input[name="placeId"]').value;
 		var dear = form.querySelector('input[name="dear"]').value;
 		var content = form.querySelector('textarea[name="content"]').value;
-		// var fileInput = form.querySelector('input[type="file"]').files[0];
+
 		if (!placeId) {
 			console.error('no placeId');
 			return;
@@ -141,7 +141,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		// data.append('dear', encodeURIComponent(dear));
 		// data.append('content', encodeURIComponent(content));
 		// data.append('placeId', encodeURIComponent(placeId));
-		// data.append('imagefile', fileInput);
 		var httpRequest = new XMLHttpRequest();
 		httpRequest.onreadystatechange = function(){
 		    if (httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -152,6 +151,30 @@ document.addEventListener("DOMContentLoaded", function() {
 		// httpRequest.setRequestHeader("Content-Type","multipart/form-data;charset=UTF-8");
 		httpRequest.send(data);
 	});
+
+	function uploadFile (e) {
+		var fileInput = this.files[0];
+		if (!fileInput) {
+			return;
+		}
+
+		console.log(fileInput.name);
+		var data = new FormData();
+		data.append('imagefile', fileInput);
+		var httpRequest = new XMLHttpRequest();
+		httpRequest.onreadystatechange = function(){
+			if (httpRequest.readyState === XMLHttpRequest.DONE) {
+				console.log('good!');
+				debugger;
+		    }
+		};
+		httpRequest.open('POST', '/api/place/'+placeId+'/post', true);
+		httpRequest.setRequestHeader("Content-Type","multipart/form-data;charset=UTF-8");
+		httpRequest.send(data);
+	}
+	var fileElement = document.querySelector('#new-letter form input[type="file"]');
+	// fileElement.addEventListener('click', uploadFile);
+	fileElement.addEventListener('change', uploadFile);
 
 	document.querySelector('#letters').addEventListener('click', function (e) {
 		if (!e.target.matches('h3') && !e.target.matches('article')) { // check delegation target
