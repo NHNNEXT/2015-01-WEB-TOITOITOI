@@ -24,11 +24,12 @@
 	<section id="new-letter" class="the-letter">
 		<h2 class="hidden-heading">new letter</h2>
 		<form action="/api/place/${place.placeId}/post">
-			<input id="place-id" type="hidden" name="placeId" value="${place.placeId}">
+			<input id="place-id" type="hidden" name="placeId" value="1">
+			<!-- fix static placeId for non-blocking process. fix it later. -->
 			<label class="dear-label" for="dear-input">Dear.</label>
 			<input id="dear-input" type="text" name="dear" maxlength="25">
 			<textarea id="post-content" name="content"></textarea>
-			<input type="file" name="imagefile">
+			<input type="file" name="imagefile" accept="image/*">
 			<div>
 				<button>SEND</button>
 				<label class="remain-length" for="post-content">20000</label>

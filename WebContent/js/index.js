@@ -112,10 +112,11 @@ document.addEventListener("DOMContentLoaded", function() {
 	dearList.getNextPageDears();
 
 	document.querySelector('#new-letter form').addEventListener('submit', function (e) {
-		var placeId = this.querySelector('input[name="placeId"]').value;
-		var dear = this.querySelector('input[name="dear"]').value;
-		var content = this.querySelector('textarea[name="content"]').value;
 		var form = this;
+		var placeId = form.querySelector('input[name="placeId"]').value;
+		var dear = form.querySelector('input[name="dear"]').value;
+		var content = form.querySelector('textarea[name="content"]').value;
+
 		if (!placeId) {
 			console.error('no placeId');
 			return;
@@ -133,6 +134,13 @@ document.addEventListener("DOMContentLoaded", function() {
 			alert("it\'s too long"); // after alert, focus on input.
 			return;
 		}
+
+		// var data = encodeURIComponent(new FormData(form));
+		// var data = new FormData();
+		var data = new FormData(form);
+		// data.append('dear', encodeURIComponent(dear));
+		// data.append('content', encodeURIComponent(content));
+		// data.append('placeId', encodeURIComponent(placeId));
 		var httpRequest = new XMLHttpRequest();
 		httpRequest.onreadystatechange = function(){
 		    if (httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -140,13 +148,33 @@ document.addEventListener("DOMContentLoaded", function() {
 		    }
 		};
 		httpRequest.open('POST', '/api/place/'+placeId+'/post', true);
-		httpRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-		httpRequest.send(
-			'dear='+encodeURIComponent(dear)
-			+'&content='+encodeURIComponent(content)
-			+'&placeId='+encodeURIComponent(placeId)
-		);
+		// httpRequest.setRequestHeader("Content-Type","multipart/form-data;charset=UTF-8");
+		httpRequest.send(data);
 	});
+
+	function uploadFile (e) {
+		var fileInput = this.files[0];
+		if (!fileInput) {
+			return;
+		}
+
+		console.log(fileInput.name);
+		var data = new FormData();
+		data.append('imagefile', fileInput);
+		var httpRequest = new XMLHttpRequest();
+		httpRequest.onreadystatechange = function(){
+			if (httpRequest.readyState === XMLHttpRequest.DONE) {
+				console.log('good!');
+				debugger;
+		    }
+		};
+		httpRequest.open('POST', '/api/place/'+placeId+'/post', true);
+		httpRequest.setRequestHeader("Content-Type","multipart/form-data;charset=UTF-8");
+		httpRequest.send(data);
+	}
+	var fileElement = document.querySelector('#new-letter form input[type="file"]');
+	// fileElement.addEventListener('click', uploadFile);
+	fileElement.addEventListener('change', uploadFile);
 
 	document.querySelector('#letters').addEventListener('click', function (e) {
 		if (!e.target.matches('h3') && !e.target.matches('article')) { // check delegation target
