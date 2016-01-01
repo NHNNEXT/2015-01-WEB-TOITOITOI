@@ -26,12 +26,17 @@ public class APIFileController {
 	private FileDAO filedao;
 
 	@RequestMapping(value = "/api/post/file", method = RequestMethod.POST)
-	public Result insertFile(@RequestParam(value = "imagefile", required = false) MultipartHttpServletRequest request) {
+	public Result insertFile(@RequestParam(value = "imagefile", required = true) MultipartHttpServletRequest request) {
+		logger.debug("hohohohoho1");
 		Iterator<String> iterator = request.getFileNames();
+		logger.debug("hohohohoho2");
 		MultipartFile multipartFile = null;
+		logger.debug("hohohohoho3");
 		while (iterator.hasNext()) {
+			logger.debug("hohohohoho4");
 			multipartFile = request.getFile(iterator.next());
 			if (multipartFile.isEmpty() == false) {
+				logger.debug("hohohohoho5");
 				logger.debug("filename : " + multipartFile.getOriginalFilename());
 
 				File file = new File(filePath);
@@ -55,7 +60,9 @@ public class APIFileController {
 				filedao.addFileInfo(imageFile);
 				return Result.success(storedFileName);
 			}
+			logger.debug("hohohohoho6");
 		}
+		logger.debug("hohohohoho7");
 		return Result.failed("multipartFile is null");
 	}
 }

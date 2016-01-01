@@ -23,9 +23,8 @@
 	</header>
 	<section id="new-letter" class="the-letter">
 		<h2 class="hidden-heading">new letter</h2>
-		<form action="/api/place/${place.placeId}/post">
-			<input id="place-id" type="hidden" name="placeId" value="1">
-			<!-- fix static placeId for non-blocking process. fix it later. -->
+		<form action="/api/place/${place.id}/post">
+			<input id="place-id" type="hidden" name="placeId" value="${place.id}">
 			<label class="dear-label" for="dear-input">Dear.</label>
 			<input id="dear-input" type="text" name="dear" maxlength="25">
 			<textarea id="post-content" name="content"></textarea>
