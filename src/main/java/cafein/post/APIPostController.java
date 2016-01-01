@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cafein.cafe.CandidateDAO;
+import cafein.file.FileDAO;
 import cafein.reply.ReplyDAO;
 import cafein.util.IllegalAPIPathException;
 import cafein.util.IllegalArgumentLengthException;
@@ -29,6 +30,8 @@ public class APIPostController {
 	private PostDAO postdao;
 	@Autowired
 	private CandidateDAO candidatedao;
+	@Autowired
+	private FileDAO filedao;
 
 	@RequestMapping(value = "/dear", method = RequestMethod.GET)
 	public Result getDearList(@PathVariable("placeId") Integer placeId, @RequestParam("page") Integer nPage) {
@@ -78,7 +81,8 @@ public class APIPostController {
 	}
 
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
-	public Result createPost(@PathVariable Integer placeId, @RequestParam String content, @RequestParam String dear) {
+	public Result createPost(@PathVariable Integer placeId, @RequestParam String content, @RequestParam String dear, @RequestParam(required = false) String storedFileName) {
+		boolean isFileUploadSuccess = true;
 
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
@@ -90,9 +94,15 @@ public class APIPostController {
 			throw new IllegalArgumentLengthException();
 		}
 
+		if (storedFileName != null){
+			filedao.updatePostId(storedFileName);
+		}
+		
 		Post newPost = new Post(dear, content, placeId);
 		logger.debug(newPost.toString());
-		return Result.success(postdao.addPost(newPost));
+		
+
+	    return Result.success(postdao.addPost(newPost));
 	}
 
 	@RequestMapping(value = "recommend", method = RequestMethod.GET)

@@ -18,6 +18,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import cafein.cafe.CandidateDAO;
 import cafein.cafe.Place;
 import cafein.cafe.PlaceDAO;
+import cafein.file.FileDAO;
+import cafein.file.ImageFile;
 import cafein.post.Post;
 import cafein.post.PostDAO;
 import cafein.reply.Reply;
@@ -37,6 +39,9 @@ public class CafeinDaoTest {
 	
 	@Autowired
 	private CandidateDAO candidatedao;
+	
+	@Autowired
+	private FileDAO filedao;
 	
 	@Test
 	public void getPlaceById() {
@@ -112,6 +117,16 @@ public class CafeinDaoTest {
 		int afterPlus = after.getLikes();
 		
 		assertEquals(new Integer(beforePlus+1), new Integer(afterPlus));
+	}
+	
+	@Test
+	public void addFileInfo() {
+		String original_filename = "ㅋㅋㅋ.jpg";
+		String stored_filename = "UDDETYUHJIOKRFTGUDDETYUHJIOKRFTG";
+		
+		ImageFile imageFile = new ImageFile(original_filename, stored_filename);
+		
+		logger.debug(filedao.addFileInfo(imageFile).toString());
 	}
 	
 /*	@Test
