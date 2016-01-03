@@ -26,8 +26,6 @@ public class PostDAO extends JdbcDaoSupport {
 	JdbcTemplate jdbcTemplate;
 
 	public Post addPost(Post post) {
-		// 기존에 있던 dear인지 체크 ->가져 온 dearId값을 적용해 post에 insert place_id, dear_id,
-		// content해야함.
 		Integer dearId = getDearId(post.getName());
 		String sql = "INSERT INTO post (place_id, dear_id, content) VALUES(?, ?, ?)";
 		final PreparedStatementCreator psc = new PreparedStatementCreator() {

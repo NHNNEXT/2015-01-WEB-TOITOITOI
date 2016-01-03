@@ -12,6 +12,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +30,7 @@ public class APIFileController {
 
 	@Autowired
 	private FileDAO filedao;
-	
+
 	@RequestMapping(value = "/api/post/file", method = RequestMethod.POST)
 	public Result insertFile(MultipartHttpServletRequest request) {
 		Iterator<String> iterator = request.getFileNames();
@@ -63,23 +64,32 @@ public class APIFileController {
 		}
 		return Result.failed("multipartFile is null");
 	}
-	
-	
+
 	@RequestMapping(value = "/api/post/{postid}/file", method = RequestMethod.GET)
-	public Result sendFile(@PathVariable(value="postid") Integer postid, HttpServletResponse response) throws UnsupportedEncodingException {
-	    String storedFileName = filedao.getStroedFileNameByPostId(postid);
-	    String originalFileName = filedao.getOriginalFileNameByPostId(postid);
-	    String originalFileExtension = storedFileName.substring(storedFileName.lastIndexOf("."));
-	    
-	    byte fileByte[];
+	public Result sendFile(@PathVariable(value = "postid") Integer postid, HttpServletResponse response)
+			throws UnsupportedEncodingException {
+		String storedFileName;
+		String originalFileName;
+		String originalFileExtension;
+		
 		try {
-			fileByte = FileUtils.readFileToByteArray(new File(filePath+storedFileName));
+			storedFileName = filedao.getStroedFileNameByPostId(postid);
+			originalFileName = filedao.getOriginalFileNameByPostId(postid);
+			originalFileExtension = storedFileName.substring(storedFileName.lastIndexOf("."));
+		} catch (EmptyResultDataAccessException e) {
+			return Result.failed("No file : "+e.toString());
+		}
+
+		byte fileByte[];
+		try {
+			fileByte = FileUtils.readFileToByteArray(new File(filePath + storedFileName));
 			response.setContentType("image/" + originalFileExtension);
 			response.setContentLength(fileByte.length);
-			response.setHeader("Content-Disposition", "attachment; fileName=" + URLEncoder.encode(originalFileName,"UTF-8")+";");
+			response.setHeader("Content-Disposition",
+					"attachment; fileName=" + URLEncoder.encode(originalFileName, "UTF-8") + ";");
 			response.setHeader("Content-Transfer-Encoding", "binary");
 			response.getOutputStream().write(fileByte);
-			
+
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
 		} catch (IOException e) {
@@ -87,6 +97,5 @@ public class APIFileController {
 		}
 		return Result.success();
 	}
-	
-	
+
 }
