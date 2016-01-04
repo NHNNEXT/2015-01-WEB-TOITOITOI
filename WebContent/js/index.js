@@ -62,6 +62,9 @@ function DearList (placeId, listElement, moreElement) {
 	this.dears = []; // which is sorted by postNum DESC
 	this.listElement = listElement; // this file will be executed after parsing DOMs, becauseof 'defer'.
 	this.moreElement = moreElement;
+	this.registerEvent();
+}
+DearList.prototype.registerEvent = function () {
 	this.moreElement.addEventListener('click', this.getNextPageDears.bind(this));
 }
 DearList.prototype.noMore = function () {
@@ -186,17 +189,14 @@ document.addEventListener("DOMContentLoaded", function() {
 		var header = parentElement.querySelector('h3');
 		var list = parentElement.querySelector('ul');
 
-		var prevOn = this.querySelector('.on');
-		removeClass(prevOn, 'on');
-		if (header === prevOn) { return; }
-
-		addClass(header, 'on');
+		toggleClass(header, 'on');
 		var elementIndex = parentElement.getAttribute('data-index'); // .dataset doesn't work for IE10.
 
 		var dear = dearList.dears[elementIndex];
-		dear.getNextPagePosts();
+		if (dear.posts.length <= 0) {
+			dear.getNextPagePosts();
+		}
 	});
-
 	// make component
 	var textarea = document.querySelector('#new-letter textarea');
 	var remainNotifier = document.querySelector('#new-letter .remain-length');
