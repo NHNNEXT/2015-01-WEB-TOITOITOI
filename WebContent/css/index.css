@@ -52,6 +52,11 @@ nav.top-bar #go-back {
     transform: rotate(-45deg) translateY(-66%);
 }
 
+button.more {
+    display: block;
+    margin: 3em auto;
+}
+
 hr.top-bar + header {
     width: 100%;
     margin-top: 4.3em;
@@ -84,8 +89,6 @@ nav.top-bar + * {
     margin-top: 3.5em;
 }
 
-.top-bar ~ *:not(header) {margin: 3em 1em;box-sizing: border-box;}
-
 #new-letter{
 	margin: 2.7em auto;
 	width: 83%;
@@ -102,11 +105,9 @@ nav.top-bar + * {
 }
 #letters {
     position: relative;
-    margin-top: 1.8em;
+    margin: 1.8em auto 1.8em auto;
     width: calc(100% - 2em);
     max-width: 50em;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 #stamp {
@@ -190,29 +191,20 @@ nav.top-bar + * {
     color: red;
 }
 
-#letters > * {
+#letters > article {
     margin: -1em 0;/* why this makes his parent also go up? */
     padding: 1em 1em 2em 1em;
     border-radius: 0.7em 0.7em 0 0;
     z-index: 2;
     box-sizing: border-box;
 }
-.dummy {
-    background-color: rgb(68, 65, 65);
-    border: 1px solid rgba(255, 255, 255, 0.64);
-    color: white;
-}
-#letters > .dummy:nth-child(even) {
-    background-color: rgb(234, 230, 216);
-    border: 1px solid rgba(13,13,13,0.2);
-}
-#letters > article:nth-child(odd) {
+#letters > article:nth-of-type(odd) {
     background-color: rgb(68, 65, 65);
     border: 1px solid rgba(255, 255, 255, 0.64);
     color: white;
     padding: 1.5em 1.2em;
 }
-#letters > article:nth-child(even) {
+#letters > article:nth-of-type(even) {
     background-color: rgb(234, 230, 216);
     border: 1px solid rgba(13,13,13,0.2);
     padding: 1.5em 1.2em;
@@ -231,33 +223,20 @@ nav.top-bar + * {
     padding: 0.4em 1.3em;
     box-sizing: border-box;
 }
-#letters > article:nth-child(odd) li {
+#letters > article:nth-of-type(odd) li {
     background-color: rgba(255,255,255,0.22);
     font-weight: 100;
 }
-#letters > article:nth-child(even) li {
+#letters > article:nth-of-type(even) li {
     background-color: rgba(255,255,255,0.52);
     font-weight: 200;
 }
 
-#letters > *:last-child {
+#letters > article:last-of-type {
     border-radius: 1em;
     padding-bottom: 1em;
 }
 
-#letters > div.dummy {
-    padding-bottom: 0.3em;
-    margin-right: 1.4em;
-    margin-left: 1.4em;
-}
-#letters > div.dummy:last-of-type {
-    margin-right: 0.3em;
-    margin-left: 0.3em;
-}
-#letters > div.dummy:nth-last-of-type(2) {
-    margin-right: 0.8em;
-    margin-left: 0.8em;
-}
 #letters > article > *:last-child {
     margin-bottom: 0;
 }
