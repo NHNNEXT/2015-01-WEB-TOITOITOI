@@ -6,29 +6,25 @@ function Post (postDataObject) {
 
 // Post, Dear, PostList, DearList 로 나눠야겠다.
 
-function Dear (dearDataObject, placeId, listElementSelector) {
+function Dear (dearDataObject, placeId, moreElementSelector) {
 	this.dearId = dearDataObject.id;
 	this.name = dearDataObject.name;
 	this.maxPostNum = dearDataObject.totalPostNum; // change property name
 	this.currentPage = 0;
+	this.lastRenderedId = -1;
 	this.posts = [];
 	this.placeId = placeId;
-	this.listElementSelector = listElementSelector; // .querySelector occurs error for ''.
+	this.moreElementSelector = moreElementSelector || undefined; // .querySelector occurs error for ''.
 }
-Dear.prototype.render = function (listElement) {
-	var listElement = document.querySelector(this.listElementSelector);
-	if (!listElement) {
-		console.error('render to what?');
-		return;
-	}
+Dear.prototype.render = function () {
+	var moreElement = document.querySelector(this.moreElementSelector);
 
-	var dataLen = this.posts.length;
 	var codes = '';
-	for (var i = 0; i < dataLen; i++) {
-		var currentPost = this.posts[i];
+	for ( var dataLen = this.posts.length, currentId = this.lastRenderedId+1; currentId < dataLen; currentId = ++(this.lastRenderedId)+1 ) {
+		var currentPost = this.posts[currentId];
 		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.dearId+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a></li>';
 	}
-	listElement.insertAdjacentHTML('beforeend', codes);
+	moreElement.insertAdjacentHTML('beforebegin', codes);
 };
 Dear.prototype.getNextPagePosts = function () {
 	if (this.currentPage > 0 && this.posts.length >= this.maxPostNum) {
@@ -89,14 +85,14 @@ DearList.prototype.noMore = function () {
 };
 DearList.prototype.render = function () {
 	var codes = '';
-	for (var dataLen = this.dears.length; this.lastRenderedId+1 < dataLen; (this.lastRenderedId)++) {
-		codes += '<article data-index="'+(this.lastRenderedId+1)+'"><h3>'+this.dears[(this.lastRenderedId+1)].name+'</h3><ul></ul></article>';
+	for ( var dataLen = this.dears.length, currentId = this.lastRenderedId+1; currentId < dataLen; currentId = ++(this.lastRenderedId)+1 ) {
+		codes += '<article data-index="'+currentId+'"><h3>'+this.dears[currentId].name+'</h3><ul><button class="more">더 보기</button></ul></article>';
 	}
 	this.moreElement.insertAdjacentHTML('beforebegin', codes);
 };
 DearList.prototype.getNextPageDears = function () {
 	var httpRequest = new XMLHttpRequest();
-	var requestURL = '/api/place/'+this.placeId+'/dear?page='+ ++(this.currentPage);
+	var requestURL = '/api/place/'+this.placeId+'/dear?page='+ (this.currentPage +1);
 	httpRequest.onreadystatechange = function () {
 	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			var received = JSON.parse(httpRequest.response);
@@ -112,8 +108,9 @@ DearList.prototype.getNextPageDears = function () {
 				}
 				return;
 			}
+			this.currentPage++;
 			received.result.forEach(function (item, index, array) {
-				this.dears.push(new Dear(item, this.placeId, 'article[data-index="'+this.dears.length+'"] ul'));
+				this.dears.push(new Dear(item, this.placeId, 'article[data-index="'+this.dears.length+'"] .more'));
 			}.bind(this));
 			this.render();
 	    }

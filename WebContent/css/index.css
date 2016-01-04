@@ -54,7 +54,10 @@ nav.top-bar #go-back {
 
 button.more {
     display: block;
-    margin: 3em auto;
+    margin: 1em auto;
+}
+#letters > button.more {
+    margin-top: 3em;
 }
 
 hr.top-bar + header {
