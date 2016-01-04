@@ -18,7 +18,7 @@
 		<filter-name>Set Character Encoding</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<!--lucy-xss-servlet-filter적용 -->
 	<filter>
 		<filter-name>xssEscapeServletFilter</filter-name>
@@ -49,5 +49,6 @@
 		<servlet-name>home</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
 
 </web-app>

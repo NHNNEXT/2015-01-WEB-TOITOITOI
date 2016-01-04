@@ -12,6 +12,8 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,11 +28,14 @@ import cafein.util.Result;
 @RestController
 public class APIFileController {
 	private static final Logger logger = LoggerFactory.getLogger(APIFileController.class);
-	private static final String filePath = "/root/images";
+//	private static final String filePath = "/root/images/";
+	private static final String filePath = "/Users/Songhee/toitoiImage/";
 
 	@Autowired
 	private FileDAO filedao;
-
+//	@Value("${upload.path}") 
+//	private String filePath;
+	
 	@RequestMapping(value = "/api/post/file", method = RequestMethod.POST)
 	public Result insertFile(MultipartHttpServletRequest request) {
 		Iterator<String> iterator = request.getFileNames();
@@ -39,7 +44,7 @@ public class APIFileController {
 			multipartFile = request.getFile(iterator.next());
 			if (multipartFile.isEmpty() == false) {
 				logger.debug("filename : " + multipartFile.getOriginalFilename());
-
+				logger.debug("filePath:"+filePath);
 				File file = new File(filePath);
 				if (file.exists() == false) {
 					file.mkdirs();
