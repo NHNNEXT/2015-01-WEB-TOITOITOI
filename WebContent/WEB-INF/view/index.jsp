@@ -38,6 +38,7 @@
 	</section>
 	<section id="letters">
 		<h2 class="hidden-heading">letters</h2>
+		<button class="more">더 보기</button>
 	</section>
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

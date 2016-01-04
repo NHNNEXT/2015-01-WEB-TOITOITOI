@@ -55,41 +55,45 @@ Dear.prototype.getNextPagePosts = function () {
 	httpRequest.send(null);
 };
 
-function DearList (placeId, maxDearNum, listElement) {
+function DearList (placeId, listElement, moreElement) {
 	this.placeId = placeId;
-	this.maxDearNum = maxDearNum;
 	this.currentPage = 0;
+	this.lastRenderedId = -1;
 	this.dears = []; // which is sorted by postNum DESC
 	this.listElement = listElement; // this file will be executed after parsing DOMs, becauseof 'defer'.
+	this.moreElement = moreElement;
+	this.moreElement.addEventListener('click', this.getNextPageDears.bind(this));
 }
+DearList.prototype.noMore = function () {
+	this.moreElement.style.display = "none"
+};
 DearList.prototype.render = function () {
-	var dataLen = this.dears.length;
 	var codes = '';
-	for (var i = 0; i < dataLen; i++) {
-		// codes += '<article><h3 data-index="'+i+'">'+this.dears[i].name+'</h3><ul></ul></article>';
-		codes += '<article data-index="'+i+'"><h3>'+this.dears[i].name+'</h3><ul></ul></article>';
-		// codes += '<article><h3>'+this.dears[i].name+'</h3><ul></ul></article>';
+	for (var dataLen = this.dears.length; this.lastRenderedId+1 < dataLen; (this.lastRenderedId)++) {
+		codes += '<article data-index="'+(this.lastRenderedId+1)+'"><h3>'+this.dears[(this.lastRenderedId+1)].name+'</h3><ul></ul></article>';
 	}
-	this.listElement.insertAdjacentHTML('beforeend', codes);
+	this.moreElement.insertAdjacentHTML('beforebegin', codes);
 };
 DearList.prototype.getNextPageDears = function () {
-	if (this.currentPage > 0 && this.dears.length >= this.maxDearNum) {
-		console.log('all dears loaded');
-		return;
-	}
-
 	var httpRequest = new XMLHttpRequest();
 	var requestURL = '/api/place/'+this.placeId+'/dear?page='+ ++(this.currentPage);
 	httpRequest.onreadystatechange = function () {
 	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			var received = JSON.parse(httpRequest.response);
 			if (!received.success) {
-				console.error('something went wrong @'+requestURL);
-				debugger;
+				switch (received.errorMessage) {
+					case "No more data." :
+						console.log('all dears loaded');
+						this.noMore();
+						break;
+					default :
+						console.error('something went wrong @'+requestURL);
+						debugger;
+				}
 				return;
 			}
 			received.result.forEach(function (item, index, array) {
-				this.dears.push(new Dear(item, this.placeId, 'article[data-index="'+index+'"] ul'));
+				this.dears.push(new Dear(item, this.placeId, 'article[data-index="'+this.dears.length+'"] ul'));
 			}.bind(this));
 			this.render();
 	    }
@@ -108,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		console.error('why no placeId?!');
 		return;
 	}
-	var dearList = new DearList (placeId, 10, document.querySelector('#letters'));
+	var dearList = new DearList (placeId, document.querySelector('#letters'), document.querySelector('#letters .more'));
 	dearList.getNextPageDears();
 
 	document.querySelector('#new-letter form').addEventListener('submit', function (e) {
@@ -153,7 +157,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 
 	function uploadFile (e) {
-		
 		var fileInput = this.files[0];
 		if (!fileInput) {
 			return;
@@ -192,13 +195,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		var dear = dearList.dears[elementIndex];
 		dear.getNextPagePosts();
-		// debugger;
-		// var list = header.parentNode.querySelector('ul');
-		// if (!list) {
-		// 	var dear = header.textContent;
-		// 	var previews = findPreview();
-		// 	addPreview(previews, header);
-		// }
 	});
 
 	// make component
