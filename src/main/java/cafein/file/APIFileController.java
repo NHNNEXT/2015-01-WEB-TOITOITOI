@@ -28,8 +28,8 @@ import cafein.util.Result;
 @RestController
 public class APIFileController {
 	private static final Logger logger = LoggerFactory.getLogger(APIFileController.class);
-//	private static final String filePath = "/root/images/";
-	private static final String filePath = "/Users/Songhee/toitoiImage/";
+	private static final String filePath = "/root/images/";
+//	private static final String filePath = "/Users/Songhee/toitoiImage/";
 
 	@Autowired
 	private FileDAO filedao;

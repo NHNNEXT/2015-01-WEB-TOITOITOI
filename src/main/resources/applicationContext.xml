@@ -5,8 +5,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-	<context:property-placeholder location="classpath*:local-properties.xml" />
-<!-- 	<context:property-placeholder location="classpath*:production-properties.xml" /> -->
+	<!-- <context:property-placeholder location="classpath*:local-properties.xml" /> -->
+	<context:property-placeholder location="classpath*:product-properties.xml" />
 
 	<context:annotation-config />
 
