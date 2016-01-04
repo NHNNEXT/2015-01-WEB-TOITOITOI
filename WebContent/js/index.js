@@ -64,8 +64,25 @@ function DearList (placeId, listElement, moreElement) {
 	this.moreElement = moreElement;
 	this.registerEvent();
 }
+DearList.prototype.toggleDear = function (e) {
+	if (!e.target.matches('h3') && !e.target.matches('article')) { // check delegation target
+		return;
+	}
+	var parentElement = e.target.closest('article');
+	var header = parentElement.querySelector('h3');
+	var list = parentElement.querySelector('ul');
+
+	toggleClass(header, 'on');
+	var elementIndex = parentElement.getAttribute('data-index'); // .dataset doesn't work for IE10.
+
+	var dear = this.dears[elementIndex];
+	if (dear.posts.length <= 0) {
+		dear.getNextPagePosts();
+	}
+};
 DearList.prototype.registerEvent = function () {
 	this.moreElement.addEventListener('click', this.getNextPageDears.bind(this));
+	this.listElement.addEventListener('click', this.toggleDear.bind(this));
 }
 DearList.prototype.noMore = function () {
 	this.moreElement.style.display = "none"
@@ -181,22 +198,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	// fileElement.addEventListener('click', uploadFile);
 	fileElement.addEventListener('change', uploadFile);
 
-	document.querySelector('#letters').addEventListener('click', function (e) {
-		if (!e.target.matches('h3') && !e.target.matches('article')) { // check delegation target
-			return;
-		}
-		var parentElement = e.target.closest('article');
-		var header = parentElement.querySelector('h3');
-		var list = parentElement.querySelector('ul');
-
-		toggleClass(header, 'on');
-		var elementIndex = parentElement.getAttribute('data-index'); // .dataset doesn't work for IE10.
-
-		var dear = dearList.dears[elementIndex];
-		if (dear.posts.length <= 0) {
-			dear.getNextPagePosts();
-		}
-	});
 	// make component
 	var textarea = document.querySelector('#new-letter textarea');
 	var remainNotifier = document.querySelector('#new-letter .remain-length');
