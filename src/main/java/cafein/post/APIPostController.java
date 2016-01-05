@@ -42,9 +42,9 @@ public class APIPostController {
 		if (!Validation.isValidParameter(nPage) || !Validation.isValidParameterType(nPage)) {
 			throw new IllegalArgumentException();
 		}
-		
-		List<Map<String,Object>> result = postdao.getDearList(placeId, nPage);
-		if(result.isEmpty()){
+
+		List<Map<String, Object>> result = postdao.getDearList(placeId, nPage);
+		if (result.isEmpty()) {
 			logger.debug(result.toString());
 			return Result.failed("No more data.");
 		}
@@ -65,7 +65,11 @@ public class APIPostController {
 			throw new IllegalArgumentException();
 		}
 
-		return Result.success(postdao.getPreviews(placeId, dearId, nPage));
+		List<Map<String,Object>> result = postdao.getPreviews(placeId, dearId, nPage); 
+		if(result.isEmpty()){
+			return Result.failed("No more data.");
+		}
+		return Result.success(result);
 	}
 
 	@RequestMapping(value = "/dear/{dearId}/post/{postId}", method = RequestMethod.GET)
@@ -81,7 +85,8 @@ public class APIPostController {
 	}
 
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
-	public Result createPost(@PathVariable Integer placeId, @RequestParam String content, @RequestParam String dear, @RequestParam(required = false) String storedFileName) {
+	public Result createPost(@PathVariable Integer placeId, @RequestParam String content, @RequestParam String dear,
+			@RequestParam(required = false) String storedFileName) {
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
@@ -91,17 +96,17 @@ public class APIPostController {
 		if (!Validation.isValidMaxLenPost(content)) {
 			throw new IllegalArgumentLengthException();
 		}
-		
+
 		Post newPost = new Post(dear, content, placeId);
 		logger.debug(newPost.toString());
 		newPost = postdao.addPost(newPost);
 		Integer postId = newPost.getId();
-		
-		if (storedFileName != null){
+
+		if (storedFileName != null) {
 			filedao.updatePostId(postId, storedFileName);
 		}
-		
-	    return Result.success(newPost);
+
+		return Result.success(newPost);
 	}
 
 	@RequestMapping(value = "recommend", method = RequestMethod.GET)

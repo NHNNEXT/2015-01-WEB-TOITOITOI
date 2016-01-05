@@ -16,6 +16,7 @@ a {
     text-decoration: none;
     color: inherit;
 }
+
 .hidden {
     overflow: hidden;
     line-height: 0;
@@ -317,6 +318,7 @@ nav.top-bar + * {
 	border-radius: 9px;
 	height: 27px;
 	color: white;
+}
 
 #letters ul li, #letters ul a {
     display: block;
@@ -327,3 +329,19 @@ nav.top-bar + * {
     padding: 0.5em;
     border-radius: 0.4em;
 }
+
+
+.question-mark{
+	display: block;
+	width: 77vmin;
+	margin: 100px auto 120px auto;
+	position: relative;
+}
+
+.no-place-text{
+	font-size: 5em;
+	font-weight: bold;
+	text-align: center;
+}
+
+
