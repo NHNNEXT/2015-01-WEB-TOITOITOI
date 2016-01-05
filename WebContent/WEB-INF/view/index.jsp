@@ -28,7 +28,7 @@
 	<hr class="top-bar">
 	<header>
 		<h1>Dear Here</h1>
-		<p><span class="emphasis">${place.name}</span>의 무언에게 편지 한 통 써보세요!</p>
+		<p><span class="emphasis">${place.name}</span>의 누군가에게 편지 한 통 써보세요!</p>
 	</header>
 	<section id="new-letter" class="the-letter">
 		<h2 class="hidden">new letter</h2>

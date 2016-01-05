@@ -20,6 +20,8 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.mysql.jdbc.Statement;
 
+import cafein.post.Post;
+
 public class ReplyDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(ReplyDAO.class);
 	@Autowired
@@ -56,10 +58,11 @@ public class ReplyDAO extends JdbcDaoSupport {
 		return result;
 	}
 
-	public void plusLike(int replyId) {
-
-		String sql = "UPDATE reply SET likes = likes+1 WHERE id = ?";
-		jdbcTemplate.update(sql, replyId);
+	public Reply plusLike(int replyId) {
+		String updateSql = "UPDATE reply SET likes = likes+1 WHERE id = ?";
+		String selectSql = "SELECT id, likes FROM reply WHERE id = ?";
+		jdbcTemplate.update(updateSql, replyId);
+		return jdbcTemplate.queryForObject(selectSql, new BeanPropertyRowMapper<Reply>(Reply.class), replyId);
 	}
 
 
