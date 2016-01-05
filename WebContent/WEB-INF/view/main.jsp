@@ -30,13 +30,14 @@
 	<section class="the-letter">
 		<div>
 			<label class="dear-label" for="dear-input">Dear.</label>
-			<img id="stamp" src="http://i64.tinypic.com/2v33m9l.png">
+			<img id="stamp" src="/css/img/stamp.png">
 			<input id="dear-input" readonly value="${dearName}">
 			<textarea name="content" readonly>${post.content}</textarea>
 		</div>
 	</section>
-	<section id="replies">
-	</section>
+	<div class="info"><span class="likes">${post.likes}</span><span class="replies">0</span></div>
+	<ul id="replies">
+	</ul>
 	<form id="write-reply">
 		<input type="hidden" name="postId" value="${post.id}">
 		<input id="reply-input" type="text" name="content" maxlength="2000">

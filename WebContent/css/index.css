@@ -97,16 +97,35 @@ nav.top-bar + * {
     margin-top: 3.5em;
 }
 
-.like::before {
+.likes::before, .replies::before {
     content: '';
     display: inline-block;
-    background-image: url('img/heart-empty.png');
     width: 1em;
     height: 1em;
     background-size: 1em 1em;
 }
-.like.on::before {
+.likes::before {
+    background-image: url('img/heart-empty.png');
+}
+.likes.on::before {
     background-image: url('img/heart-full.png');
+}
+.replies::before {
+    background-image: url('img/reply.png');
+}
+.info {
+    text-align: right;
+}
+
+#letters ul .likes {
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+    height: 100%;
+    display: inline-block;
+}
+#replies .likes {
+    float: right;
 }
 
 #new-letter{
@@ -244,13 +263,6 @@ nav.top-bar + * {
     padding: 0.4em 1.3em;
     box-sizing: border-box;
 }
-#letters ul .like {
-    position: absolute;
-    right: 0.5em;
-    top: 0.5em;
-    height: 100%;
-    display: inline-block;
-}
 #letters > article:nth-of-type(odd) li {
     background-color: rgba(255,255,255,0.22);
     font-weight: 100;
@@ -283,14 +295,24 @@ nav.top-bar + * {
     display: none;
 }
 
-#replies .reply{
+#replies {
+    margin-bottom: 4em;
+}
+#replies li {
 	font-weight: 200;
 	font-size: 12px;
 	background-color: rgba(188, 182, 179,0.7);
 	border-radius: 13px;
 	margin-bottom: 12px;
-	/* box-sizing: border-box; */
-	padding: 0.7em 1.3em;
+	padding: 0.7em 2em 0.7em 1.3em;
+    position: relative;
+}
+#replies li::before {
+    content: 're : ';
+}
+#replies .likes {
+    position: absolute;
+    right: 0.5em;
 }
 
 #write-reply{
