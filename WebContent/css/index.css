@@ -116,6 +116,17 @@ nav.top-bar + * {
     text-align: right;
 }
 
+#letters ul .likes {
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+    height: 100%;
+    display: inline-block;
+}
+#replies .likes {
+    float: right;
+}
+
 #new-letter{
 	margin: 2.7em auto;
 	width: 83%;
@@ -251,13 +262,6 @@ nav.top-bar + * {
     padding: 0.4em 1.3em;
     box-sizing: border-box;
 }
-#letters ul .likes {
-    position: absolute;
-    right: 0.5em;
-    top: 0.5em;
-    height: 100%;
-    display: inline-block;
-}
 #letters > article:nth-of-type(odd) li {
     background-color: rgba(255,255,255,0.22);
     font-weight: 100;
@@ -290,14 +294,24 @@ nav.top-bar + * {
     display: none;
 }
 
-#replies .reply{
+#replies {
+    margin-bottom: 4em;
+}
+#replies li {
 	font-weight: 200;
 	font-size: 12px;
 	background-color: rgba(188, 182, 179,0.7);
 	border-radius: 13px;
 	margin-bottom: 12px;
-	/* box-sizing: border-box; */
-	padding: 0.7em 1.3em;
+	padding: 0.7em 2em 0.7em 1.3em;
+    position: relative;
+}
+#replies li::before {
+    content: 're : ';
+}
+#replies .likes {
+    position: absolute;
+    right: 0.5em;
 }
 
 #write-reply{

@@ -36,8 +36,8 @@
 		</div>
 	</section>
 	<div class="info"><span class="likes">${post.likes}</span><span class="replies">0</span></div>
-	<section id="replies">
-	</section>
+	<ul id="replies">
+	</ul>
 	<form id="write-reply">
 		<input type="hidden" name="postId" value="${post.id}">
 		<input id="reply-input" type="text" name="content" maxlength="2000">

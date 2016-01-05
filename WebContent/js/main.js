@@ -2,20 +2,11 @@ var data = [];
 
 var replyPath = '/api'+window.location.pathname+'/reply';
 
-function getRepliesContent(data) {
-	var repliesContent= [];
-	for (var i=0 ; i<data.length ; i++) {
-		repliesContent.push(data[i].content);
-	}
-	console.log(repliesContent);
-	return repliesContent;
-}
-
 function renderDearList (dataList) {
 	var dataLen = dataList.length;
 	var codes = '';
 	for (var i = 0; i < dataLen; i++) {
-		codes += '<article class="reply">re : '+dataList[i]+'</article>';
+		codes += '<li>'+dataList[i].content+'<span class="likes"><span class="hidden">좋아요</span> '+dataList[i].likes+'</span></li>';
 	}
 	document.querySelector('#replies').insertAdjacentHTML('beforeend', codes);
 	document.querySelector('.info .replies').textContent = dataLen;
@@ -26,8 +17,7 @@ function getDearListDone () {
 	var httpRequest = new XMLHttpRequest();
 	httpRequest.onreadystatechange = function(){
 	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-			data = JSON.parse(httpRequest.response);
-			renderDearList(getRepliesContent(data));
+			renderDearList(JSON.parse(httpRequest.response));
 	    }
 	};
 	httpRequest.open('GET', replyPath, true);
@@ -40,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 function updateReplies(reply){
-	var code = '<article class="reply">re : '+reply.content+'</article>'
+	var code = '<li class="reply">re : '+reply.content+'<span class="likes"><span class="hidden">좋아요</span> '+reply.likes+'</span></li>'
 	document.querySelector('#replies').insertAdjacentHTML('afterbegin', code);
 	var replieNumElement = document.querySelector('.info .replies');
 	var prevReplies = replieNumElement.textContent;
