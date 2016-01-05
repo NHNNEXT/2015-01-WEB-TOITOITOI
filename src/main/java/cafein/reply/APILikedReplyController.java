@@ -17,7 +17,7 @@ public class APILikedReplyController {
 	@Autowired
 	private ReplyDAO replydao;
 
-	@RequestMapping(value = "/likedOnReply", method = RequestMethod.POST)
+	@RequestMapping(value = "/likedOnReply", method = RequestMethod.GET)
 	protected Result like(@RequestParam(value = "reid") int replyId, @RequestParam String status) {
 
 		replydao.plusLike(replyId);
