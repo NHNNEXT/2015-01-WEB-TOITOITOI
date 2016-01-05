@@ -35,7 +35,7 @@ Dear.prototype.render = function () {
 	var codes = '';
 	for ( var dataLen = this.posts.length, currentId = this.lastRenderedId+1; currentId < dataLen; currentId = ++(this.lastRenderedId)+1 ) {
 		var currentPost = this.posts[currentId];
-		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.dearId+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a><span class="like"><span class="hidden">좋아요</span> '+currentPost.likes+'</span></li>';
+		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.name+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a><span class="like"><span class="hidden">좋아요</span> '+currentPost.likes+'</span></li>';
 	}
 	this.moreElement.insertAdjacentHTML('beforebegin', codes);
 
