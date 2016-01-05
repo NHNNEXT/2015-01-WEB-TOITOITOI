@@ -96,6 +96,18 @@ nav.top-bar + * {
     margin-top: 3.5em;
 }
 
+.like::before {
+    content: '';
+    display: inline-block;
+    background-image: url('img/heart-empty.png');
+    width: 1em;
+    height: 1em;
+    background-size: 1em 1em;
+}
+.like.on::before {
+    background-image: url('img/heart-full.png');
+}
+
 #new-letter{
 	margin: 2.7em auto;
 	width: 83%;
@@ -237,9 +249,6 @@ nav.top-bar + * {
     top: 0.5em;
     height: 100%;
     display: inline-block;
-}
-#letters ul .like::before {
-    content: '\2661';
 }
 #letters > article:nth-of-type(odd) li {
     background-color: rgba(255,255,255,0.22);
