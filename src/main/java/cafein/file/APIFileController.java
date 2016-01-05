@@ -12,8 +12,6 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +26,8 @@ import cafein.util.Result;
 @RestController
 public class APIFileController {
 	private static final Logger logger = LoggerFactory.getLogger(APIFileController.class);
-	private static final String filePath = "/root/images/";
-//	private static final String filePath = "/Users/Songhee/toitoiImage/";
+//	private static final String filePath = "/root/images/";
+	private static final String filePath = "/Users/Thomas/toitoiImage/";
 
 	@Autowired
 	private FileDAO filedao;
