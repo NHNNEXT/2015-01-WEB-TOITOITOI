@@ -97,6 +97,9 @@ nav.top-bar + * {
     margin-top: 3.5em;
 }
 
+.likes {
+    text-align: left;
+}
 .likes::before, .replies::before {
     content: '';
     display: inline-block;
@@ -105,6 +108,8 @@ nav.top-bar + * {
     background-size: 1em 1em;
 }
 .likes::before {
+    display: inline-block;
+    margin-right: 0.4em;
     background-image: url('img/heart-empty.png');
 }
 .likes.on::before {
@@ -113,7 +118,7 @@ nav.top-bar + * {
 .replies::before {
     background-image: url('img/reply.png');
 }
-.info {
+.the-letter + .info {
     text-align: right;
 }
 
@@ -124,14 +129,22 @@ nav.top-bar + * {
     height: 100%;
     display: inline-block;
 }
-#replies .likes {
-    float: right;
-}
 
 #new-letter{
 	margin: 2.7em auto;
 	width: 83%;
     max-width: 46em;
+}
+.info .message {
+    color: white;
+    background-color: blue;
+    text-align: center;
+}
+.info .message:not('.on') {
+    display: none;
+}
+.info .message.fail {
+    background-color: red;
 }
 
 .the-letter {
@@ -204,7 +217,7 @@ nav.top-bar + * {
 #new-letter > * > textarea {
     min-height: calc(100vh - 27em);
 }
-#new-letter button {
+#new-letter button.send {
     display: block;
     background-color: #E89702;
     border: none;
@@ -216,6 +229,28 @@ nav.top-bar + * {
     color: white;
     font-size: 0.8em;
 }
+#new-letter button.file {
+    background-image: url('img/photo.svg');
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    width: 2.5em;
+    height: 2.5em;
+    float: left;
+}
+#new-letter button.file > input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+}
+
 #new-letter div {
     position: relative;
 }
@@ -304,7 +339,7 @@ nav.top-bar + * {
 	background-color: rgba(188, 182, 179,0.7);
 	border-radius: 13px;
 	margin-bottom: 12px;
-	padding: 0.7em 2em 0.7em 1.3em;
+	padding: 0.7em 4em 0.7em 1.3em;
     position: relative;
 }
 #replies li::before {
@@ -321,8 +356,15 @@ nav.top-bar + * {
 	background-color: rgba(202,182,170,1);
 	width: 100%;
 	margin: 0;
-	padding: 7px 7px;
 	box-sizing: border-box;
+}
+#write-reply div {
+    width: 100%;
+    float: left;
+}
+#write-reply .input {
+    margin: 7px;
+    width: calc(100% - 14px);
 }
 
 #write-reply #reply-input{

@@ -9,7 +9,7 @@ function renderDearList (dataList) {
 	var codes = '';
 	for (var i = 0; i < dataLen; i++) {
 		var currentReply = dataList[i];
-		codes += '<li data-id="'+currentReply.id+'">'+currentReply.content+'<span class="likes"><span class="hidden">좋아요</span> '+currentReply.likes+'</span></li>';
+		codes += '<li data-id="'+currentReply.id+'">'+currentReply.content+'<span class="likes"><span class="hidden">좋아요</span>'+currentReply.likes+'</span></li>';
 	}
 	document.querySelector('#replies').insertAdjacentHTML('beforeend', codes);
 	increase(document.querySelector('.info .replies'), dataLen, true);
@@ -42,6 +42,13 @@ function increase (element, value, isOverwrite) {
 }
 
 $(document).ready(function() {
+	var attachment = new Image();
+	attachment.onload = function (e) {
+		var parentElement = document.querySelector('section.the-letter');
+		parentElement.insertBefore(this, parentElement.lastChild.nextSibling);
+	};
+	attachment.src = '/api/post/'+postId+'/file';
+
 	$('.info .likes').on('click.like', function (e) {
 		var target = this;
 		$.ajax({
@@ -80,14 +87,24 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	function dealMessage (isSuccess, messageHTML, targetElement) {
+		var messageBar = document.querySelector('#write-reply .message');
+		messageHTML = messageHTML || '무언가 잘못되었어요!';
+		((isSuccess)? removeClass : addClass)(messageBar, 'fail');
+		messageBar.innerHTML = messageHTML;
+		//TODO: after showing message, focus on targetElement. targetElement might be empty.
+		//TODO: 2초 뒤에 사라지게(fadeIn/Out)는 나중에.
+	}
+
 	  var form = $('#write-reply'); // contact form
 	  var submit = $('#write-reply button');  // submit button
 
 	  // form submit event
 	  form.on('submit', function(e) {
-	    e.preventDefault(); // prevent default form submit
+	    e.preventDefault();
 	    if (!$('#reply-input').val()) {
-	    	console.log('입력 좀 해주시죠');
+	    	dealMessage( false, '댓글 내용을 입력해주세요.', this.querySelector('#reply-input') );
 	    	return;
 	    }
 
@@ -96,16 +113,19 @@ $(document).ready(function() {
 	      type: 'POST', // form submit method get/post
 	      dataType: 'json',
 	      data: form.serialize(), // serialize form data
-	      success: function(data) {
-	      	if (!data.success) {
-	      		console.error('something went wrong @'+replyPath);
+	      success: function(received) {
+	      	if (!received.success) {
+	      		dealMessage( false, received.errorMessage );
 	      		return;
 	      	}
-	        updateReplies(data.result);
+
+	        dealMessage( true, '댓글이 등록되었습니다.' );
+	        updateReplies(received.result);
 	        form.trigger('reset'); // reset form
 	      },
 	      error: function(e) {
-	        console.log(e)
+	      	debugger;
+	        dealMessage( false, e );
 	      }
 	    });
 	  });

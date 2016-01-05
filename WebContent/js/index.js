@@ -35,7 +35,7 @@ Dear.prototype.render = function () {
 	var codes = '';
 	for ( var dataLen = this.posts.length, currentId = this.lastRenderedId+1; currentId < dataLen; currentId = ++(this.lastRenderedId)+1 ) {
 		var currentPost = this.posts[currentId];
-		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.name+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a><span class="likes"><span class="hidden">좋아요</span> '+currentPost.likes+'</span></li>';
+		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.name+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a><span class="likes"><span class="hidden">좋아요</span>'+currentPost.likes+'</span></li>';
 	}
 	this.moreElement.insertAdjacentHTML('beforebegin', codes);
 
@@ -151,9 +151,6 @@ DearList.prototype.getNextPageDears = function () {
 
 document.addEventListener("DOMContentLoaded", function() {
 	var placeId = document.querySelector('#place-id').value;
-	document.querySelector('#new-letter form').addEventListener('submit', function (e) {
-		e.preventDefault();
-	});
 	if (!placeId) {
 		console.error('why no placeId?!');
 		return;
@@ -161,68 +158,73 @@ document.addEventListener("DOMContentLoaded", function() {
 	var dearList = new DearList (placeId, document.querySelector('#letters'), document.querySelector('#letters .more'));
 	dearList.getNextPageDears();
 
-	document.querySelector('#new-letter form').addEventListener('submit', function (e) {
-		var form = this;
-		var placeId = form.querySelector('input[name="placeId"]').value;
-		var dear = form.querySelector('input[name="dear"]').value;
-		var content = form.querySelector('textarea[name="content"]').value;
+	function dealMessage (isSuccess, messageHTML, targetElement) {
+		var messageBar = formElement.querySelector('.message');
+		messageHTML = messageHTML || '무언가 잘못되었어요!';
+		((isSuccess)? removeClass : addClass)(messageBar, 'fail');
+		messageBar.innerHTML = messageHTML;
+		//TODO: after showing message, focus on targetElement. targetElement might be empty.
+		//TODO: 2초 뒤에 사라지게(fadeIn/Out)는 나중에.
+	}
+
+	var formElement = document.querySelector('#new-letter form');
+	formElement.addEventListener('submit', function (e) {
+		e.preventDefault();
+
+		var placeId = this.querySelector('input[name="placeId"]').value;
+		var dear = this.querySelector('input[name="dear"]').value;
+		var content = this.querySelector('textarea[name="content"]').value;
+		var inputFiles = this.querySelector('input[type="file"]').files;
 
 		if (!placeId) {
 			console.error('no placeId');
 			return;
 		}
-
 		if (!dear) {
-			alert("input dear"); // after alert, focus on input.
+			dealMessage( false, '누구에게 쓰는 편지인가요? 받는 대상을 입력해주세요.', this.querySelector('input[name="dear"]') );
 			return;
 		}
 		if (!content) {
-			alert("input content"); // after alert, focus on input.
+			dealMessage( false, '편지의 내용을 입력해주세요.', this.querySelector('textarea[name="content"]') );
 			return;
 		}
 		if (content.length > 20000) {
-			alert("it\'s too long"); // after alert, focus on input.
+			dealMessage( false, '편지의 내용이 너무 길어요! 20000자 이하로 입력해주세요.', this.querySelector('textarea[name="content"]') );
 			return;
 		}
 
-		// var data = encodeURIComponent(new FormData(form));
-		// var data = new FormData();
-		var data = new FormData(form);
-		// data.append('dear', encodeURIComponent(dear));
-		// data.append('content', encodeURIComponent(content));
-		// data.append('placeId', encodeURIComponent(placeId));
-		var httpRequest = new XMLHttpRequest();
-		httpRequest.onreadystatechange = function(){
-		    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-		    	form.reset();
-		    }
-		};
-		httpRequest.open('POST', '/api/place/'+placeId+'/post', true);
-		// httpRequest.setRequestHeader("Content-Type","multipart/form-data;charset=UTF-8");
-		httpRequest.send(data);
-	});
-
-	function uploadFile (e) {
-		var fileInput = this.files[0];
-		if (!fileInput) {
-			return;
-		}
-
-		console.log(fileInput.name);
-		var data = new FormData();
-		data.append('imagefile', fileInput);
+		var data = new FormData(this);
 		var httpRequest = new XMLHttpRequest();
 		httpRequest.onreadystatechange = function(){
 			if (httpRequest.readyState === XMLHttpRequest.DONE) {
-				console.log('good!');
-		    }
+				if (httpRequest.status == 200) {
+					var received = JSON.parse(httpRequest.response);
+					if (!received.success) {
+						dealMessage( false, received.errorMessage );
+						return;
+					}
+
+					var createdPost = received.result;
+					var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.dearId+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
+					dealMessage( true, resultMessage );
+					formElement.reset();
+					return;
+				}
+				dealMessage( false );
+			}
 		};
-		httpRequest.open('POST', '/api/post/file', true);
+		httpRequest.open('POST', '/api/place/'+placeId+'/post', true);
 		httpRequest.send(data);
-	}
-	var fileElement = document.querySelector('#new-letter form input[type="file"]');
-	// fileElement.addEventListener('click', uploadFile);
-	fileElement.addEventListener('change', uploadFile);
+	});
+
+	formElement.querySelector('input[type="file"]').addEventListener('change', function (e) {
+		var inputFiles = e.target.files;
+		var fr = new FileReader();
+		fr.onload = function (argument) {
+			formElement.querySelector('img.preview').src = fr.result;
+		};
+		fr.readAsDataURL(inputFiles[0]);
+	});
 
 	// make component
 	var textarea = document.querySelector('#new-letter textarea');

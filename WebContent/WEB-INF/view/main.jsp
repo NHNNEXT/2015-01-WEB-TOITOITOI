@@ -39,9 +39,14 @@
 	<ul id="replies">
 	</ul>
 	<form id="write-reply">
-		<input type="hidden" name="postId" value="${post.id}">
-		<input id="reply-input" type="text" name="content" maxlength="2000">
-		<button>댓글쓰기</button>
+		<div class="info">
+			<div class="message"></div>
+		</div>
+		<div class="input">
+			<input type="hidden" name="postId" value="${post.id}">
+			<input id="reply-input" type="text" name="content" maxlength="2000">
+			<button>댓글쓰기</button>
+		</div>
 	</form>
 </body>
 </html>
