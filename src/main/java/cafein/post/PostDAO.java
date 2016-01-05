@@ -108,8 +108,10 @@ public class PostDAO extends JdbcDaoSupport {
 		return jdbcTemplate.queryForList(sql, new Object[] { placeid, dearId, startingRow });
 	}
 
-	public void plusLike(int postid) {
-		String sql = "UPDATE post SET likes = likes+1 WHERE id = ?";
-		jdbcTemplate.update(sql, postid);
+	public Post plusLike(int postid) {
+		String updateSql = "UPDATE post SET likes = likes+1 WHERE id = ?";
+		String selectSql = "SELECT id, likes FROM post WHERE id = ?";
+		jdbcTemplate.update(updateSql, postid);
+		return jdbcTemplate.queryForObject(selectSql, new BeanPropertyRowMapper<Post>(Post.class), postid);
 	}
 }

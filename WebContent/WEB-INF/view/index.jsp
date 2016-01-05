@@ -14,6 +14,15 @@
 	<script defer src="/js/util.js"></script>
 	<script defer src="/js/index.js"></script>
 	<script defer src="/js/elastic.js"></script>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-71768526-1', 'auto');
+		ga('send', 'pageview');
+	</script>
 </head>
 <body>
 	<hr class="top-bar">
@@ -22,7 +31,7 @@
 		<p><span class="emphasis">${place.name}</span>의 무언가에게 편지 한 통 써보세요!</p>
 	</header>
 	<section id="new-letter" class="the-letter">
-		<h2 class="hidden-heading">new letter</h2>
+		<h2 class="hidden">new letter</h2>
 		<form action="/api/place/${place.id}/post">
 			<input id="place-id" type="hidden" name="placeId" value="${place.id}">
 			<label class="dear-label" for="dear-input">Dear.</label>
@@ -37,18 +46,9 @@
 		<img src="http://localhost:8080/api/post/7/file">
 	</section>
 	<section id="letters">
-		<h2 class="hidden-heading">letters</h2>
+		<h2 class="hidden">letters</h2>
 		<button class="more">더 보기</button>
 	</section>
-	<script>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-		ga('create', 'UA-71768526-1', 'auto');
-		ga('send', 'pageview');
-	</script>
 </body>
 </html>
  

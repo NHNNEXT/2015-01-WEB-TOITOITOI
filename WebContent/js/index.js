@@ -6,45 +6,63 @@ function Post (postDataObject) {
 
 // Post, Dear, PostList, DearList 로 나눠야겠다.
 
-function Dear (dearDataObject, placeId, listElementSelector) {
+function Dear (dearDataObject, placeId, listElementSelector, moreElementSelector) {
 	this.dearId = dearDataObject.id;
 	this.name = dearDataObject.name;
 	this.maxPostNum = dearDataObject.totalPostNum; // change property name
 	this.currentPage = 0;
+	this.lastRenderedId = -1;
 	this.posts = [];
 	this.placeId = placeId;
-	this.listElementSelector = listElementSelector; // .querySelector occurs error for ''.
+	this._listElementSelector = listElementSelector;
+	this._moreElementSelector = moreElementSelector;
 }
-Dear.prototype.render = function (listElement) {
-	var listElement = document.querySelector(this.listElementSelector);
-	if (!listElement) {
-		console.error('render to what?');
-		return;
-	}
+Dear.prototype.initAfterRender = function () {
+	// 이게 뭐야 ㅜㅜㅜㅜㅜㅜㅜㅜㅜ Model 이랑 View 랑 얼른 나눠야하는데 ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ
+	// 코드 중복 때문에라도 클래스 얼른 나눠야 ㅜㅜㅜㅜㅜㅜㅜㅜ
+	this.listElement = document.querySelector(this._listElementSelector);
+	this.moreElement = this.listElement.querySelector(this._moreElementSelector);
 
-	var dataLen = this.posts.length;
+	this.registerEvent();
+};
+Dear.prototype.noMore = function () {
+	this.moreElement.style.display = "none";
+};
+Dear.prototype.registerEvent = function () {
+	this.moreElement.addEventListener('click', this.getNextPagePosts.bind(this));
+};
+Dear.prototype.render = function () {
 	var codes = '';
-	for (var i = 0; i < dataLen; i++) {
-		var currentPost = this.posts[i];
+	for ( var dataLen = this.posts.length, currentId = this.lastRenderedId+1; currentId < dataLen; currentId = ++(this.lastRenderedId)+1 ) {
+		var currentPost = this.posts[currentId];
+		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.name+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a><span class="like"><span class="hidden">좋아요</span> '+currentPost.likes+'</span></li>';
+	}
+	this.moreElement.insertAdjacentHTML('beforebegin', codes);
+
+	for ( var dataLen = this.posts.length, currentId = this.lastRenderedId+1; currentId < dataLen; currentId = ++(this.lastRenderedId)+1 ) {
+		var currentPost = this.posts[currentId];
 		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.dearId+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a></li>';
 	}
-	listElement.insertAdjacentHTML('beforeend', codes);
 };
-Dear.prototype.getNextPagePosts = function () {
-	if (this.currentPage > 0 && this.posts.length >= this.maxPostNum) {
-		console.log('all posts loaded');
-		return;
-	}
-
+Dear.prototype.getNextPagePosts = function (e) {
 	var httpRequest = new XMLHttpRequest(); ///api/place/1/dear/1/post?page=1
-	var requestURL = '/api/place/'+this.placeId+'/dear/'+this.dearId+'/post?page='+ ++(this.currentPage);
+	var requestURL = '/api/place/'+this.placeId+'/dear/'+this.dearId+'/post?page='+ (this.currentPage +1);
 	httpRequest.onreadystatechange = function () {
 	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			var received = JSON.parse(httpRequest.response);
 			if (!received.success) {
-				console.error('something went wrong @'+requestURL);
+				switch (received.errorMessage) {
+					case "No more data." :
+						console.log('all posts loaded');
+						this.noMore();
+						break;
+					default :
+						console.error('something went wrong @'+requestURL);
+						debugger;
+				}
 				return;
 			}
+			this.currentPage++;
 			received.result.forEach(function (item, index, array) {
 				this.posts.push(new Post(item));
 			}.bind(this));
@@ -83,20 +101,27 @@ DearList.prototype.toggleDear = function (e) {
 DearList.prototype.registerEvent = function () {
 	this.moreElement.addEventListener('click', this.getNextPageDears.bind(this));
 	this.listElement.addEventListener('click', this.toggleDear.bind(this));
-}
+};
 DearList.prototype.noMore = function () {
-	this.moreElement.style.display = "none"
+	this.moreElement.style.display = "none";
 };
 DearList.prototype.render = function () {
 	var codes = '';
-	for (var dataLen = this.dears.length; this.lastRenderedId+1 < dataLen; (this.lastRenderedId)++) {
-		codes += '<article data-index="'+(this.lastRenderedId+1)+'"><h3>'+this.dears[(this.lastRenderedId+1)].name+'</h3><ul></ul></article>';
+	var lastRenderedId = this.lastRenderedId;
+	var dataLen = this.dears.length;
+
+	for ( var currentId = lastRenderedId+1; currentId < dataLen; currentId++ ) {
+		codes += '<article data-index="'+currentId+'"><h3>'+this.dears[currentId].name+'</h3><ul><button class="more">더 보기</button></ul></article>';
 	}
 	this.moreElement.insertAdjacentHTML('beforebegin', codes);
+	for ( var currentId = lastRenderedId+1; currentId < dataLen; currentId++ ) {
+		this.dears[currentId].initAfterRender();
+	}
+	this.lastRenderedId = dataLen - 1;
 };
 DearList.prototype.getNextPageDears = function () {
 	var httpRequest = new XMLHttpRequest();
-	var requestURL = '/api/place/'+this.placeId+'/dear?page='+ ++(this.currentPage);
+	var requestURL = '/api/place/'+this.placeId+'/dear?page='+ (this.currentPage +1);
 	httpRequest.onreadystatechange = function () {
 	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
 			var received = JSON.parse(httpRequest.response);
@@ -112,8 +137,9 @@ DearList.prototype.getNextPageDears = function () {
 				}
 				return;
 			}
+			this.currentPage++;
 			received.result.forEach(function (item, index, array) {
-				this.dears.push(new Dear(item, this.placeId, 'article[data-index="'+this.dears.length+'"] ul'));
+				this.dears.push(new Dear(item, this.placeId, 'article[data-index="'+this.dears.length+'"] ul', 'button.more'));
 			}.bind(this));
 			this.render();
 	    }

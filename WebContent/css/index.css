@@ -16,8 +16,13 @@ a {
     text-decoration: none;
     color: inherit;
 }
-.hidden-heading {
-    display: none;
+
+.hidden {
+    overflow: hidden;
+    line-height: 0;
+    height: 0;
+    width: 0;
+    font-size: 0;
 }
 
 .top-bar {
@@ -54,7 +59,10 @@ nav.top-bar #go-back {
 
 button.more {
     display: block;
-    margin: 3em auto;
+    margin: 1em auto;
+}
+#letters > button.more {
+    margin-top: 3em;
 }
 
 hr.top-bar + header {
@@ -87,6 +95,18 @@ hr.top-bar + header p .emphasis {
 
 nav.top-bar + * {
     margin-top: 3.5em;
+}
+
+.like::before {
+    content: '';
+    display: inline-block;
+    background-image: url('img/heart-empty.png');
+    width: 1em;
+    height: 1em;
+    background-size: 1em 1em;
+}
+.like.on::before {
+    background-image: url('img/heart-full.png');
 }
 
 #new-letter{
@@ -213,15 +233,23 @@ nav.top-bar + * {
     margin-bottom: 0.7em;
     border-radius: 0.4em;
     font-size: 0.8em;
+    position: relative;
 }
 #letters ul a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
-    width: 100%;
+    width: calc(100% - 3em);
     padding: 0.4em 1.3em;
     box-sizing: border-box;
+}
+#letters ul .like {
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+    height: 100%;
+    display: inline-block;
 }
 #letters > article:nth-of-type(odd) li {
     background-color: rgba(255,255,255,0.22);
@@ -290,6 +318,7 @@ nav.top-bar + * {
 	border-radius: 9px;
 	height: 27px;
 	color: white;
+}
 
 #letters ul li, #letters ul a {
     display: block;
@@ -300,3 +329,19 @@ nav.top-bar + * {
     padding: 0.5em;
     border-radius: 0.4em;
 }
+
+
+.question-mark{
+	display: block;
+	width: 77vmin;
+	margin: 100px auto 120px auto;
+	position: relative;
+}
+
+.no-place-text{
+	font-size: 5em;
+	font-weight: bold;
+	text-align: center;
+}
+
+

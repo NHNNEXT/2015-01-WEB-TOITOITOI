@@ -71,7 +71,11 @@ public class APIPostController {
 			throw new IllegalArgumentException();
 		}
 
-		return Result.success(postdao.getPreviews(placeId, dearId, nPage));
+		List<Map<String,Object>> result = postdao.getPreviews(placeId, dearId, nPage); 
+		if(result.isEmpty()){
+			return Result.failed("No more data.");
+		}
+		return Result.success(result);
 	}
 
 	@RequestMapping(value = "/dear/{dearId}/post/{postId}", method = RequestMethod.GET)
@@ -106,7 +110,6 @@ public class APIPostController {
 			multipartFile = request.getFile(iterator.next());
 			logger.debug(multipartFile.getOriginalFilename());
 		}
-
 		Post newPost = new Post(dear, content, placeId);
 		logger.debug(newPost.toString());
 

@@ -15,14 +15,13 @@ public class APILikedPostController {
 	@Autowired
 	PostDAO postdao;
 
-	@RequestMapping(value = "/api/post/{postid}/like", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/post/{postid}/like", method = RequestMethod.GET)
 	protected Result liked(@PathVariable int postid) {
 
 		if (!Validation.isValidParameter(postid) || !Validation.isValidParameterType(postid)) {
 			throw new IllegalAPIPathException();
 		}
 
-		postdao.plusLike(postid);
-		return Result.success();
+		return Result.success(postdao.plusLike(postid));
 	}
 }
