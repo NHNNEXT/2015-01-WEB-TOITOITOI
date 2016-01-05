@@ -97,6 +97,9 @@ nav.top-bar + * {
     margin-top: 3.5em;
 }
 
+.likes {
+    text-align: left;
+}
 .likes::before, .replies::before {
     content: '';
     display: inline-block;
@@ -105,6 +108,8 @@ nav.top-bar + * {
     background-size: 1em 1em;
 }
 .likes::before {
+    display: inline-block;
+    margin-right: 0.4em;
     background-image: url('img/heart-empty.png');
 }
 .likes.on::before {
@@ -124,27 +129,21 @@ nav.top-bar + * {
     height: 100%;
     display: inline-block;
 }
-#replies .likes {
-    float: right;
-}
 
 #new-letter{
 	margin: 2.7em auto;
 	width: 83%;
     max-width: 46em;
 }
-#new-letter .info > *:not('.on') {
-    /*display: none;*/
-}
-#new-letter .message {
+.info .message {
     color: white;
     background-color: blue;
     text-align: center;
 }
-#new-letter .message:not('.on') {
+.info .message:not('.on') {
     display: none;
 }
-#new-letter .message.fail {
+.info .message.fail {
     background-color: red;
 }
 
@@ -340,7 +339,7 @@ nav.top-bar + * {
 	background-color: rgba(188, 182, 179,0.7);
 	border-radius: 13px;
 	margin-bottom: 12px;
-	padding: 0.7em 2em 0.7em 1.3em;
+	padding: 0.7em 4em 0.7em 1.3em;
     position: relative;
 }
 #replies li::before {
@@ -357,8 +356,15 @@ nav.top-bar + * {
 	background-color: rgba(202,182,170,1);
 	width: 100%;
 	margin: 0;
-	padding: 7px 7px;
 	box-sizing: border-box;
+}
+#write-reply div {
+    width: 100%;
+    float: left;
+}
+#write-reply .input {
+    margin: 7px;
+    width: calc(100% - 14px);
 }
 
 #write-reply #reply-input{

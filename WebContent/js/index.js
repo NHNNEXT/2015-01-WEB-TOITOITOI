@@ -35,7 +35,7 @@ Dear.prototype.render = function () {
 	var codes = '';
 	for ( var dataLen = this.posts.length, currentId = this.lastRenderedId+1; currentId < dataLen; currentId = ++(this.lastRenderedId)+1 ) {
 		var currentPost = this.posts[currentId];
-		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.name+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a><span class="likes"><span class="hidden">좋아요</span> '+currentPost.likes+'</span></li>';
+		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.name+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a><span class="likes"><span class="hidden">좋아요</span>'+currentPost.likes+'</span></li>';
 	}
 	this.moreElement.insertAdjacentHTML('beforebegin', codes);
 
@@ -199,14 +199,16 @@ document.addEventListener("DOMContentLoaded", function() {
 			if (httpRequest.readyState === XMLHttpRequest.DONE) {
 				if (httpRequest.status == 200) {
 					var received = JSON.parse(httpRequest.response);
-					if (received.success) {
-						var createdPost = received.result;
-						var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.dearId+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
-						dealMessage( true, resultMessage );
-						formElement.reset();
+					if (!received.success) {
+						dealMessage( false, received.errorMessage );
 						return;
 					}
-					dealMessage( false, received.errorMessage );
+
+					var createdPost = received.result;
+					var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.dearId+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
+					dealMessage( true, resultMessage );
+					formElement.reset();
+					return;
 				}
 				dealMessage( false );
 			}
