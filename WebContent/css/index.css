@@ -224,8 +224,8 @@ nav.top-bar + * {
     border: none;
     position: relative;
     overflow: hidden;
-    width: 4em;
-    height: 4em;
+    width: 2.5em;
+    height: 2.5em;
     float: left;
 }
 #new-letter button.file > input {

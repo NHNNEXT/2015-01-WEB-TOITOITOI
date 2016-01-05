@@ -151,9 +151,6 @@ DearList.prototype.getNextPageDears = function () {
 
 document.addEventListener("DOMContentLoaded", function() {
 	var placeId = document.querySelector('#place-id').value;
-	document.querySelector('#new-letter form').addEventListener('submit', function (e) {
-		e.preventDefault();
-	});
 	if (!placeId) {
 		console.error('why no placeId?!');
 		return;
@@ -161,18 +158,19 @@ document.addEventListener("DOMContentLoaded", function() {
 	var dearList = new DearList (placeId, document.querySelector('#letters'), document.querySelector('#letters .more'));
 	dearList.getNextPageDears();
 
-	document.querySelector('#new-letter form').addEventListener('submit', function (e) {
-		var form = this;
-		var placeId = form.querySelector('input[name="placeId"]').value;
-		var dear = form.querySelector('input[name="dear"]').value;
-		var content = form.querySelector('textarea[name="content"]').value;
-		var inputFiles = form.querySelector('input[type="file"]').files;
+	var formElement = document.querySelector('#new-letter form');
+	formElement.addEventListener('submit', function (e) {
+		e.preventDefault();
+
+		var placeId = this.querySelector('input[name="placeId"]').value;
+		var dear = this.querySelector('input[name="dear"]').value;
+		var content = this.querySelector('textarea[name="content"]').value;
+		var inputFiles = this.querySelector('input[type="file"]').files;
 
 		if (!placeId) {
 			console.error('no placeId');
 			return;
 		}
-
 		if (!dear) {
 			alert("input dear"); // after alert, focus on input.
 			return;
@@ -186,15 +184,28 @@ document.addEventListener("DOMContentLoaded", function() {
 			return;
 		}
 
-		var data = new FormData(form);
+		var data = new FormData(this);
 		var httpRequest = new XMLHttpRequest();
 		httpRequest.onreadystatechange = function(){
-		    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-		    	form.reset();
-		    }
+			if (httpRequest.readyState === XMLHttpRequest.DONE) {
+				if (httpRequest.status == 200) {
+					formElement.reset();
+				} else {
+					// 실패
+				}
+			}
 		};
 		httpRequest.open('POST', '/api/place/'+placeId+'/post', true);
 		httpRequest.send(data);
+	});
+
+	formElement.querySelector('input[type="file"]').addEventListener('change', function (e) {
+		var inputFiles = e.target.files;
+		var fr = new FileReader();
+		fr.onload = function (argument) {
+			formElement.querySelector('img.preview').src = fr.result;
+		};
+		fr.readAsDataURL(inputFiles[0]);
 	});
 
 	// make component
