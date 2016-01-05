@@ -87,7 +87,7 @@ public class APIFileController {
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
 		} catch (IOException e) {
-			return Result.failed(e.toString());
+			return Result.failed("Failed to load file.");
 		}
 		return Result.success();
 	}

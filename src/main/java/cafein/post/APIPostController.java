@@ -123,7 +123,7 @@ public class APIPostController {
 				filedao.updatePostId(postId, storedFileName);
 				return Result.success(newPost);
 			}
-			return Result.failed("Fail to save file in Server");
+		return Result.failed("Fail to save file in Server");
 		}
 		newPost = postdao.addPost(newPost);
 		return Result.success(newPost);
