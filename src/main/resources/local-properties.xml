@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-	<entry key="database.driverClassName">com.mysql.jdbc.Driver</entry>
-	<entry key="database.url">jdbc:mysql://localhost:3307/dearhere</entry>
-	<entry key="database.username">root</entry>
-	<entry key="database.password">db1004</entry>
-<!-- 	<entry key="upload.path">/Users/Songhee/toitoiImage/</entry> -->
-</properties>
