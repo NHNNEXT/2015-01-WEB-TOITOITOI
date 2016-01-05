@@ -36,8 +36,8 @@ public class APIPostController {
 	private CandidateDAO candidatedao;
 	@Autowired
 	private FileDAO filedao;
-
-	private APIFileController filecontroller = new APIFileController();
+	@Autowired
+	private APIFileController apiFileController;
 
 	@RequestMapping(value = "/dear", method = RequestMethod.GET)
 	public Result getDearList(@PathVariable("placeId") Integer placeId, @RequestParam("page") Integer nPage) {
@@ -114,7 +114,7 @@ public class APIPostController {
 		logger.debug(newPost.toString());
 
 		if (multipartFile != null) {
-			String storedFileName = filecontroller.insertFile(multipartFile);
+			String storedFileName = apiFileController.insertFile(multipartFile);
 			
 			if (storedFileName != null) {
 				newPost = postdao.addPost(newPost);
