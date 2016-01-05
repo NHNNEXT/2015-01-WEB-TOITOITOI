@@ -113,7 +113,8 @@ public class APIPostController {
 		Post newPost = new Post(dear, content, placeId);
 		logger.debug(newPost.toString());
 
-		if (multipartFile != null) {
+		if (multipartFile.isEmpty() == false) {
+			logger.debug("multipartFile  exist!");
 			String storedFileName = apiFileController.insertFile(multipartFile);
 			
 			if (storedFileName != null) {
