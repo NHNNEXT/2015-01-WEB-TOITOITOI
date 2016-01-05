@@ -35,6 +35,7 @@
 			<textarea name="content" readonly>${post.content}</textarea>
 		</div>
 	</section>
+	<div class="info"><span class="likes">${post.likes}</span><span class="replies">0</span></div>
 	<section id="replies">
 	</section>
 	<form id="write-reply">

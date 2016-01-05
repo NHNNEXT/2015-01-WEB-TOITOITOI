@@ -96,16 +96,24 @@ nav.top-bar + * {
     margin-top: 3.5em;
 }
 
-.like::before {
+.likes::before, .replies::before {
     content: '';
     display: inline-block;
-    background-image: url('img/heart-empty.png');
     width: 1em;
     height: 1em;
     background-size: 1em 1em;
 }
-.like.on::before {
+.likes::before {
+    background-image: url('img/heart-empty.png');
+}
+.likes.on::before {
     background-image: url('img/heart-full.png');
+}
+.replies::before {
+    background-image: url('img/reply.png');
+}
+.info {
+    text-align: right;
 }
 
 #new-letter{
@@ -243,7 +251,7 @@ nav.top-bar + * {
     padding: 0.4em 1.3em;
     box-sizing: border-box;
 }
-#letters ul .like {
+#letters ul .likes {
     position: absolute;
     right: 0.5em;
     top: 0.5em;

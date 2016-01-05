@@ -18,6 +18,8 @@ function renderDearList (dataList) {
 		codes += '<article class="reply">re : '+dataList[i]+'</article>';
 	}
 	document.querySelector('#replies').insertAdjacentHTML('beforeend', codes);
+	document.querySelector('.info .replies').textContent = dataLen;
+
 }
 
 function getDearListDone () {
@@ -40,6 +42,9 @@ document.addEventListener("DOMContentLoaded", function() {
 function updateReplies(reply){
 	var code = '<article class="reply">re : '+reply.content+'</article>'
 	document.querySelector('#replies').insertAdjacentHTML('afterbegin', code);
+	var replieNumElement = document.querySelector('.info .replies');
+	var prevReplies = replieNumElement.textContent;
+	replieNumElement.textContent = (parseInt(prevReplies)+1);
 }
 
 $(document).ready(function() {
