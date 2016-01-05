@@ -31,7 +31,7 @@
 		<p><span class="emphasis">${place.name}</span>의 무언가에게 편지 한 통 써보세요!</p>
 	</header>
 	<section id="new-letter" class="the-letter">
-		<h2 class="hidden-heading">new letter</h2>
+		<h2 class="hidden">new letter</h2>
 		<form action="/api/place/${place.id}/post">
 			<input id="place-id" type="hidden" name="placeId" value="${place.id}">
 			<label class="dear-label" for="dear-input">Dear.</label>
@@ -46,7 +46,7 @@
 		<img src="http://localhost:8080/api/post/7/file">
 	</section>
 	<section id="letters">
-		<h2 class="hidden-heading">letters</h2>
+		<h2 class="hidden">letters</h2>
 		<button class="more">더 보기</button>
 	</section>
 </body>

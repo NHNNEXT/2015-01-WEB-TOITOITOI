@@ -27,7 +27,7 @@
 	</script>
 </head>
 <body>
-	<nav class="top-bar"><a id="go-back" href="/place/${post.placeId}"><span style="display:none;">뒤로가기</span></a></nav>
+	<nav class="top-bar"><a id="go-back" href="/place/${post.placeId}"><span class="hidden">뒤로가기</span></a></nav>
 	<section class="the-letter">
 		<div>
 			<label class="dear-label" for="dear-input">Dear.</label>

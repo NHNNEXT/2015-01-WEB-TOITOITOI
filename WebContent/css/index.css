@@ -16,8 +16,12 @@ a {
     text-decoration: none;
     color: inherit;
 }
-.hidden-heading {
-    display: none;
+.hidden {
+    overflow: hidden;
+    line-height: 0;
+    height: 0;
+    width: 0;
+    font-size: 0;
 }
 
 .top-bar {
@@ -216,15 +220,26 @@ nav.top-bar + * {
     margin-bottom: 0.7em;
     border-radius: 0.4em;
     font-size: 0.8em;
+    position: relative;
 }
 #letters ul a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
-    width: 100%;
+    width: calc(100% - 3em);
     padding: 0.4em 1.3em;
     box-sizing: border-box;
+}
+#letters ul .like {
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+    height: 100%;
+    display: inline-block;
+}
+#letters ul .like::before {
+    content: '\2661';
 }
 #letters > article:nth-of-type(odd) li {
     background-color: rgba(255,255,255,0.22);
