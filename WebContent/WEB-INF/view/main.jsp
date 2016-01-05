@@ -30,7 +30,7 @@
 	<section class="the-letter">
 		<div>
 			<label class="dear-label" for="dear-input">Dear.</label>
-			<img id="stamp" src="http://i64.tinypic.com/2v33m9l.png">
+			<img id="stamp" src="/css/img/stamp.png">
 			<input id="dear-input" readonly value="${dearName}">
 			<textarea name="content" readonly>${post.content}</textarea>
 		</div>
