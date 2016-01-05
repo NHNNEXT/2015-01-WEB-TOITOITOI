@@ -23,11 +23,13 @@ import cafein.util.Result;
 
 @RestController
 public class APIFileController {
-	private static final Logger logger = LoggerFactory.getLogger(APIFileController.class);
 	@Autowired
 	private FileDAO filedao;
+	
+	private static final Logger logger = LoggerFactory.getLogger(APIFileController.class);
 	// private static final String filePath = "/root/images/";
 	private static final String filePath = "/Users/Songhee/toitoiImage/";
+	
 	
 	public String insertFile(MultipartFile multipartFile) {
 

@@ -8,10 +8,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 public class FileDAO extends JdbcDaoSupport{
-	private static final Logger logger = LoggerFactory.getLogger(FileDAO.class);
-	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	private static final Logger logger = LoggerFactory.getLogger(FileDAO.class);
+	
 	
 	public String addFileInfo(ImageFile imagefile){
 		logger.debug("add in");
