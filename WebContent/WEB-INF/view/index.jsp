@@ -37,9 +37,11 @@
 			<label class="dear-label" for="dear-input">Dear.</label>
 			<input id="dear-input" type="text" name="dear" maxlength="25">
 			<textarea id="post-content" name="content"></textarea>
-			<input type="file" name="imagefile" accept="image/*">
 			<div>
-				<button>SEND</button>
+				<button class="file">
+					<input type="file" name="imagefile" accept="image/*">
+				</button>
+				<button class="send">SEND</button>
 				<label class="remain-length" for="post-content">20000</label>
 			</div>
 		</form>
