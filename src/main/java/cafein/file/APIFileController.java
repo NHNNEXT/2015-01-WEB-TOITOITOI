@@ -71,7 +71,7 @@ public class APIFileController {
 			originalFileName = filedao.getOriginalFileNameByPostId(postid);
 			originalFileExtension = storedFileName.substring(storedFileName.lastIndexOf("."));
 		} catch (EmptyResultDataAccessException e) {
-			return Result.failed("No file : " + e.toString());
+			return Result.failed("No file");
 		}
 
 		byte fileByte[];
