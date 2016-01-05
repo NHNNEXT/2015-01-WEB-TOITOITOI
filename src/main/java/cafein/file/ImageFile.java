@@ -17,6 +17,13 @@ public class ImageFile {
 		this.stored_filename = stored_filename;
 	}
 
+	public ImageFile(String original_filename, String stored_filename, Integer post_id) {
+		super();
+		this.original_filename = original_filename;
+		this.stored_filename = stored_filename;
+		this.post_id = post_id;
+	}
+
 	public ImageFile(Integer id, String original_filename, String stored_filename, String stored_time, Integer post_id) {
 		super();
 		this.id = id;
@@ -108,5 +115,12 @@ public class ImageFile {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "ImageFile [id=" + id + ", original_filename=" + original_filename + ", stored_filename="
+				+ stored_filename + ", stored_time=" + stored_time + ", post_id=" + post_id + "]";
+	}
+	
 	
 }

@@ -2,6 +2,7 @@ package cafein.support;
 
 import static org.junit.Assert.assertEquals;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ import cafein.post.PostDAO;
 import cafein.reply.Reply;
 import cafein.reply.ReplyDAO;
 
-//@RunWith(SpringJUnit4ClassRunner.class)@ContextConfiguration("classpath:/applicationContext.xml")
+@RunWith(SpringJUnit4ClassRunner.class)@ContextConfiguration("classpath:/applicationContext.xml")
 public class CafeinDaoTest {
 	private static final Logger logger = LoggerFactory.getLogger(CafeinDaoTest.class);
 	@Autowired
@@ -42,7 +43,7 @@ public class CafeinDaoTest {
 	
 	@Autowired
 	private FileDAO filedao;
-	/*
+	
 	@Test
 	public void getPlaceById() {
 		placedao.getPlaceById(1);	
@@ -74,7 +75,6 @@ public class CafeinDaoTest {
 		replydao.plusLike(1);
 		logger.debug(replydao.getReplyJustInserted(1).toString());
 	}
-	PostDAO test
 	
 	@Test
 	public void addPost() {
@@ -121,19 +121,23 @@ public class CafeinDaoTest {
 	
 	@Test
 	public void addFileInfo() {
-		String original_filename = "ㅋㅋㅋ.jpg";
-		String stored_filename = "UDDETYUHJIOKRFTGUDDETYUHJIOKRFTG";
-		
+		String original_filename ="테스.jpg";
+		String stored_filename = "UDDETYUHJIOKRFTGUDDETYUHJIOKR";
+		String test;
 		ImageFile imageFile = new ImageFile(original_filename, stored_filename);
-		
-		logger.debug(filedao.addFileInfo(imageFile).toString());
+		logger.debug(imageFile.getOriginal_filename());
+		logger.debug(imageFile.getStored_filename());
+		test =filedao.addFileInfo(imageFile);
+		logger.debug(test);
 	}
 	
 	@Test
-	public void updatePostId() {
-		filedao.updatePostId(2,"UDDETYUHJIOKRFTGUDDETYUHJIOKRFTG");
+	public void updatePostId(){
+		String name = "UDDETYUHJIOKRFTGUDDETYUHJIOKR";
+		Integer postid = 1;
+		filedao.updatePostId(postid, name);
+		
 	}
-	
 	@Test
 	public void getPrivews() {
 		logger.debug(postdao.getPreviews(1, 1, 1).toString());
@@ -145,7 +149,7 @@ public class CafeinDaoTest {
 	@Test
 	public void addDear() {
 		logger.debug(postdao.addDear("김기범").toString());
-	}*/
+	}
 
 }
 
