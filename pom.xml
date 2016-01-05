@@ -9,6 +9,7 @@
 	<properties>
 		<tomcat.version>8.0.24</tomcat.version>
 		<org.springframework.version>4.2.3.RELEASE</org.springframework.version>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
 	<dependencies>
