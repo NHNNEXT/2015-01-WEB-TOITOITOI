@@ -113,7 +113,7 @@ nav.top-bar + * {
 .replies::before {
     background-image: url('img/reply.png');
 }
-.info {
+.the-letter + .info {
     text-align: right;
 }
 
@@ -132,6 +132,20 @@ nav.top-bar + * {
 	margin: 2.7em auto;
 	width: 83%;
     max-width: 46em;
+}
+#new-letter .info > *:not('.on') {
+    /*display: none;*/
+}
+#new-letter .message {
+    color: white;
+    background-color: blue;
+    text-align: center;
+}
+#new-letter .message:not('.on') {
+    display: none;
+}
+#new-letter .message.fail {
+    background-color: red;
 }
 
 .the-letter {

@@ -44,8 +44,10 @@
 				<button class="send">SEND</button>
 				<label class="remain-length" for="post-content">20000</label>
 			</div>
-			<img class="preview"/>
-			<div class="info"></div>
+			<div class="info">
+				<img class="preview"/>
+				<div class="message"></div>
+			</div>
 		</form>
 	</section>
 	<section id="letters">

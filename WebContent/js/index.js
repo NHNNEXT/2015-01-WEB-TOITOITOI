@@ -158,6 +158,15 @@ document.addEventListener("DOMContentLoaded", function() {
 	var dearList = new DearList (placeId, document.querySelector('#letters'), document.querySelector('#letters .more'));
 	dearList.getNextPageDears();
 
+	function dealMessage (isSuccess, messageHTML, targetElement) {
+		var messageBar = formElement.querySelector('.message');
+		messageHTML = messageHTML || '무언가 잘못되었어요!';
+		((isSuccess)? removeClass : addClass)(messageBar, 'fail');
+		messageBar.innerHTML = messageHTML;
+		//TODO: after showing message, focus on targetElement. targetElement might be empty.
+		//TODO: 2초 뒤에 사라지게(fadeIn/Out)는 나중에.
+	}
+
 	var formElement = document.querySelector('#new-letter form');
 	formElement.addEventListener('submit', function (e) {
 		e.preventDefault();
@@ -172,15 +181,15 @@ document.addEventListener("DOMContentLoaded", function() {
 			return;
 		}
 		if (!dear) {
-			alert("input dear"); // after alert, focus on input.
+			dealMessage( false, '누구에게 쓰는 편지인가요? 받는 대상을 입력해주세요.', this.querySelector('input[name="dear"]') );
 			return;
 		}
 		if (!content) {
-			alert("input content"); // after alert, focus on input.
+			dealMessage( false, '편지의 내용을 입력해주세요.', this.querySelector('textarea[name="content"]') );
 			return;
 		}
 		if (content.length > 20000) {
-			alert("it\'s too long"); // after alert, focus on input.
+			dealMessage( false, '편지의 내용이 너무 길어요! 20000자 이하로 입력해주세요.', this.querySelector('textarea[name="content"]') );
 			return;
 		}
 
@@ -189,10 +198,17 @@ document.addEventListener("DOMContentLoaded", function() {
 		httpRequest.onreadystatechange = function(){
 			if (httpRequest.readyState === XMLHttpRequest.DONE) {
 				if (httpRequest.status == 200) {
-					formElement.reset();
-				} else {
-					// 실패
+					var received = JSON.parse(httpRequest.response);
+					if (received.success) {
+						var createdPost = received.result;
+						var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.dearId+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
+						dealMessage( true, resultMessage );
+						formElement.reset();
+						return;
+					}
+					dealMessage( false, received.errorMessage );
 				}
+				dealMessage( false );
 			}
 		};
 		httpRequest.open('POST', '/api/place/'+placeId+'/post', true);
