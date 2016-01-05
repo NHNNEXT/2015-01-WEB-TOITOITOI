@@ -1,5 +1,6 @@
 package cafein.post;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cafein.cafe.CandidateDAO;
+import cafein.file.APIFileController;
 import cafein.file.FileDAO;
 import cafein.reply.ReplyDAO;
 import cafein.util.IllegalAPIPathException;
@@ -33,6 +37,8 @@ public class APIPostController {
 	@Autowired
 	private FileDAO filedao;
 
+	private APIFileController filecontroller = new APIFileController();
+
 	@RequestMapping(value = "/dear", method = RequestMethod.GET)
 	public Result getDearList(@PathVariable("placeId") Integer placeId, @RequestParam("page") Integer nPage) {
 
@@ -42,9 +48,9 @@ public class APIPostController {
 		if (!Validation.isValidParameter(nPage) || !Validation.isValidParameterType(nPage)) {
 			throw new IllegalArgumentException();
 		}
-		
-		List<Map<String,Object>> result = postdao.getDearList(placeId, nPage);
-		if(result.isEmpty()){
+
+		List<Map<String, Object>> result = postdao.getDearList(placeId, nPage);
+		if (result.isEmpty()) {
 			logger.debug(result.toString());
 			return Result.failed("No more data.");
 		}
@@ -80,8 +86,10 @@ public class APIPostController {
 		return Result.success(post);
 	}
 
+
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
-	public Result createPost(@PathVariable Integer placeId, @RequestParam String content, @RequestParam String dear, @RequestParam(required = false) String storedFileName) {
+	public Result createPost(@PathVariable Integer placeId, @RequestParam String content, @RequestParam String dear,
+			MultipartHttpServletRequest request) {
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
@@ -91,17 +99,30 @@ public class APIPostController {
 		if (!Validation.isValidMaxLenPost(content)) {
 			throw new IllegalArgumentLengthException();
 		}
-		
+
+		Iterator<String> iterator = request.getFileNames();
+		MultipartFile multipartFile = null;
+		while (iterator.hasNext()) {
+			multipartFile = request.getFile(iterator.next());
+			logger.debug(multipartFile.getOriginalFilename());
+		}
+
 		Post newPost = new Post(dear, content, placeId);
 		logger.debug(newPost.toString());
-		newPost = postdao.addPost(newPost);
-		Integer postId = newPost.getId();
-		
-		if (storedFileName != null){
-			filedao.updatePostId(postId, storedFileName);
+
+		if (multipartFile != null) {
+			String storedFileName = filecontroller.insertFile(multipartFile);
+			
+			if (storedFileName != null) {
+				newPost = postdao.addPost(newPost);
+				Integer postId = newPost.getId();
+				filedao.updatePostId(postId, storedFileName);
+				return Result.success(newPost);
+			}
+			return Result.failed("Fail to save file in Server");
 		}
-		
-	    return Result.success(newPost);
+		newPost = postdao.addPost(newPost);
+		return Result.success(newPost);
 	}
 
 	@RequestMapping(value = "recommend", method = RequestMethod.GET)

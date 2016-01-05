@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,46 +30,38 @@ import cafein.util.Result;
 @RestController
 public class APIFileController {
 	private static final Logger logger = LoggerFactory.getLogger(APIFileController.class);
-	private static final String filePath = "/root/images/";
-//	private static final String filePath = "/Users/Songhee/toitoiImage/";
-
 	@Autowired
 	private FileDAO filedao;
-//	@Value("${upload.path}") 
-//	private String filePath;
+	// private static final String filePath = "/root/images/";
+	private static final String filePath = "/Users/Songhee/toitoiImage/";
+	private static final APIFileController instance = new APIFileController();
 	
-	@RequestMapping(value = "/api/post/file", method = RequestMethod.POST)
-	public Result insertFile(MultipartHttpServletRequest request) {
-		Iterator<String> iterator = request.getFileNames();
-		MultipartFile multipartFile = null;
-		while (iterator.hasNext()) {
-			multipartFile = request.getFile(iterator.next());
-			if (multipartFile.isEmpty() == false) {
-				logger.debug("filename : " + multipartFile.getOriginalFilename());
-				logger.debug("filePath:"+filePath);
-				File file = new File(filePath);
-				if (file.exists() == false) {
-					file.mkdirs();
-				}
+	public String insertFile(MultipartFile multipartFile) {
 
-				String originalFileName = multipartFile.getOriginalFilename();
-				String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-				String storedFileName = ImageFileUtils.getRandomString() + originalFileExtension;
-
-				file = new File(filePath + storedFileName);
-
-				try {
-					multipartFile.transferTo(file);
-				} catch (IOException e) {
-					return Result.failed(e.toString());
-				}
-
-				ImageFile imageFile = new ImageFile(originalFileName, storedFileName);
-				filedao.addFileInfo(imageFile);
-				return Result.success(storedFileName);
-			}
+		logger.debug("filename : " + multipartFile.getOriginalFilename());
+		logger.debug("filePath:" + filePath);
+		File file = new File(filePath);
+		if (file.exists() == false) {
+			file.mkdirs();
 		}
-		return Result.failed("multipartFile is null");
+
+		String originalFileName = multipartFile.getOriginalFilename();
+		String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+		String storedFileName = ImageFileUtils.getRandomString() + originalFileExtension;
+
+		file = new File(filePath + storedFileName);
+
+		try {
+			multipartFile.transferTo(file);
+		} catch (IOException e) {
+			return null;
+		}
+		logger.debug(storedFileName);
+		ImageFile imageFile = new ImageFile(originalFileName, storedFileName);
+		logger.debug(imageFile.toString());
+		logger.debug(imageFile.getStored_filename());
+		System.out.println(filedao);
+		return filedao.addFileInfo(imageFile);
 	}
 
 	@RequestMapping(value = "/api/post/{postid}/file", method = RequestMethod.GET)
@@ -76,13 +70,13 @@ public class APIFileController {
 		String storedFileName;
 		String originalFileName;
 		String originalFileExtension;
-		
+
 		try {
 			storedFileName = filedao.getStroedFileNameByPostId(postid);
 			originalFileName = filedao.getOriginalFileNameByPostId(postid);
 			originalFileExtension = storedFileName.substring(storedFileName.lastIndexOf("."));
 		} catch (EmptyResultDataAccessException e) {
-			return Result.failed("No file : "+e.toString());
+			return Result.failed("No file : " + e.toString());
 		}
 
 		byte fileByte[];

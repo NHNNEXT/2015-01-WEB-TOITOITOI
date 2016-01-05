@@ -13,11 +13,12 @@ public class FileDAO extends JdbcDaoSupport{
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
-	public String addFileInfo(ImageFile imageFile){
+	public String addFileInfo(ImageFile imagefile){
+		logger.debug("add in");
 		String sql = "INSERT INTO imagefile (original_filename, stored_filename) VALUES (?, ?)";
-        jdbcTemplate.update(sql, new Object[] {imageFile.getOriginal_filename(), imageFile.getStored_filename()});  
-		
-		return imageFile.getStored_filename();
+		System.out.println(jdbcTemplate);
+		jdbcTemplate.update(sql, new Object[] {imagefile.getOriginal_filename(), imagefile.getStored_filename()});  
+		return imagefile.getStored_filename();
 	}
 
 	public void updatePostId(Integer postId, String storedFileName) {
