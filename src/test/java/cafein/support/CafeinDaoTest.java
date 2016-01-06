@@ -25,6 +25,7 @@ import cafein.post.Post;
 import cafein.post.PostDAO;
 import cafein.reply.Reply;
 import cafein.reply.ReplyDAO;
+import cafein.util.Validation;
 
 @RunWith(SpringJUnit4ClassRunner.class)@ContextConfiguration("classpath:/applicationContext.xml")
 public class CafeinDaoTest {
@@ -43,6 +44,13 @@ public class CafeinDaoTest {
 	
 	@Autowired
 	private FileDAO filedao;
+	
+	@Test
+	public void isVaild(){
+		Boolean test = true;
+		test = Validation.isValidParameter(" ");
+		logger.debug(test.toString());
+	}
 	
 	@Test
 	public void getPlaceById() {

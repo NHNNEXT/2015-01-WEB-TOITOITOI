@@ -7,7 +7,7 @@ public class Validation {
 		boolean status;
 		
 		if(string!=null && !(string.isEmpty())) {
-			if((string != "") &&(string != " ")) {
+			if((string != "") && (string != " ")) {
 				return status = true;
 			}	
 		}
