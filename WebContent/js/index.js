@@ -83,10 +83,15 @@ function DearList (placeId, listElement, moreElement) {
 	this.registerEvent();
 }
 DearList.prototype.toggleDear = function (e) {
-	if (!e.target.matches('h3') && !e.target.matches('article')) { // check delegation target
+	var parentElement;
+	if (e.target.matches('h3')) {
+		parentElement = e.target.parentElement;
+	} else if (e.target.matches('article')) {
+		parentElement = e.target;
+	} else {
 		return;
 	}
-	var parentElement = e.target.closest('article');
+
 	var header = parentElement.querySelector('h3');
 	var list = parentElement.querySelector('ul');
 

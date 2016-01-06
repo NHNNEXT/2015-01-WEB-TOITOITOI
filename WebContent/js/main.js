@@ -70,7 +70,8 @@ $(document).ready(function() {
 	});
 	$('#replies').on('click.like', '.likes:not(".on")', function (e) {
 		var target = this;
-		var id = target.closest('li').dataset.id;
+		var id = $(this).closest('li')[0].dataset.id;
+
 		var requestPath = '/api/reply/'+id+'/like';
 		$.ajax({
 			url : requestPath,
