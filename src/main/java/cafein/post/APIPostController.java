@@ -103,7 +103,7 @@ public class APIPostController {
 		if (!Validation.isValidMaxLenPost(content)) {
 			throw new IllegalArgumentLengthException();
 		}
-
+		logger.debug("dear??"+dear);
 		Iterator<String> iterator = request.getFileNames();
 		MultipartFile multipartFile = null;
 		while (iterator.hasNext()) {

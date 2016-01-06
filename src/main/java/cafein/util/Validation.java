@@ -1,5 +1,6 @@
 package cafein.util;
 
+
 public class Validation {
 	
 	//null,empty,띄어쓰기한칸" ","" 체크
@@ -7,7 +8,10 @@ public class Validation {
 		boolean status;
 		
 		if(string!=null && !(string.isEmpty())) {
-			if((string != "") && (string != " ")) {
+			System.out.println("what?"+string);
+			System.out.println(string.isEmpty());
+			System.out.println(string!=null);
+			if((string.equals("")) && (string.equals(" "))) {
 				return status = true;
 			}	
 		}

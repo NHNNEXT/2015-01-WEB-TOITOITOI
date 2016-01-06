@@ -38,15 +38,22 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
 	}
 	
 
-	// 500
+
 	@ExceptionHandler({ IllegalAPIPathException.class })
 	public ResponseEntity<Object> handlPathError(final RuntimeException ex, final WebRequest request) {
-		logger.error("500 Status Code", ex);
-		final String bodyOfResponse = "API path variable wrong";
-		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR,
+		logger.error("404 Status Code", ex);
+		final String bodyOfResponse = "Page does not exit.";
+		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND,
 				request);
 	}
-	
+	@ExceptionHandler({ IllegalArgumentException.class, IllegalStateException.class})
+	public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
+		logger.error("400 Status Code", ex);
+		final String bodyOfResponse = "Empty input data";
+		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST,
+				request);
+	}
+	//500
 	@ExceptionHandler({IllegalArgumentLengthException.class})
 	public ResponseEntity<Object> handleMessageLength(final RuntimeException ex, final WebRequest request) {
 		logger.error("500 Status Code", ex);
@@ -54,15 +61,14 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR,
 				request);
 	}
-
-	@ExceptionHandler({ NullPointerException.class, IllegalArgumentException.class, IllegalStateException.class})
-	public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request) {
+	
+	@ExceptionHandler({NullPointerException.class}) 
+	public ResponseEntity<Object> nullHandler(final RuntimeException ex, final WebRequest request) {
 		logger.error("500 Status Code", ex);
-		final String bodyOfResponse = "Empty message";
+		final String bodyOfResponse = "system error";
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR,
 				request);
 	}
-	
 	@ExceptionHandler({MaxUploadSizeExceededException.class})
 	public ResponseEntity<Object> maxSizeExceededHandler(final RuntimeException ex, final WebRequest request) {
 		logger.error("500 Status Code", ex);
