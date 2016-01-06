@@ -11,7 +11,7 @@ public class Validation {
 			System.out.println("what?"+string);
 			System.out.println(string.isEmpty());
 			System.out.println(string!=null);
-			if((string.equals("")) && (string.equals(" "))) {
+			if(!(string.equals("")) && !(string.equals(" "))) {
 				return status = true;
 			}	
 		}

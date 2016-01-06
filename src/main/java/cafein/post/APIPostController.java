@@ -121,11 +121,13 @@ public class APIPostController {
 				newPost = postdao.addPost(newPost);
 				Integer postId = newPost.getId();
 				filedao.updatePostId(postId, storedFileName);
+				newPost.setName(dear);
 				return Result.success(newPost);
 			}
 		return Result.failed("Fail to save file in Server");
 		}
 		newPost = postdao.addPost(newPost);
+		newPost.setName(dear);
 		return Result.success(newPost);
 	}
 

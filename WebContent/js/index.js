@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					}
 
 					var createdPost = received.result;
-					var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.dearId+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
+					var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.name+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
 					dealMessage( true, resultMessage );
 					formElement.reset();
 					addClass(formElement.querySelector('.preview'), 'off');
