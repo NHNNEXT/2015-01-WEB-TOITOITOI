@@ -139,7 +139,7 @@ nav.top-bar + * {
 	width: 83%;
     max-width: 46em;
 }
-.info .preview {
+.preview {
     max-width: 100%;
 }
 .info .preview.off {
