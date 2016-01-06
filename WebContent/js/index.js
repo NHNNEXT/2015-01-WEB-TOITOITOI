@@ -206,7 +206,6 @@ document.addEventListener("DOMContentLoaded", function() {
 						}
 
 						var createdPost = received.result;
-						debugger;
 						var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.name+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
 						dealMessage( true, resultMessage );
 						formElement.reset();
@@ -228,13 +227,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	formElement.querySelector('input[type="file"]').addEventListener('change', function (e) {
 		var inputFiles = e.target.files;
+		if (!inputFiles) {
+			return;
+		}
+		var targetFile = inputFiles[0];
+		if (targetFile.size > 10000000) {
+			alert('파일 용량은 10메가를 넘길 수 없습니다 ㅜㅜ');
+			return;
+		}
+
 		var fr = new FileReader();
 		fr.onload = function (argument) {
 			var previewElement = formElement.querySelector('img.preview');
 			previewElement.src = fr.result;
 			removeClass(previewElement, 'off');
 		};
-		fr.readAsDataURL(inputFiles[0]);
+		fr.readAsDataURL(targetFile);
 	});
 
 	// make component
