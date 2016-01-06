@@ -45,7 +45,7 @@
 			</div>
 			<button class="send">SEND</button>
 			<div class="info">
-				<img class="preview"/>
+				<img class="preview off"/>
 				<div class="message"></div>
 			</div>
 		</form>

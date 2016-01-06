@@ -139,6 +139,12 @@ nav.top-bar + * {
 	width: 83%;
     max-width: 46em;
 }
+.info .preview {
+    max-width: 100%;
+}
+.info .preview.off {
+    display: none;
+}
 .info .message {
     color: white;
     background-color: blue;

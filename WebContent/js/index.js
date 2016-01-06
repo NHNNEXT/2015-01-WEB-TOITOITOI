@@ -208,6 +208,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.dearId+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
 					dealMessage( true, resultMessage );
 					formElement.reset();
+					addClass(formElement.querySelector('.preview'), 'off');
 					return;
 				}
 				dealMessage( false );
@@ -221,7 +222,9 @@ document.addEventListener("DOMContentLoaded", function() {
 		var inputFiles = e.target.files;
 		var fr = new FileReader();
 		fr.onload = function (argument) {
-			formElement.querySelector('img.preview').src = fr.result;
+			var previewElement = formElement.querySelector('img.preview');
+			previewElement.src = fr.result;
+			removeClass(previewElement, 'off');
 		};
 		fr.readAsDataURL(inputFiles[0]);
 	});
