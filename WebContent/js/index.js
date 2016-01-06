@@ -180,11 +180,11 @@ document.addEventListener("DOMContentLoaded", function() {
 			console.error('no placeId');
 			return;
 		}
-		if (!dear) {
+		if (!dear || !/\S+/.test(dear)) {
 			dealMessage( false, '누구에게 쓰는 편지인가요? 받는 대상을 입력해주세요.', this.querySelector('input[name="dear"]') );
 			return;
 		}
-		if (!content) {
+		if (!content || !/\S+/.test(content)) {
 			dealMessage( false, '편지의 내용을 입력해주세요.', this.querySelector('textarea[name="content"]') );
 			return;
 		}
@@ -195,23 +195,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		var data = new FormData(this);
 		var httpRequest = new XMLHttpRequest();
-		httpRequest.onreadystatechange = function(){
+		httpRequest.onreadystatechange = function() {
 			if (httpRequest.readyState === XMLHttpRequest.DONE) {
-				if (httpRequest.status == 200) {
-					var received = JSON.parse(httpRequest.response);
-					if (!received.success) {
-						dealMessage( false, received.errorMessage );
-						return;
-					}
+				switch (httpRequest.status) {
+					case 200 :
+						var received = JSON.parse(httpRequest.response);
+						if (!received.success) {
+							dealMessage( false, received.errorMessage );
+							return;
+						}
 
-					var createdPost = received.result;
-					var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.name+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
-					dealMessage( true, resultMessage );
-					formElement.reset();
-					addClass(formElement.querySelector('.preview'), 'off');
-					return;
+						var createdPost = received.result;
+						debugger;
+						var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.name+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
+						dealMessage( true, resultMessage );
+						formElement.reset();
+						addClass(formElement.querySelector('.preview'), 'off');
+						return;
+					case 400 :
+						if (httpRequest.response == "Empty input data") {
+							dealMessage( false, '내용을 입력해 주세요 ㅜㅜ' );
+						}
+						break;
+					default :
+						dealMessage( false );
 				}
-				dealMessage( false );
 			}
 		};
 		httpRequest.open('POST', '/api/place/'+placeId+'/post', true);
