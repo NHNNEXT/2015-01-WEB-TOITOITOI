@@ -87,7 +87,7 @@ public class APIFileController {
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
 		} catch (IOException e) {
-			return Result.failed(e.toString());
+			return Result.failed("이미지 파일 로딩에 실패했습니다.");
 		}
 		return Result.success();
 	}
