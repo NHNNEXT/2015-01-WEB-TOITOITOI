@@ -95,6 +95,8 @@ hr.top-bar + header p .emphasis {
 
 nav.top-bar + * {
     margin-top: 3.5em;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .likes {
@@ -120,6 +122,8 @@ nav.top-bar + * {
 }
 .the-letter + .info {
     text-align: right;
+    width: calc(100% - 2em);
+    margin: 1em auto;
 }
 
 #letters ul .likes {
@@ -166,6 +170,7 @@ nav.top-bar + * {
 	position: absolute;
 	width: 3.5em;
 	right: 0.1em;
+    top: 1.5em;
 }
 
 .the-letter > * {
@@ -179,7 +184,8 @@ nav.top-bar + * {
 .the-letter > * > label.dear-label {
     display: inline-block;
     height: 0.4em;
-    width: 8em;
+    /*width: 8em;*/
+    width: 100%;
     position: absolute;
     top: 1px;
     z-index: 2;
@@ -187,6 +193,7 @@ nav.top-bar + * {
     font-weight: 200;
     border-radius: 29px;
     box-shadow: 0 20px 0 0 rgba(0,0,0,0.2);
+    max-width: 100%;
 }
 
 .the-letter > * > input {
@@ -202,7 +209,14 @@ nav.top-bar + * {
     border-radius: 0;/* for safari */
 }
 #new-letter > * > input {
-    width: 40%;
+    /*width: 40%;*/
+}
+#new-letter .buttons::after { 
+   content: "."; 
+   visibility: hidden; 
+   display: block; 
+   height: 0; 
+   clear: both;
 }
 .the-letter > * > textarea {
     border: none;
@@ -222,7 +236,8 @@ nav.top-bar + * {
     background-color: #E89702;
     border: none;
     width: 27%;
-    min-width: 5em;
+    min-width: 7em;
+    max-width: 100%;
     border-radius: 1em;
     margin: 0 auto;
     line-height: 2em;
@@ -255,11 +270,11 @@ nav.top-bar + * {
     position: relative;
 }
 #new-letter .remain-length {
-    position: absolute;
-    right: 0;
-    bottom: 0;
+    float: right;
     display: inline-block;
     opacity: 0.3;
+    height: 100%;
+    line-height: 1.8em;
 }
 #new-letter .remain-length.over {
     color: red;
@@ -332,6 +347,7 @@ nav.top-bar + * {
 
 #replies {
     margin-bottom: 4em;
+    margin-top: 0;
 }
 #replies li {
 	font-weight: 200;
@@ -339,6 +355,8 @@ nav.top-bar + * {
 	background-color: rgba(188, 182, 179,0.7);
 	border-radius: 13px;
 	margin-bottom: 12px;
+    margin-left: 1em;
+    margin-right: 1em;
 	padding: 0.7em 4em 0.7em 1.3em;
     position: relative;
 }
@@ -372,12 +390,13 @@ nav.top-bar + * {
 	border-style: none;
 	border-radius: 9px;
 	height: 26px;
-	width: calc(100% - 6em);
+	width: calc(100% - 8em);
 }
 
 #write-reply button{
 	background-color: rgba(191,68,56,1);
 	float: right;
+    width: 6em;
 	border-style: none;
 	border-radius: 9px;
 	height: 27px;

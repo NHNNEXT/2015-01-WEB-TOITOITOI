@@ -37,13 +37,13 @@
 			<label class="dear-label" for="dear-input">Dear.</label>
 			<input id="dear-input" type="text" name="dear" maxlength="25">
 			<textarea id="post-content" name="content"></textarea>
-			<div>
+			<div class="buttons">
 				<button class="file">
 					<input type="file" name="imagefile" accept="image/*">
 				</button>
-				<button class="send">SEND</button>
 				<label class="remain-length" for="post-content">20000</label>
 			</div>
+			<button class="send">SEND</button>
 			<div class="info">
 				<img class="preview"/>
 				<div class="message"></div>
