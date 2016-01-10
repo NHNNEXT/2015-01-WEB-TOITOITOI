@@ -1,3 +1,6 @@
+var ReactDOM = require('react-dom');
+var React = require('react');
+
 function Post (postDataObject) {
 	this.postId = postDataObject.id;
 	this.preview = postDataObject.preview;
@@ -265,4 +268,10 @@ document.addEventListener("DOMContentLoaded", function() {
 		textarea.addEventListener('cut', function (e) { window.setTimeout(changeRemainLength, 0); });
 		textarea.addEventListener('drop', function (e) { window.setTimeout(changeRemainLength, 0); });
 	}
+
+	// ReactDOM.render(
+	//   <h1>Hello, world!</h1>,
+	//   document.getElementsByTagName('body')[0]
+	// );
+
 });
