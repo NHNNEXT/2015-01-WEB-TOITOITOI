@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import cafein.cafe.Place;
 import cafein.cafe.PlaceDAO;
+import cafein.repository.PlaceRepository;
 import cafein.util.IllegalAPIPathException;
 import cafein.util.Validation;
 
@@ -18,21 +19,22 @@ import cafein.util.Validation;
 public class PlaceController {
 	private static final Logger logger = LoggerFactory.getLogger(PlaceController.class);
 	@Autowired
-	private PlaceDAO placeDao;
+	private PlaceRepository repository;
 
 	@RequestMapping(value = "/place/{placeId}", method = RequestMethod.GET)
 	public String viewPlace(@PathVariable Integer placeId, Model model) {
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
-		Place place = placeDao.getPlaceById(placeId);
+		Place place = repository.findOne(placeId);
+		logger.debug("hi"+placeId);
+		logger.debug(place.toString());
 		model.addAttribute("place", place);
 		if (place != null) {
 			logger.debug(place.toString());
 			return "index";
 		}
-		return"placeidException";
-
+		return "placeidException";
 	}
 
 }

@@ -1,16 +1,16 @@
 package cafein.cafe;
 
+import org.springframework.data.annotation.Id;
+
 public class Place {
 
+	@Id
 	private Integer id;
 	private String name;
-	
-	public Place(){
-		
-	}
+
+	public Place() {}
 
 	public Place(int id, String name) {
-		super();
 		this.id = id;
 		this.name = name;
 	}
@@ -18,7 +18,6 @@ public class Place {
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -26,7 +25,6 @@ public class Place {
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -69,7 +67,5 @@ public class Place {
 	public String toString() {
 		return "Place [placeId=" + id + ", name=" + name + "]";
 	}
-
-	
 
 }
