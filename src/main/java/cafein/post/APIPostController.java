@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import cafein.cafe.CandidateDAO;
+import cafein.cafe.Dear;
 import cafein.file.APIFileController;
 import cafein.file.FileDAO;
 import cafein.reply.ReplyDAO;
@@ -49,7 +50,7 @@ public class APIPostController {
 			throw new IllegalArgumentException();
 		}
 
-		List<Map<String, Object>> result = postdao.getDearList(placeId, nPage);
+		List<Dear> result = postdao.getDearList(placeId, nPage);
 		if (result.isEmpty()) {
 			logger.debug(result.toString());
 			return Result.failed("No more data.");

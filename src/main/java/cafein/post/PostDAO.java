@@ -20,6 +20,8 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.mysql.jdbc.Statement;
 
+import cafein.cafe.Dear;
+
 public class PostDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
 	@Autowired
@@ -87,14 +89,15 @@ public class PostDAO extends JdbcDaoSupport {
 	}
 
 	// dear테이블과 join필요 place는 join 불필
-	public List<Map<String, Object>> getDearList(Integer placeId, Integer nPage) {
+	public List<Dear> getDearList(Integer placeId, Integer nPage) {
 
-		String sql = "SELECT post.dear_id AS id, dear.name AS name, COUNT(post.id) AS totalPostNum "
+		String sql = "SELECT dear.id, dear.name "
 				+ "FROM post LEFT JOIN dear ON post.dear_id = dear.id "
 				+ "WHERE post.place_id = ? "
-				+ "GROUP BY post.dear_id ORDER BY totalPostNum DESC LIMIT ?, 10";
+				+ "GROUP BY post.dear_id ORDER BY COUNT(post.id) DESC LIMIT ?, 10";
 
-		List<Map<String,Object>> result = jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 });
+		List<Dear> result = jdbcTemplate.query(sql, new Object[] { placeId, (nPage - 1) * 10 }, new BeanPropertyRowMapper<Dear>(Dear.class)); 
+//				jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 }, Dear.class);
 		return result;
 	}
 

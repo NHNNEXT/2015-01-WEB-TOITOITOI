@@ -3,9 +3,7 @@ package cafein.support;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
 import cafein.cafe.CandidateDAO;
-import cafein.cafe.Place;
+import cafein.cafe.Dear;
 import cafein.cafe.PlaceDAO;
 import cafein.file.FileDAO;
 import cafein.file.ImageFile;
@@ -100,7 +97,7 @@ public class CafeinDaoTest {
 	
 	@Test
 	public void getDearList(){
-		List<Map<String,Object>> test;
+		List<Dear> test;
 		test = postdao.getDearList(1, 4);
 		if(test.isEmpty()){
 	 	logger.debug(test.toString());
