@@ -27,8 +27,6 @@ public class PlaceController {
 			throw new IllegalAPIPathException();
 		}
 		Place place = placeDao.getPlaceById(placeId);
-		logger.debug("hi"+placeId);
-		logger.debug(place.toString());
 		model.addAttribute("place", place);
 		if (place != null) {
 			logger.debug(place.toString());

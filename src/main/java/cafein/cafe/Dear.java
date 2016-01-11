@@ -7,17 +7,9 @@ public class Dear {
 	private Integer id;
 	private String name;
 	private Integer totalPostNum;
+	private Integer placeId;
 
 	public Dear() {}
-	public Dear(Integer id, String name) {
-		this.id = id;
-		this.name = name;
-	}
-	public Dear(Integer id, String name, Integer totalPostNum) {
-		this.id = id;
-		this.name = name;
-		this.totalPostNum = totalPostNum;
-	}
 
 	public Integer getId() {
 		return id;
@@ -31,13 +23,19 @@ public class Dear {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public Integer getTotalPostNum() {
 		return totalPostNum;
 	}
 	public void setTotalPostNum(Integer totalPostNum) {
 		this.totalPostNum = totalPostNum;
 	}
+	public Integer getPlaceId() {
+		return placeId;
+	}
+	public void setPlaceId(Integer placeId) {
+		this.placeId = placeId;
+	}
+
 	@Override
 	public String toString() {
 		return "Dear [id=" + id + ", name=" + name + "]";

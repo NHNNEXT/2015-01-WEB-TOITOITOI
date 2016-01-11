@@ -8,10 +8,6 @@ public class Place {
 	private String name;
 
 	public Place() {}
-	public Place(int id, String name) {
-		this.id = id;
-		this.name = name;
-	}
 
 	public Integer getId() {
 		return id;
