@@ -3,13 +3,11 @@ package cafein.cafe;
 import org.springframework.data.annotation.Id;
 
 public class Place {
-
 	@Id
 	private Integer id;
 	private String name;
 
 	public Place() {}
-
 	public Place(int id, String name) {
 		this.id = id;
 		this.name = name;
@@ -21,12 +19,16 @@ public class Place {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Place [placeId=" + id + ", name=" + name + "]";
 	}
 
 	@Override
@@ -38,7 +40,6 @@ public class Place {
 		result = prime * result + id;
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -62,10 +63,4 @@ public class Place {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "Place [placeId=" + id + ", name=" + name + "]";
-	}
-
 }

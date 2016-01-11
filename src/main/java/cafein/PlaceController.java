@@ -19,14 +19,14 @@ import cafein.util.Validation;
 public class PlaceController {
 	private static final Logger logger = LoggerFactory.getLogger(PlaceController.class);
 	@Autowired
-	private PlaceRepository repository;
+	private PlaceRepository placeDao;
 
 	@RequestMapping(value = "/place/{placeId}", method = RequestMethod.GET)
 	public String viewPlace(@PathVariable Integer placeId, Model model) {
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
-		Place place = repository.findOne(placeId);
+		Place place = placeDao.getPlaceById(placeId);
 		logger.debug("hi"+placeId);
 		logger.debug(place.toString());
 		model.addAttribute("place", place);
