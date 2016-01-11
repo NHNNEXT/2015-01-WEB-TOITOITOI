@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import cafein.cafe.Dear;
 
 public interface DearRepository extends MongoRepository<Dear, Integer> {
-	int pageSize = 20;
+	int pageSize = 10;
 	Page<Dear> findByPlaceId(Integer placeId, Pageable pageable);
 	
 	default List<Dear> getDearList(Integer placeId, Integer nPage) {
