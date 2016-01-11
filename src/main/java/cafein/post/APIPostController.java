@@ -53,7 +53,7 @@ public class APIPostController {
 		}
 
 //		List<Dear> result = postdao.getDearList(placeId, nPage);
-		List<Dear> result = dearDao.getDearList(placeId, nPage);
+		List<Dear> result = dearDao.getDearList(placeId, nPage-1);
 		if (result.isEmpty()) {
 			return Result.failed("No more data.");
 		}
