@@ -15,6 +15,6 @@ public interface DearRepository extends MongoRepository<Dear, Integer> {
 	Page<Dear> findByPlaceId(Integer placeId, Pageable pageable);
 	
 	default List<Dear> getDearList(Integer placeId, Integer nPage) {
-		return findByPlaceId(placeId, new PageRequest(nPage, pageSize, new Sort(Sort.Direction.DESC, "totalPostNum"))).getContent();
+		return findByPlaceId(placeId, new PageRequest(nPage-1, pageSize, Sort.Direction.DESC, "totalPostNum")).getContent();
 	}
 }

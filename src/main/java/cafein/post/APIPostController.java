@@ -21,6 +21,7 @@ import cafein.file.APIFileController;
 import cafein.file.FileDAO;
 import cafein.reply.ReplyDAO;
 import cafein.repository.DearRepository;
+import cafein.repository.PostRepository;
 import cafein.util.IllegalAPIPathException;
 import cafein.util.IllegalArgumentLengthException;
 import cafein.util.Result;
@@ -32,6 +33,8 @@ public class APIPostController {
 	private static final Logger logger = LoggerFactory.getLogger(APIPostController.class);
 	@Autowired
 	private DearRepository dearDao;
+	@Autowired
+	private PostRepository postDao;
 	@Autowired
 	private ReplyDAO replydao;
 	@Autowired
@@ -53,7 +56,7 @@ public class APIPostController {
 		}
 
 //		List<Dear> result = postdao.getDearList(placeId, nPage);
-		List<Dear> result = dearDao.getDearList(placeId, nPage-1);
+		List<Dear> result = dearDao.getDearList(placeId, nPage);
 		if (result.isEmpty()) {
 			return Result.failed("No more data.");
 		}
@@ -74,7 +77,7 @@ public class APIPostController {
 			throw new IllegalArgumentException();
 		}
 
-		List<Map<String,Object>> result = postdao.getPreviews(placeId, dearId, nPage); 
+		List<Post> result = postDao.getPreviews(placeId, dearId, nPage);
 		if(result.isEmpty()){
 			return Result.failed("No more data.");
 		}

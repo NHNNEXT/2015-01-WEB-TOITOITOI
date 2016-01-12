@@ -3,7 +3,7 @@ var React = require('react');
 
 function Post (postDataObject) {
 	this.postId = postDataObject.id;
-	this.preview = postDataObject.preview;
+	this.preview = postDataObject.content;
 	this.likes = postDataObject.likes;
 }
 
