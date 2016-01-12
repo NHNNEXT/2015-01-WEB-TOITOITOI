@@ -19,6 +19,12 @@
 
 */
 
+/* mongoimport --db dearhere --collection reply --drop --file dump-reply.json
+\((\d+),'([\d\-]+) ([\d\:]+)','([^']+)',(\d+),(\d+)\)(,*)
+*
+{ "_id" : $1, "postId" : $6, "createdtime" : ISODate("$2T$3Z"), "likes" : $5, "content" : "$4" }
+
+*/
 // m:n -> 1:n 으로 바뀜. 근데 이전 실제 데이터도 1:n이어서 가능한 코드. 같은 dear가 여러 place에 있는 적 x.
 db.post.find().forEach(function(item) {
 	db.dear.update({"_id":item["dearId"]}, {$set: {placeId:item["placeId"]}});
