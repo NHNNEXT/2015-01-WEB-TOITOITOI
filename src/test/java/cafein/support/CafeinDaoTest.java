@@ -132,8 +132,7 @@ public class CafeinDaoTest {
 		ImageFile imageFile = new ImageFile(original_filename, stored_filename);
 		logger.debug(imageFile.getOriginal_filename());
 		logger.debug(imageFile.getStored_filename());
-		test =filedao.addFileInfo(imageFile);
-		logger.debug(test);
+		filedao.addFileInfo(imageFile);
 	}
 	
 	@Test

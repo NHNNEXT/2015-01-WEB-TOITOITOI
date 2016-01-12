@@ -27,8 +27,8 @@ public class APIFileController {
 	private FileDAO filedao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(APIFileController.class);
-	private static final String filePath = "/root/images/";
-//	private static final String filePath = "/Users/Songhee/toitoiImage/";
+//	private static final String filePath = "/root/images/";
+	private static final String filePath = "/Users/heesu/toitoiImage/";
 	
 	
 	public String insertFile(MultipartFile multipartFile) {
@@ -55,26 +55,25 @@ public class APIFileController {
 		ImageFile imageFile = new ImageFile(originalFileName, storedFileName);
 		logger.debug(imageFile.toString());
 		logger.debug(imageFile.getStored_filename());
-		System.out.println(filedao);
-		return filedao.addFileInfo(imageFile);
+		filedao.addFileInfo(imageFile);
+		return imageFile.getStored_filename();
 	}
 
 	@RequestMapping(value = "/api/post/{postid}/file", method = RequestMethod.GET)
 	public Result sendFile(@PathVariable(value = "postid") Integer postid, HttpServletResponse response)
 			throws UnsupportedEncodingException {
-		String storedFileName;
-		String originalFileName;
-		String originalFileExtension;
+		ImageFile imagefile;
 
 		try {
-			storedFileName = filedao.getStroedFileNameByPostId(postid);
-			originalFileName = filedao.getOriginalFileNameByPostId(postid);
-			originalFileExtension = storedFileName.substring(storedFileName.lastIndexOf("."));
+			imagefile = filedao.getImagefileByPostId(postid);
 		} catch (EmptyResultDataAccessException e) {
 			return Result.failed("No file");
 		}
 
 		byte fileByte[];
+		String storedFileName = imagefile.getStored_filename();
+		String originalFileName = imagefile.getOriginal_filename();
+		String originalFileExtension = storedFileName.substring(storedFileName.lastIndexOf("."));
 		try {
 			fileByte = FileUtils.readFileToByteArray(new File(filePath + storedFileName));
 			response.setContentType("image/" + originalFileExtension);
