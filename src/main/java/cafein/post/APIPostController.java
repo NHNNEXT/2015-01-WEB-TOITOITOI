@@ -2,7 +2,6 @@ package cafein.post;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,7 +90,7 @@ public class APIPostController {
 		if (!Validation.isValidParameter(postId) || !Validation.isValidParameterType(postId)) {
 			throw new IllegalAPIPathException();
 		}
-		post = postdao.getPostByPostId(postId);
+		post = postDao.getPostByPostId(postId);
 		post.setReplyList(replydao.getReplys(postId));
 		return Result.success(post);
 	}

@@ -15,6 +15,10 @@ public interface PostRepository extends MongoRepository<Post, Integer> {
 	int pageSize = 20;
 	@Query(value="{ 'dearId' : ?0 }", fields="{ '_id' : 1, 'content' : 1, 'likes' : 1 }")
 	Page<Post> findByDearId(Integer dearId, Pageable pageable);
+
+	default Post getPostByPostId(Integer postId) {
+		return findOne(postId);
+	}
 	
 	default List<Post> getPreviews(Integer placeId, Integer dearId, Integer nPage) {
 		// TODO : placeId 필요없음!
