@@ -31,6 +31,10 @@
 *
 { "_id" : $1, "attatchedTo" : {"collection" : "post", "_id" : $6}, "storedFilename" : "$3", "originalFilename" : "$2", "createdtime" : ISODate("$4T$5Z") }
 
+*
+(?:"attatchedTo" : \{"collection" : "post", "_id" : )(\d+)\}
+*
+"postId" : $1
 */
 // m:n -> 1:n 으로 바뀜. 근데 이전 실제 데이터도 1:n이어서 가능한 코드. 같은 dear가 여러 place에 있는 적 x.
 db.post.find().forEach(function(item) {
