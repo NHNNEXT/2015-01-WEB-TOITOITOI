@@ -29,6 +29,10 @@
 	<header>
 		<h1>Dear Here</h1>
 		<p><span class="emphasis">${place.name}</span>의 누군가에게 편지 한 통 써보세요!</p>
+		<p><span class="emphasis">TEST 의 추천 DEAR!!!</span></p>
+		<c:forEach var="dear" items="${candidates}">
+			<div>${dear.name}</div>
+		</c:forEach>
 	</header>
 	<section id="new-letter" class="the-letter">
 		<h2 class="hidden">new letter</h2>

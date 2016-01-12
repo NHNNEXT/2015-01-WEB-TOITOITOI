@@ -5,8 +5,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-	<!-- <context:property-placeholder location="classpath*:local-properties.xml" /> -->
-	<context:property-placeholder location="classpath*:product-properties.xml" />
+	<context:property-placeholder location="classpath*:local-properties.xml" />
+	<!-- <context:property-placeholder location="classpath*:product-properties.xml" /> -->
 
 	<context:annotation-config />
 
@@ -30,6 +30,8 @@
 		<property name="maxInMemorySize" value="10000000" />
 		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
+	
+	<tx:annotation-driven/>
 	<!-- Configure the file upload directory -->
 <!-- 	<bean id="uploadDirResource" class="org.springframework.core.io.FileSystemResource">
 		<constructor-arg>

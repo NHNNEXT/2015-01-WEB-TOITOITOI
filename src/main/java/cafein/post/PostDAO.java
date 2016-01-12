@@ -17,6 +17,9 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mysql.jdbc.Statement;
 
@@ -24,7 +27,7 @@ public class PostDAO extends JdbcDaoSupport {
 	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Post addPost(Post post) {
 		Integer dearId = getDearId(post.getName());
 		String sql = "INSERT INTO post (place_id, dear_id, content) VALUES(?, ?, ?)";
@@ -45,7 +48,8 @@ public class PostDAO extends JdbcDaoSupport {
 		logger.debug("key:" + key);
 		return getPostByPostId(key);
 	}
-
+	
+	@Transactional(propagation= Propagation.REQUIRED, isolation=Isolation.REPEATABLE_READ)
 	public Integer getDearId(String dear) {
 		String sql = "SELECT id from dear where name = ?";
 		Integer id = null;
@@ -57,8 +61,8 @@ public class PostDAO extends JdbcDaoSupport {
 			return addDear(dear);
 		}
 	}
-
-	// 새로Dear에게 쓸때만
+	
+	@Transactional(propagation= Propagation.REQUIRED, isolation=Isolation.REPEATABLE_READ)
 	public Integer addDear(String dear) {
 		String sql = "INSERT INTO dear (name) VALUES(?)";
 		final PreparedStatementCreator psc = new PreparedStatementCreator() {
@@ -79,14 +83,12 @@ public class PostDAO extends JdbcDaoSupport {
 		}
 	}
 
-	// Query바꾼 후 Test완료
 	public Post getPostByPostId(Integer id) {
 		String sql = "SELECT * FROM post WHERE post.id=?";
 		Post post = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Post>(Post.class), id);
 		return post;
 	}
 
-	// dear테이블과 join필요 place는 join 불필
 	public List<Map<String, Object>> getDearList(Integer placeId, Integer nPage) {
 
 		String sql = "SELECT post.dear_id AS id, dear.name AS name, COUNT(post.id) AS totalPostNum "
@@ -98,7 +100,6 @@ public class PostDAO extends JdbcDaoSupport {
 		return result;
 	}
 
-	// dearId를 parameter로 받는다면 dear join없이 가능.
 	public List<Map<String, Object>> getPreviews(Integer placeid, Integer dearId, int nPage) {
 		int startingRow = (nPage - 1) * 20;
 		String sql = "SELECT id, LEFT(content, 80) AS preview, likes FROM post "

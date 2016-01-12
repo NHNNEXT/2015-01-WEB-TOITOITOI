@@ -12,7 +12,7 @@ public class CandidateDAO extends JdbcDaoSupport{
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
-	public List<CandidateDear> getRecommendedDears(int placeId) {
+	public List<CandidateDear> getRecommendedDears(Integer placeId) {
 		String sql = "SELECT * FROM candidate WHERE place_id=?";
 		List<CandidateDear> result;
 		result = jdbcTemplate.query(sql,new Object[] {placeId}, new BeanPropertyRowMapper<CandidateDear>(CandidateDear.class));
