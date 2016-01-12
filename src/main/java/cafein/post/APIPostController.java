@@ -76,7 +76,7 @@ public class APIPostController {
 		}
 
 		List<Post> result = postDao.getPreviews(placeId, dearId, nPage);
-		if(result.isEmpty()){
+		if (result.isEmpty()) {
 			return Result.failed("No more data.");
 		}
 		return Result.success(result);
@@ -106,7 +106,7 @@ public class APIPostController {
 		if (!Validation.isValidMaxLenPost(content)) {
 			throw new IllegalArgumentLengthException();
 		}
-		logger.debug("dear??"+dear);
+		logger.debug("dear??" + dear);
 		Iterator<String> iterator = request.getFileNames();
 		MultipartFile multipartFile = null;
 		while (iterator.hasNext()) {
@@ -119,7 +119,7 @@ public class APIPostController {
 		if (multipartFile.isEmpty() == false) {
 			logger.debug("multipartFile  exist!");
 			String storedFileName = apiFileController.insertFile(multipartFile);
-			
+
 			if (storedFileName != null) {
 				newPost = postdao.addPost(newPost);
 				Integer postId = newPost.getId();
@@ -127,7 +127,7 @@ public class APIPostController {
 				newPost.setName(dear);
 				return Result.success(newPost);
 			}
-		return Result.failed("Fail to save file in Server");
+			return Result.failed("Fail to save file in Server");
 		}
 		newPost = postdao.addPost(newPost);
 		newPost.setName(dear);
