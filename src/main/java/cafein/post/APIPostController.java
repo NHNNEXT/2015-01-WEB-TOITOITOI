@@ -55,7 +55,6 @@ public class APIPostController {
 			throw new IllegalArgumentException();
 		}
 
-//		List<Dear> result = postdao.getDearList(placeId, nPage);
 		List<Dear> result = dearDao.getDearList(placeId, nPage);
 		if (result.isEmpty()) {
 			return Result.failed("No more data.");
@@ -77,6 +76,7 @@ public class APIPostController {
 			throw new IllegalArgumentException();
 		}
 
+//		List<Map<String,Object>> result = postdao.getPreviews(placeId, dearId, nPage);
 		List<Post> result = postDao.getPreviews(placeId, dearId, nPage);
 		if(result.isEmpty()){
 			return Result.failed("No more data.");
