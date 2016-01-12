@@ -26,6 +26,8 @@ import cafein.util.Result;
 public class APIFileController {
 	@Autowired
 	private FileDAO filedao;
+	@Autowired
+	private ImagefileRepository imagefileDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(APIFileController.class);
 //	private static final String filePath = "/root/images/";
@@ -66,7 +68,8 @@ public class APIFileController {
 		ImageFile imagefile;
 
 		try {
-			imagefile = filedao.getImagefileByPostId(postid);
+//			imagefile = filedao.getImagefileByPostId(postid);
+			imagefile = imagefileDao.findByPostId(postid);
 		} catch (EmptyResultDataAccessException e) {
 			return Result.failed("No file");
 		}

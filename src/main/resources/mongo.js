@@ -26,7 +26,7 @@
 
 */
 
-/* mongoimport --db dearhere --collection imagefile --drop --file dump-imagefile.json
+/* mongoimport --db dearhere --collection imageFile --drop --file dump-imagefile.json
 \((\d+),'(\\.|[^']++)*','(\\.|[^']++)*','([\d\-]+) ([\d\:]+)',(\d+)\)(,*)
 *
 { "_id" : $1, "attatchedTo" : {"collection" : "post", "_id" : $6}, "storedFilename" : "$3", "originalFilename" : "$2", "createdtime" : ISODate("$4T$5Z") }
