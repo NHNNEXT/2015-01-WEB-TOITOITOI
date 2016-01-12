@@ -130,8 +130,8 @@ public class CafeinDaoTest {
 		String stored_filename = "UDDETYUHJIOKRFTGUDDETYUHJIOKR";
 		String test;
 		ImageFile imageFile = new ImageFile(original_filename, stored_filename);
-		logger.debug(imageFile.getOriginal_filename());
-		logger.debug(imageFile.getStored_filename());
+		logger.debug(imageFile.getOriginalFilename());
+		logger.debug(imageFile.getStoredFilename());
 		filedao.addFileInfo(imageFile);
 	}
 	

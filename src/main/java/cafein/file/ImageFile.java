@@ -3,34 +3,16 @@ package cafein.file;
 public class ImageFile {
 	
 	private Integer id;
-	private String original_filename;
-	private String stored_filename;
-	private String stored_time;
-	private Integer post_id;
+	private String originalFilename;
+	private String storedFilename;
+	private String storedTime;
+	private Integer postId;
 	
-	public ImageFile() {
-	}
+	public ImageFile() {}
 
-	public ImageFile(String original_filename, String stored_filename) {
-		super();
-		this.original_filename = original_filename;
-		this.stored_filename = stored_filename;
-	}
-
-	public ImageFile(String original_filename, String stored_filename, Integer post_id) {
-		super();
-		this.original_filename = original_filename;
-		this.stored_filename = stored_filename;
-		this.post_id = post_id;
-	}
-
-	public ImageFile(Integer id, String original_filename, String stored_filename, String stored_time, Integer post_id) {
-		super();
-		this.id = id;
-		this.original_filename = original_filename;
-		this.stored_filename = stored_filename;
-		this.stored_time = stored_time;
-		this.post_id = post_id;
+	public ImageFile(String originalFilename, String storedFilename) {
+		this.originalFilename = originalFilename;
+		this.storedFilename = storedFilename;
 	}
 
 	/* Getter And Setter */
@@ -40,29 +22,29 @@ public class ImageFile {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getOriginal_filename() {
-		return original_filename;
+	public String getOriginalFilename() {
+		return originalFilename;
 	}
-	public void setOriginal_filename(String original_filename) {
-		this.original_filename = original_filename;
+	public void setOriginalFilename(String originalFilename) {
+		this.originalFilename = originalFilename;
 	}
-	public String getStored_filename() {
-		return stored_filename;
+	public String getStoredFilename() {
+		return storedFilename;
 	}
-	public void setStored_filename(String stored_filename) {
-		this.stored_filename = stored_filename;
+	public void setStoredFilename(String storedFilename) {
+		this.storedFilename = storedFilename;
 	}
-	public String getStored_time() {
-		return stored_time;
+	public String getStoredTime() {
+		return storedTime;
 	}
-	public void setStored_time(String stored_time) {
-		this.stored_time = stored_time;
+	public void setStoredTime(String storedTime) {
+		this.storedTime = storedTime;
 	}
-	public Integer getPost_id() {
-		return post_id;
+	public Integer getPostId() {
+		return postId;
 	}
-	public void setPost_id(Integer post_id) {
-		this.post_id = post_id;
+	public void setPostId(Integer postId) {
+		this.postId = postId;
 	}
 
 	
@@ -71,10 +53,10 @@ public class ImageFile {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((original_filename == null) ? 0 : original_filename.hashCode());
-		result = prime * result + ((post_id == null) ? 0 : post_id.hashCode());
-		result = prime * result + ((stored_filename == null) ? 0 : stored_filename.hashCode());
-		result = prime * result + ((stored_time == null) ? 0 : stored_time.hashCode());
+		result = prime * result + ((originalFilename == null) ? 0 : originalFilename.hashCode());
+		result = prime * result + ((postId == null) ? 0 : postId.hashCode());
+		result = prime * result + ((storedFilename == null) ? 0 : storedFilename.hashCode());
+		result = prime * result + ((storedTime == null) ? 0 : storedTime.hashCode());
 		return result;
 	}
 
@@ -93,33 +75,33 @@ public class ImageFile {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (original_filename == null) {
-			if (other.original_filename != null)
+		if (originalFilename == null) {
+			if (other.originalFilename != null)
 				return false;
-		} else if (!original_filename.equals(other.original_filename))
+		} else if (!originalFilename.equals(other.originalFilename))
 			return false;
-		if (post_id == null) {
-			if (other.post_id != null)
+		if (postId == null) {
+			if (other.postId != null)
 				return false;
-		} else if (!post_id.equals(other.post_id))
+		} else if (!postId.equals(other.postId))
 			return false;
-		if (stored_filename == null) {
-			if (other.stored_filename != null)
+		if (storedFilename == null) {
+			if (other.storedFilename != null)
 				return false;
-		} else if (!stored_filename.equals(other.stored_filename))
+		} else if (!storedFilename.equals(other.storedFilename))
 			return false;
-		if (stored_time == null) {
-			if (other.stored_time != null)
+		if (storedTime == null) {
+			if (other.storedTime != null)
 				return false;
-		} else if (!stored_time.equals(other.stored_time))
+		} else if (!storedTime.equals(other.storedTime))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ImageFile [id=" + id + ", original_filename=" + original_filename + ", stored_filename="
-				+ stored_filename + ", stored_time=" + stored_time + ", post_id=" + post_id + "]";
+		return "ImageFile [id=" + id + ", original_filename=" + originalFilename + ", stored_filename="
+				+ storedFilename + ", stored_time=" + storedTime + ", post_id=" + postId + "]";
 	}
 	
 	

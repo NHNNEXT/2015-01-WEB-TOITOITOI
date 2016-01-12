@@ -17,7 +17,7 @@ public class FileDAO extends JdbcDaoSupport{
 	public void addFileInfo(ImageFile imagefile){
 		logger.debug("add in");
 		String sql = "INSERT INTO imagefile (original_filename, stored_filename) VALUES (?, ?)";
-		jdbcTemplate.update(sql, new Object[] {imagefile.getOriginal_filename(), imagefile.getStored_filename()});  
+		jdbcTemplate.update(sql, new Object[] {imagefile.getOriginalFilename(), imagefile.getStoredFilename()});
 	}
 
 	public void updatePostId(Integer postId, String storedFileName) {

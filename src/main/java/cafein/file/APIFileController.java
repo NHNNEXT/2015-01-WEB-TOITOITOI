@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import cafein.repository.ImagefileRepository;
 import cafein.util.ImageFileUtils;
 import cafein.util.Result;
 
@@ -54,9 +55,9 @@ public class APIFileController {
 		logger.debug(storedFileName);
 		ImageFile imageFile = new ImageFile(originalFileName, storedFileName);
 		logger.debug(imageFile.toString());
-		logger.debug(imageFile.getStored_filename());
+		logger.debug(imageFile.getStoredFilename());
 		filedao.addFileInfo(imageFile);
-		return imageFile.getStored_filename();
+		return imageFile.getStoredFilename();
 	}
 
 	@RequestMapping(value = "/api/post/{postid}/file", method = RequestMethod.GET)
@@ -71,8 +72,8 @@ public class APIFileController {
 		}
 
 		byte fileByte[];
-		String storedFileName = imagefile.getStored_filename();
-		String originalFileName = imagefile.getOriginal_filename();
+		String storedFileName = imagefile.getStoredFilename();
+		String originalFileName = imagefile.getOriginalFilename();
 		String originalFileExtension = storedFileName.substring(storedFileName.lastIndexOf("."));
 		try {
 			fileByte = FileUtils.readFileToByteArray(new File(filePath + storedFileName));
