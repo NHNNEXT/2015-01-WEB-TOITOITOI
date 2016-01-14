@@ -1,5 +1,5 @@
-var ReactDOM = require('react-dom');
-var React = require('react');
+//var ReactDOM = require('react-dom');
+//var React = require('react');
 
 function Post (postDataObject) {
 	this.postId = postDataObject.id;

@@ -12,7 +12,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<link type="text/css" rel="stylesheet" href="/css/index.css">
 	<script defer src="/js/util.js"></script>
-	<script defer src="/js/compiled.js"></script>
+	<script defer src="/js/index.js"></script>
 	<script defer src="/js/elastic.js"></script>
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
