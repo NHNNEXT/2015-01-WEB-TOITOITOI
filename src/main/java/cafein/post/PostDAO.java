@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,15 @@ public class PostDAO extends JdbcDaoSupport {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	public Post addPost(Post post, Integer placeId) {
-		Integer dearId = post.getDearId();
+	public Post addPost(Post post, String placeId) {
+		String dearId = post.getDearId();
 		String sql = "INSERT INTO post (place_id, dear_id, content) VALUES(?, ?, ?)";
 		final PreparedStatementCreator psc = new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(final Connection connection) throws SQLException {
 				final PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				ps.setInt(1, placeId);
-				ps.setInt(2, dearId);
+				ps.setString(1, placeId);
+				ps.setString(2, dearId);
 				ps.setString(3, post.getContent());
 				return ps;
 			}

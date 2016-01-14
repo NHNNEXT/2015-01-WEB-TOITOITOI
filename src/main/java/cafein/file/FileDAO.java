@@ -14,10 +14,10 @@ public class FileDAO extends JdbcDaoSupport{
 	private static final Logger logger = LoggerFactory.getLogger(FileDAO.class);
 	
 	
-	public void addFileInfo(ImageFile imagefile){
+	public void addFileInfo(Image imagefile){
 		logger.debug("add in");
 		String sql = "INSERT INTO imagefile (original_filename, stored_filename) VALUES (?, ?)";
-		jdbcTemplate.update(sql, new Object[] {imagefile.getOriginalFilename(), imagefile.getStoredFilename()});
+		jdbcTemplate.update(sql, new Object[] {imagefile.getOriginalName(), imagefile.getStoredName()});
 	}
 
 	public void updatePostId(Integer postId, String storedFileName) {
@@ -25,8 +25,8 @@ public class FileDAO extends JdbcDaoSupport{
 		jdbcTemplate.update(sql, postId, storedFileName);
 	}
 	
-	public ImageFile getImagefileByPostId(Integer postId) throws EmptyResultDataAccessException {
+	public Image getImagefileByPostId(Integer postId) throws EmptyResultDataAccessException {
 		String sql = "SELECT * FROM imagefile WHERE post_id=?";
-		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<ImageFile>(ImageFile.class), postId);
+		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Image>(Image.class), postId);
 	}
 }

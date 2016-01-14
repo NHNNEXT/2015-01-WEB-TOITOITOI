@@ -17,7 +17,7 @@ import cafein.cafe.CandidateDAO;
 import cafein.cafe.Dear;
 import cafein.cafe.PlaceDAO;
 import cafein.file.FileDAO;
-import cafein.file.ImageFile;
+import cafein.file.Image;
 import cafein.post.Post;
 import cafein.post.PostDAO;
 import cafein.reply.Reply;
@@ -57,8 +57,8 @@ public class CafeinDaoTest {
 	@Test
 	public void addReply() throws SQLException {
 		Reply result = null;
-		Reply testreply = new Reply(1, "우리는회의를해!");
-		result = replydao.addReply(testreply);
+//		Reply testreply = new Reply(1, "우리는회의를해!");
+//		result = replydao.addReply(testreply);
 		logger.debug(result.toString());
 	}
 
@@ -84,7 +84,7 @@ public class CafeinDaoTest {
 	@Test
 	public void addPost() {
 		Post test;
-		logger.debug(postdao.addPost(new Post("shine",1), 1).toString());
+//		logger.debug(postdao.addPost(new Post("shine",1), 1).toString());
 	}
 	
 	@Test
@@ -129,9 +129,9 @@ public class CafeinDaoTest {
 		String original_filename ="테스.jpg";
 		String stored_filename = "UDDETYUHJIOKRFTGUDDETYUHJIOKR";
 		String test;
-		ImageFile imageFile = new ImageFile(original_filename, stored_filename);
-		logger.debug(imageFile.getOriginalFilename());
-		logger.debug(imageFile.getStoredFilename());
+		Image imageFile = new Image(original_filename, stored_filename);
+//		logger.debug(imageFile.getOriginalFilename());
+//		logger.debug(imageFile.getStoredFilename());
 		filedao.addFileInfo(imageFile);
 	}
 	

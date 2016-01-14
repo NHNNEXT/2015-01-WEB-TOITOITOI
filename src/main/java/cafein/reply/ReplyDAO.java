@@ -34,7 +34,7 @@ public class ReplyDAO extends JdbcDaoSupport {
 			@Override
 			public PreparedStatement createPreparedStatement(final Connection connection) throws SQLException {
 				final PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				ps.setInt(1, reply.getPostId());
+				ps.setString(1, reply.getPostId());
 				ps.setString(2, reply.getContent());
 				return ps;
 			}

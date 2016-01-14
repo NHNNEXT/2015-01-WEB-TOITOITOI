@@ -1,67 +1,62 @@
 package cafein.cafe;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 public class Dear {
 	@Id
-	private Integer id;
+	private String id;
+	@Indexed
+	private String uri;
 	private String name;
+	private String placeId;
 	private Integer totalPostNum;
-	private Integer placeId;
 
-	public Dear() {}
+	public Dear() {
+	}
 
-	public Integer getId() {
+	public String getUri() {
+		return uri;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+
+	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getPlaceId() {
+		return placeId;
+	}
+
+	public void setPlaceId(String placeId) {
+		this.placeId = placeId;
+	}
+
 	public Integer getTotalPostNum() {
 		return totalPostNum;
 	}
+
 	public void setTotalPostNum(Integer totalPostNum) {
 		this.totalPostNum = totalPostNum;
-	}
-	public Integer getPlaceId() {
-		return placeId;
-	}
-	public void setPlaceId(Integer placeId) {
-		this.placeId = placeId;
 	}
 
 	@Override
 	public String toString() {
-		return "Dear [id=" + id + ", name=" + name + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Dear other = (Dear) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+		return "Dear [uri=" + uri + ", id=" + id + ", name=" + name + "]";
 	}
 }

@@ -1,6 +1,10 @@
 var ReactDOM = require('react-dom');
 var React = require('react');
 
+var Place = {
+	uri : "test" // 일단 하드코딩.
+};
+
 function Post (postDataObject) {
 	this.postId = postDataObject.id;
 	this.preview = postDataObject.content;
@@ -13,7 +17,7 @@ function Dear (dearDataObject, placeId, listElementSelector, moreElementSelector
 	this.dearId = dearDataObject.id;
 	this.name = dearDataObject.name;
 	this.maxPostNum = dearDataObject.totalPostNum; // change property name
-	this.currentPage = 0;
+	this.currentPage = -1;
 	this.lastRenderedId = -1;
 	this.posts = [];
 	this.placeId = placeId;
@@ -38,13 +42,13 @@ Dear.prototype.render = function () {
 	var codes = '';
 	for ( var dataLen = this.posts.length, currentId = this.lastRenderedId+1; currentId < dataLen; currentId = ++(this.lastRenderedId)+1 ) {
 		var currentPost = this.posts[currentId];
-		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.name+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a><span class="likes"><span class="hidden">좋아요</span>'+currentPost.likes+'</span></li>';
+		codes += '<li><a href="/place/'+Place.uri+'/dear/'+this.name+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a><span class="likes"><span class="hidden">좋아요</span>'+currentPost.likes+'</span></li>';
 	}
 	this.moreElement.insertAdjacentHTML('beforebegin', codes);
 
 	for ( var dataLen = this.posts.length, currentId = this.lastRenderedId+1; currentId < dataLen; currentId = ++(this.lastRenderedId)+1 ) {
 		var currentPost = this.posts[currentId];
-		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.dearId+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a></li>';
+		codes += '<li><a href="/place/'+Place.uri+'/dear/'+this.name+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a></li>';
 	}
 };
 Dear.prototype.getNextPagePosts = function (e) {
@@ -78,7 +82,7 @@ Dear.prototype.getNextPagePosts = function (e) {
 
 function DearList (placeId, listElement, moreElement) {
 	this.placeId = placeId;
-	this.currentPage = 0;
+	this.currentPage = -1;
 	this.lastRenderedId = -1;
 	this.dears = []; // which is sorted by postNum DESC
 	this.listElement = listElement; // this file will be executed after parsing DOMs, becauseof 'defer'.

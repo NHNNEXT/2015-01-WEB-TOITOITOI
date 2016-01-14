@@ -32,7 +32,7 @@
 	</header>
 	<section id="new-letter" class="the-letter">
 		<h2 class="hidden">new letter</h2>
-		<form action="/api/place/${place.id}/post">
+		<form>
 			<input id="place-id" type="hidden" name="placeId" value="${place.id}">
 			<label class="dear-label" for="dear-input">Dear.</label>
 			<input id="dear-input" type="text" name="dear" maxlength="25">

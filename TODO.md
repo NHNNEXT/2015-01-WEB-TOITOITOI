@@ -1,4 +1,8 @@
 [x] remove Post.name and use Dear
+[x] or id.integer -> _id.ObjectId
+[x] page --;
+[x] INDEX - dear.unique(placeId,name), dear.sort(placeId,postNum), post.sort(likes,replyNum)
+[x] 브라우저 주소 바꾸기. id 말고 name!
 [ ] imagefile.postId -> post.imageIds, reply.imageIds
 
 * CREATE post
@@ -16,16 +20,10 @@
 * imagefileS to post, reply
 * replyList at APIReplyController, not postView(not in use now)
 
-* page --;
-* imagefile._id - [AI](http://whitenode.tistory.com/entry/mongodb-에서-autoincrement를-사용해보자-nodejs에서도-사용해보자/)
-* imagefile.columnName - createdtime, attachedTo:{collection, id}
-* INDEX - dear.unique(placeId,name)
-* INDEX - dear.sort(placeId,postNum)
-* INDEX - post.sort(likes,replyNum)
-* "_id" 바꾸기
-* 브라우저 주소 바꾸기. id 말고 name!
+
 * 이미지 메타데이터 저장하기. [참고](http://johnbokma.com/java/obtaining-image-metadata.html)
 * controller 나누기
 * package 나누기
-* id들 Integer -> Long
 * Page. 여러 메소드 - isLast 등 - 활용
+* placeid jsp에 넣지말고 js에서 새로 요청받기. 둘다 string형이므로 서버에서 try-and-fail 식으로 응답줘야한다.
+* Post.replyList 없애고 요청 나눠서.

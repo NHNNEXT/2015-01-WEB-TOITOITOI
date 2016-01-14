@@ -18,15 +18,11 @@ import cafein.util.Validation;
 @Controller
 public class PlaceController {
 	private static final Logger logger = LoggerFactory.getLogger(PlaceController.class);
-	@Autowired
-	private PlaceRepository placeDao;
+	@Autowired private PlaceRepository placeDao;
 
-	@RequestMapping(value = "/place/{placeId}", method = RequestMethod.GET)
-	public String viewPlace(@PathVariable Integer placeId, Model model) {
-		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
-			throw new IllegalAPIPathException();
-		}
-		Place place = placeDao.getPlaceById(placeId);
+	@RequestMapping(value = "/place/{uri}", method = RequestMethod.GET)
+	public String viewPlace(@PathVariable String uri, Model model) {
+		Place place = placeDao.findOneByUri(uri);
 		model.addAttribute("place", place);
 		if (place != null) {
 			logger.debug(place.toString());
