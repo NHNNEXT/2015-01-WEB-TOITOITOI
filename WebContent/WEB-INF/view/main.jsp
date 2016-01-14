@@ -2,6 +2,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="cafein.post.Post"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <!DOCTYPE html>
@@ -34,6 +35,10 @@
 			<input id="dear-input" readonly value="${dearName}">
 			<textarea name="content" readonly>${post.content}</textarea>
 		</div>
+		<c:if test="${!empty post.imageIds}">
+		<c:set var="attach" value="${post.imageIds.get(0)}" />
+		<img src="/api/image/${attach}">
+		</c:if>
 	</section>
 	<div class="info"><span class="likes">${post.likes}</span><span class="replies">0</span></div>
 	<ul id="replies">

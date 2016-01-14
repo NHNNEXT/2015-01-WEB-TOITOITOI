@@ -29,12 +29,11 @@ public class APIFileController {
 	private FileDAO filedao;
 	@Autowired
 	private ImageRepository imageDao;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(APIFileController.class);
-//	private static final String filePath = "/root/images/";
+	// private static final String filePath = "/root/images/";
 	private static final String filePath = "/Users/heesu/toitoiImage/";
-	
-	
+
 	public String insertFile(MultipartFile multipartFile) {
 
 		logger.debug("filename : " + multipartFile.getOriginalFilename());
@@ -63,15 +62,12 @@ public class APIFileController {
 		return imageFile.getStoredName();
 	}
 
-	@RequestMapping(value = "/api/post/{postid}/file", method = RequestMethod.GET)
-	public Result sendFile(@PathVariable(value = "postid") ObjectId postid, HttpServletResponse response)
+	@RequestMapping(value = "/api/image/{imageId}", method = RequestMethod.GET)
+	public Result sendFile(@PathVariable ObjectId imageId, HttpServletResponse response)
 			throws UnsupportedEncodingException {
-		Image imagefile;
-
-		try {
-//			imagefile = filedao.getImagefileByPostId(postid);
-			imagefile = imageDao.findOne(postid);
-		} catch (EmptyResultDataAccessException e) {
+		
+		Image imagefile = imageDao.findOne(imageId);
+		if (imagefile == null) {
 			return Result.failed("No file");
 		}
 
