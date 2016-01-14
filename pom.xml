@@ -196,8 +196,7 @@
 							<goal>npm</goal>
 						</goals>
 						<configuration>
-							<arguments>install</arguments>
-							<arguments>run react</arguments>
+							<arguments>install run react</arguments>
 						</configuration>
 					</execution>
 				</executions>
