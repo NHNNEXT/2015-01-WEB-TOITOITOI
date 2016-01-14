@@ -213,8 +213,9 @@ document.addEventListener("DOMContentLoaded", function() {
 							return;
 						}
 
-						var createdPost = received.result;
-						var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.name+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
+						var createdPost = received.result.post;
+						var receivedDear = received.result.dear;
+						var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+receivedDear.placeId+'/dear/'+receivedDear.name+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
 						dealMessage( true, resultMessage );
 						formElement.reset();
 						addClass(formElement.querySelector('.preview'), 'off');

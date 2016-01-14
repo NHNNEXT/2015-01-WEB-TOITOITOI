@@ -27,14 +27,14 @@ public class PostDAO extends JdbcDaoSupport {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	public Post addPost(Post post) {
-		Integer dearId = getDearId(post.getName());
+	public Post addPost(Post post, Integer placeId) {
+		Integer dearId = post.getDearId();
 		String sql = "INSERT INTO post (place_id, dear_id, content) VALUES(?, ?, ?)";
 		final PreparedStatementCreator psc = new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(final Connection connection) throws SQLException {
 				final PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-				ps.setInt(1, post.getPlaceId());
+				ps.setInt(1, placeId);
 				ps.setInt(2, dearId);
 				ps.setString(3, post.getContent());
 				return ps;

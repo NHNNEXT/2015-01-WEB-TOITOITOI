@@ -84,7 +84,7 @@ public class CafeinDaoTest {
 	@Test
 	public void addPost() {
 		Post test;
-		logger.debug(postdao.addPost(new Post("toitoi","shine",1)).toString());
+		logger.debug(postdao.addPost(new Post("shine",1), 1).toString());
 	}
 	
 	@Test

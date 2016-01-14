@@ -1,7 +1,9 @@
 package cafein.post;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,6 +84,7 @@ public class APIPostController {
 		return Result.success(result);
 	}
 
+	// TODO : 이거 지금 쓰이나???
 	@RequestMapping(value = "/dear/{dearId}/post/{postId}", method = RequestMethod.GET)
 	public Result viewPost(@PathVariable Integer postId) {
 		Post post = null;
@@ -91,6 +94,7 @@ public class APIPostController {
 		}
 		post = postDao.getPostByPostId(postId);
 		post.setReplyList(replyDao.getReplys(postId));
+		logger.error("끄아아아앙아아앙ㅇㅇ아앙앙아"+post.toString());
 		return Result.success(post);
 	}
 
@@ -113,25 +117,41 @@ public class APIPostController {
 			multipartFile = request.getFile(iterator.next());
 			logger.debug(multipartFile.getOriginalFilename());
 		}
-		Post newPost = new Post(dear, content, placeId);
+		Post newPost = new Post(content);
 		logger.debug(newPost.toString());
+
+		Map<String, Object> result = new HashMap<String, Object>();
 
 		if (multipartFile.isEmpty() == false) {
 			logger.debug("multipartFile  exist!");
 			String storedFileName = apiFileController.insertFile(multipartFile);
 
 			if (storedFileName != null) {
-				newPost = postdao.addPost(newPost);
+				Dear newDear = new Dear();
+				newDear.setId(postdao.getDearId(dear));
+				newDear.setName(dear);
+				newDear.setPlaceId(placeId);
+				result.put("dear", newDear);
+
+				newPost.setDearId(newDear.getId());
+				newPost = postdao.addPost(newPost, placeId);
 				Integer postId = newPost.getId();
 				filedao.updatePostId(postId, storedFileName);
-				newPost.setName(dear);
-				return Result.success(newPost);
+				result.put("post", newPost);
+				return Result.success(result);
 			}
 			return Result.failed("Fail to save file in Server");
 		}
-		newPost = postdao.addPost(newPost);
-		newPost.setName(dear);
-		return Result.success(newPost);
+		Dear newDear = new Dear();
+		newDear.setId(postdao.getDearId(dear));
+		newDear.setName(dear);
+		newDear.setPlaceId(placeId);
+		result.put("dear", newDear);
+
+		newPost.setDearId(newDear.getId());
+		newPost = postdao.addPost(newPost, placeId);
+		result.put("post", newPost);
+		return Result.success(result);
 	}
 
 	@RequestMapping(value = "recommend", method = RequestMethod.GET)
