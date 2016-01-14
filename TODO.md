@@ -27,3 +27,4 @@
 * Page. 여러 메소드 - isLast 등 - 활용
 * placeid jsp에 넣지말고 js에서 새로 요청받기. 둘다 string형이므로 서버에서 try-and-fail 식으로 응답줘야한다.
 * Post.replyList 없애고 요청 나눠서.
+* Image.도 .jsp말고 ajax로 요청 나눠서.

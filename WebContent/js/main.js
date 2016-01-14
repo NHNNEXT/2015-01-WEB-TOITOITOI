@@ -42,14 +42,6 @@ function increase (element, value, isOverwrite) {
 }
 
 $(document).ready(function() {
-	var attachment = new Image();
-	addClass(attachment, 'preview');
-	attachment.onload = function (e) {
-		var parentElement = document.querySelector('section.the-letter');
-		parentElement.insertBefore(this, parentElement.lastChild.nextSibling);
-	};
-	attachment.src = '/api/post/'+postId+'/file';
-
 	$('.info .likes').on('click.like', function (e) {
 		var target = this;
 		$.ajax({
