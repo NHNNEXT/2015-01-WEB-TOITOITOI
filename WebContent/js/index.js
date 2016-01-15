@@ -1,5 +1,5 @@
-var ReactDOM = require('react-dom');
-var React = require('react');
+// var ReactDOM = require('react-dom');
+// var React = require('react');
 
 var Place = {
 	uri : "test" // 일단 하드코딩.

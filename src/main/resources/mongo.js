@@ -164,6 +164,7 @@ function updateChildNum (parentName, childName) {
 		setOption["total"+ (childName.charAt(0).toUpperCase() + childName.slice(1)) +"Num"] = num;
 		db[parentName].update({"_id":item["_id"]}, {$set:setOption});
 	});
+	// mapReduce 로 updatedNum 친절하게 알려주면.
 }
 
 db.system.js.save({_id: "updateChildNum",value : updateChildNum});
