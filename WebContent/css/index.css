@@ -293,15 +293,15 @@ nav.top-bar + * {
     z-index: 2;
     box-sizing: border-box;
 }
-#letters > article:nth-of-type(odd) {
+#letters > article {
+    background-color: rgb(234, 230, 216);
+    border: 1px solid rgba(13,13,13,0.2);
+    padding: 1.5em 1.2em;
+}
+#letters > article:first-of-type {
     background-color: rgb(68, 65, 65);
     border: 1px solid rgba(255, 255, 255, 0.64);
     color: white;
-    padding: 1.5em 1.2em;
-}
-#letters > article:nth-of-type(even) {
-    background-color: rgb(234, 230, 216);
-    border: 1px solid rgba(13,13,13,0.2);
     padding: 1.5em 1.2em;
 }
 #letters li {
