@@ -319,20 +319,19 @@ nav.top-bar + * {
     padding: 0.4em 1.3em;
     box-sizing: border-box;
 }
-#letters > article:nth-of-type(odd) li {
-    background-color: rgba(255,255,255,0.22);
-    font-weight: 100;
-}
-#letters > article:nth-of-type(even) li {
+#letters > article li {
     background-color: rgba(255,255,255,0.52);
     font-weight: 200;
+}
+#letters > article:first-of-type li {
+    background-color: rgba(255,255,255,0.22);
+    font-weight: 100;
 }
 
 #letters > article:last-of-type {
     border-radius: 1em;
     padding-bottom: 1em;
 }
-
 #letters > article > *:last-child {
     margin-bottom: 0;
 }
