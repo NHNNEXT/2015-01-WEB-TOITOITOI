@@ -20,7 +20,7 @@ public class PlaceController {
 	@Autowired
 	private PlaceDAO placeDao;
 
-	@RequestMapping(value = "/place/{placeId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{placeId}", method = RequestMethod.GET)
 	public String viewPlace(@PathVariable Integer placeId, Model model) {
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
