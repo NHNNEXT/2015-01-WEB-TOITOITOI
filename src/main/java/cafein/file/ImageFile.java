@@ -1,5 +1,8 @@
 package cafein.file;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ImageFile {
 	
 	private Integer id;
