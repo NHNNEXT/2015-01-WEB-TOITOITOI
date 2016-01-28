@@ -176,7 +176,7 @@ nav.top-bar + * {
 	position: absolute;
 	width: 3.5em;
 	right: 0.1em;
-    top: 1.5em;
+    top: 0;
 }
 
 .the-letter > * {
@@ -190,8 +190,6 @@ nav.top-bar + * {
 .the-letter > * > label.dear-label {
     display: inline-block;
     height: 0.4em;
-    /*width: 8em;*/
-    width: 100%;
     position: absolute;
     top: 1px;
     z-index: 2;
@@ -199,7 +197,8 @@ nav.top-bar + * {
     font-weight: 200;
     border-radius: 29px;
     box-shadow: 0 20px 0 0 rgba(0,0,0,0.2);
-    max-width: 100%;
+    width: 100%;
+    max-width: calc(100% - 4em);
 }
 
 .the-letter > * > input {
@@ -293,15 +292,15 @@ nav.top-bar + * {
     z-index: 2;
     box-sizing: border-box;
 }
-#letters > article:nth-of-type(odd) {
+#letters > article {
+    background-color: rgb(234, 230, 216);
+    border: 1px solid rgba(13,13,13,0.2);
+    padding: 1.5em 1.2em;
+}
+#letters > article:first-of-type {
     background-color: rgb(68, 65, 65);
     border: 1px solid rgba(255, 255, 255, 0.64);
     color: white;
-    padding: 1.5em 1.2em;
-}
-#letters > article:nth-of-type(even) {
-    background-color: rgb(234, 230, 216);
-    border: 1px solid rgba(13,13,13,0.2);
     padding: 1.5em 1.2em;
 }
 #letters li {
@@ -319,20 +318,19 @@ nav.top-bar + * {
     padding: 0.4em 1.3em;
     box-sizing: border-box;
 }
-#letters > article:nth-of-type(odd) li {
-    background-color: rgba(255,255,255,0.22);
-    font-weight: 100;
-}
-#letters > article:nth-of-type(even) li {
+#letters > article li {
     background-color: rgba(255,255,255,0.52);
     font-weight: 200;
+}
+#letters > article:first-of-type li {
+    background-color: rgba(255,255,255,0.22);
+    font-weight: 100;
 }
 
 #letters > article:last-of-type {
     border-radius: 1em;
     padding-bottom: 1em;
 }
-
 #letters > article > *:last-child {
     margin-bottom: 0;
 }

@@ -1,3 +1,6 @@
+//var ReactDOM = require('react-dom');
+//var React = require('react');
+
 function Post (postDataObject) {
 	this.postId = postDataObject.id;
 	this.preview = postDataObject.preview;
@@ -155,12 +158,16 @@ DearList.prototype.getNextPageDears = function () {
 
 
 document.addEventListener("DOMContentLoaded", function() {
+	// 임시방편. insert into dear values (91, "만든이");
+	var THEID = 91;
+
 	var placeId = document.querySelector('#place-id').value;
 	if (!placeId) {
 		console.error('why no placeId?!');
 		return;
 	}
 	var dearList = new DearList (placeId, document.querySelector('#letters'), document.querySelector('#letters .more'));
+	dearList.dears.push(new Dear({id:THEID, name:'만든이'}, placeId, 'article[data-index="'+0+'"] ul', 'button.more'));
 	dearList.getNextPageDears();
 
 	function dealMessage (isSuccess, messageHTML, targetElement) {
@@ -265,4 +272,10 @@ document.addEventListener("DOMContentLoaded", function() {
 		textarea.addEventListener('cut', function (e) { window.setTimeout(changeRemainLength, 0); });
 		textarea.addEventListener('drop', function (e) { window.setTimeout(changeRemainLength, 0); });
 	}
+
+	// ReactDOM.render(
+	//   <h1>Hello, world!</h1>,
+	//   document.getElementsByTagName('body')[0]
+	// );
+
 });

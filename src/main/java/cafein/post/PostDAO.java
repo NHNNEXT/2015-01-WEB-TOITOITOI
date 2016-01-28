@@ -92,7 +92,8 @@ public class PostDAO extends JdbcDaoSupport {
 		String sql = "SELECT post.dear_id AS id, dear.name AS name, COUNT(post.id) AS totalPostNum "
 				+ "FROM post LEFT JOIN dear ON post.dear_id = dear.id "
 				+ "WHERE post.place_id = ? "
-				+ "GROUP BY post.dear_id ORDER BY totalPostNum DESC LIMIT ?, 10";
+				+ "GROUP BY post.dear_id HAVING post.dear_id!=91 "
+				+ "ORDER BY totalPostNum DESC LIMIT ?, 10";
 
 		List<Map<String,Object>> result = jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 });
 		return result;
