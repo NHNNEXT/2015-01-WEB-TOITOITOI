@@ -30,7 +30,6 @@ public class APIFileController {
 	private static final String filePath = "/root/images/";
 //	private static final String filePath = "/Users/Songhee/toitoiImage/";
 	
-	
 	public String insertFile(MultipartFile multipartFile) {
 
 		logger.debug("filename : " + multipartFile.getOriginalFilename());
