@@ -101,8 +101,8 @@ public class CafeinDaoTest {
 	@Test
 	public void getDearList(){
 		List<Map<String,Object>> test;
-		test = postdao.getDearList(1, 4);
-		if(test.isEmpty()){
+		test = postdao.getDearList(1, 1);
+		if(!test.isEmpty()){
 	 	logger.debug(test.toString());
 	 	logger.debug("test");
 		}
