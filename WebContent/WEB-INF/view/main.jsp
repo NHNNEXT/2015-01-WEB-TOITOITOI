@@ -33,6 +33,7 @@
 			<img id="stamp" src="/css/img/stamp.png">
 			<input id="dear-input" readonly value="${dearName}">
 			<textarea name="content" readonly>${post.content}</textarea>
+			<p id="createdDate">${createdDate}</p>
 		</div>
 	</section>
 	<div class="info"><span class="likes">${post.likes}</span><span class="replies">0</span></div>

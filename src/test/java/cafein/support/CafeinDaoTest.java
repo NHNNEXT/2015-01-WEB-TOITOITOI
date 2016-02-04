@@ -158,7 +158,12 @@ public class CafeinDaoTest {
 	public void addDear() {
 		logger.debug(postdao.addDear("김기범").toString());
 	}
-
+	
+	@Test
+	public void viewPost() {
+		Integer postid = 1;
+		logger.debug(postdao.getPostByPostId(postid).toString());
+	}
 }
 
 

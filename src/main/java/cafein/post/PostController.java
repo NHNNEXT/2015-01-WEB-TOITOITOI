@@ -2,6 +2,8 @@ package cafein.post;
 
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import cafein.util.Validation;
 
 @Controller
 public class PostController {
+private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 	@Autowired
 	private PostDAO postDao;
 	
@@ -23,7 +26,12 @@ public class PostController {
 		if(!Validation.isValidParameter(postId) || !Validation.isValidParameterType(postId)){
 			throw new IllegalAPIPathException();
 		}
-		model.addAttribute("post", postDao.getPostByPostId(postId));
+		Post post = postDao.getPostByPostId(postId);
+		String[] createdtime = post.getCreatedtime().split("\\s");
+		String createdDate = createdtime[0];
+		logger.debug(createdDate);
+		model.addAttribute("post", post);
+		model.addAttribute("createdDate", createdDate);
 		model.addAttribute("dearName", dearName);
 		return "main";
 	}	
