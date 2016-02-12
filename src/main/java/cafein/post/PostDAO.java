@@ -89,11 +89,11 @@ public class PostDAO extends JdbcDaoSupport {
 	// dear테이블과 join필요 place는 join 불필
 	public List<Map<String, Object>> getDearList(Integer placeId, Integer nPage) {
 
-		String sql = "SELECT post.dear_id AS id, dear.name AS name, COUNT(post.id) AS totalPostNum "
+		String sql = "SELECT post.dear_id AS id, dear.name AS name "
 				+ "FROM post LEFT JOIN dear ON post.dear_id = dear.id "
 				+ "WHERE post.place_id = ? "
 				+ "GROUP BY post.dear_id HAVING post.dear_id!=91 "
-				+ "ORDER BY totalPostNum DESC LIMIT ?, 10";
+				+ "ORDER BY post.createdtime DESC LIMIT ?, 10";
 
 		List<Map<String,Object>> result = jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 });
 		return result;
@@ -102,9 +102,9 @@ public class PostDAO extends JdbcDaoSupport {
 	// dearId를 parameter로 받는다면 dear join없이 가능.
 	public List<Map<String, Object>> getPreviews(Integer placeid, Integer dearId, int nPage) {
 		int startingRow = (nPage - 1) * 20;
-		String sql = "SELECT id, LEFT(content, 80) AS preview, likes FROM post "
+		String sql = "SELECT id, LEFT(content, 80) AS preview, likes, createdtime FROM post "
 				+ "WHERE place_id = ? AND dear_id = ? "
-				+ "ORDER BY likes DESC LIMIT ?, 20";
+				+ "ORDER BY createdtime DESC LIMIT ?, 20";
 		
 		return jdbcTemplate.queryForList(sql, new Object[] { placeid, dearId, startingRow });
 	}
