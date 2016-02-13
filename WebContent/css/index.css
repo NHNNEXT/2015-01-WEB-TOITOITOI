@@ -349,6 +349,19 @@ nav.top-bar + * {
     display: none;
 }
 
+#letters h3 button.new {
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    float: right;
+    line-height: 100%;
+}
+#letters h3 button.new::before {
+    content: "+";
+}
+
 #replies {
     margin-bottom: 4em;
     margin-top: 0;
