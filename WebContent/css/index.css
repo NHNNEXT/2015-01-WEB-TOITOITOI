@@ -64,7 +64,7 @@ nav.top-bar #go-back {
 button.more {
     display: block;
     margin: 1em auto;
-    font-size: 1em;
+    font-size: 0.8em;
     border-radius: 3px;
     background-color: rgb(68, 65, 65);
     border: none;
