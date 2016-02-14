@@ -57,9 +57,18 @@ nav.top-bar #go-back {
     transform: rotate(-45deg) translateY(-66%);
 }
 
+#letters > article:first-of-type button.more {
+    background-color: rgb(234, 230, 216);
+    color: black;
+}
 button.more {
     display: block;
     margin: 1em auto;
+    font-size: 1em;
+    border-radius: 3px;
+    background-color: rgb(68, 65, 65);
+    border: none;
+    color: white;
 }
 #letters > button.more {
     margin-top: 3em;
