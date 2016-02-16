@@ -9,7 +9,7 @@ function Post (postDataObject) {
 
 // Post, Dear, PostList, DearList 로 나눠야겠다.
 
-function Dear (dearDataObject, placeId, listElementSelector, moreElementSelector) {
+function Dear (dearDataObject, placeId, listElementSelector, moreElementSelector, newElementSelector) {
 	this.dearId = dearDataObject.id;
 	this.name = dearDataObject.name;
 	this.maxPostNum = dearDataObject.totalPostNum; // change property name
@@ -19,20 +19,29 @@ function Dear (dearDataObject, placeId, listElementSelector, moreElementSelector
 	this.placeId = placeId;
 	this._listElementSelector = listElementSelector;
 	this._moreElementSelector = moreElementSelector;
+	this._newElementSelector = newElementSelector;
 }
 Dear.prototype.initAfterRender = function () {
 	// 이게 뭐야 ㅜㅜㅜㅜㅜㅜㅜㅜㅜ Model 이랑 View 랑 얼른 나눠야하는데 ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ
 	// 코드 중복 때문에라도 클래스 얼른 나눠야 ㅜㅜㅜㅜㅜㅜㅜㅜ
 	this.listElement = document.querySelector(this._listElementSelector);
 	this.moreElement = this.listElement.querySelector(this._moreElementSelector);
+	this.newElement = this.listElement.parentElement.querySelector(this._newElementSelector);
 
 	this.registerEvent();
 };
 Dear.prototype.noMore = function () {
 	this.moreElement.style.display = "none";
 };
+Dear.prototype.writeNewPost = function () {
+	// console.log(this.name);
+	var inputElement = document.querySelector('#new-letter input#dear-input');
+	inputElement.value = this.name;
+	inputElement.focus();
+}
 Dear.prototype.registerEvent = function () {
 	this.moreElement.addEventListener('click', this.getNextPagePosts.bind(this));
+	this.newElement.addEventListener('click', this.writeNewPost.bind(this));
 };
 Dear.prototype.render = function () {
 	var codes = '';
@@ -119,7 +128,7 @@ DearList.prototype.render = function () {
 	var dataLen = this.dears.length;
 
 	for ( var currentId = lastRenderedId+1; currentId < dataLen; currentId++ ) {
-		codes += '<article data-index="'+currentId+'"><h3>'+this.dears[currentId].name+'</h3><ul><button class="more">더 보기</button></ul></article>';
+		codes += '<article data-index="'+currentId+'"><h3>'+this.dears[currentId].name+'<button class="new"></button></h3><ul><button class="more">더 보기</button></ul></article>';
 	}
 	this.moreElement.insertAdjacentHTML('beforebegin', codes);
 	for ( var currentId = lastRenderedId+1; currentId < dataLen; currentId++ ) {
@@ -147,7 +156,7 @@ DearList.prototype.getNextPageDears = function () {
 			}
 			this.currentPage++;
 			received.result.forEach(function (item, index, array) {
-				this.dears.push(new Dear(item, this.placeId, 'article[data-index="'+this.dears.length+'"] ul', 'button.more'));
+				this.dears.push(new Dear(item, this.placeId, 'article[data-index="'+this.dears.length+'"] ul', 'button.more', 'button.new'));
 			}.bind(this));
 			this.render();
 	    }
@@ -167,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		return;
 	}
 	var dearList = new DearList (placeId, document.querySelector('#letters'), document.querySelector('#letters .more'));
-	dearList.dears.push(new Dear({id:THEID, name:'만든이'}, placeId, 'article[data-index="'+0+'"] ul', 'button.more'));
+	dearList.dears.push(new Dear({id:THEID, name:'만든이'}, placeId, 'article[data-index="'+0+'"] ul', 'button.more', 'button.new'));
 	dearList.getNextPageDears();
 
 	function dealMessage (isSuccess, messageHTML, targetElement) {
