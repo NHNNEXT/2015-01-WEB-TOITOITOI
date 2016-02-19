@@ -243,7 +243,7 @@ nav.top-bar + * {
     font-size: 14px;
 }
 #new-letter > * > textarea {
-    min-height: calc(100vh - 27em);
+    min-height: 2em;
 }
 #new-letter button.send {
     display: block;
