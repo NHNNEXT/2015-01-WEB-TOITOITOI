@@ -87,15 +87,13 @@ public class PostDAO extends JdbcDaoSupport {
 	}
 
 	// dear테이블과 join필요 place는 join 불필
-	public List<Map<String, Object>> getDearList(Integer placeId, Integer nPage) {
-
+	public List<Map<String, Object>> getDearList(Integer placeId) {
 		String sql = "SELECT post.dear_id AS id, dear.name AS name, COUNT(post.id) AS totalPostNum "
 				+ "FROM post LEFT JOIN dear ON post.dear_id = dear.id "
 				+ "WHERE post.place_id = ? "
 				+ "GROUP BY post.dear_id HAVING post.dear_id!=91 "
-				+ "ORDER BY totalPostNum DESC LIMIT ?, 10";
-
-		List<Map<String,Object>> result = jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 });
+				+ "ORDER BY totalPostNum DESC";
+		List<Map<String,Object>> result = jdbcTemplate.queryForList(sql, new Object[] {placeId});
 		return result;
 	}
 

@@ -40,16 +40,13 @@ public class APIPostController {
 	private APIFileController apiFileController;
 
 	@RequestMapping(value = "/dear", method = RequestMethod.GET)
-	public Result getDearList(@PathVariable("placeId") Integer placeId, @RequestParam("page") Integer nPage) {
+	public Result getDearList(@PathVariable("placeId") Integer placeId) {
 
 		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
 			throw new IllegalAPIPathException();
 		}
-		if (!Validation.isValidParameter(nPage) || !Validation.isValidParameterType(nPage)) {
-			throw new IllegalArgumentException();
-		}
 
-		List<Map<String, Object>> result = postdao.getDearList(placeId, nPage);
+		List<Map<String, Object>> result = postdao.getDearList(placeId);
 		if (result.isEmpty()) {
 			logger.debug(result.toString());
 			return Result.failed("No more data.");
