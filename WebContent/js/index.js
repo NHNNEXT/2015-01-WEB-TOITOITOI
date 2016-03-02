@@ -84,6 +84,7 @@ function DearList (placeId, listElement, moreElement) {
 	this.listElement = listElement; // this file will be executed after parsing DOMs, becauseof 'defer'.
 	this.moreElement = moreElement;
 	this.registerEvent();
+	this.noMore();
 }
 DearList.prototype.toggleDear = function (e) {
 	var parentElement;

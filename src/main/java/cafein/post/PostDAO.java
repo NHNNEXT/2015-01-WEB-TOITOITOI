@@ -88,12 +88,10 @@ public class PostDAO extends JdbcDaoSupport {
 
 	// dear테이블과 join필요 place는 join 불필
 	public List<Map<String, Object>> getDearList(Integer placeId, Integer nPage) {
-
-		String sql = "SELECT distinct latest.dear_id AS id, latest.name AS name FROM "+
-				"(SELECT dear_id, name from post LEFT JOIN dear ON post.dear_id = dear.id "+
-				"WHERE post.place_id = ? ORDER BY post.createdtime DESC) AS latest "+
-				"HAVING latest.dear_id!=91 LIMIT ?,10";
-		List<Map<String,Object>> result = jdbcTemplate.queryForList(sql, new Object[] { placeId, (nPage - 1) * 10 });
+		String sql = "SELECT MAX(p.createdtime) AS createdtime, d.id, d.name, COUNT(d.id) AS totalPostNum "
+				+ "FROM post p LEFT JOIN dear d ON p.dear_id = d.id "
+				+ "WHERE p.place_id = ? AND d.id <> 91 GROUP BY dear_id ORDER BY createdtime DESC";
+		List<Map<String, Object>> result = jdbcTemplate.queryForList(sql, placeId);
 		return result;
 	}
 
@@ -103,7 +101,7 @@ public class PostDAO extends JdbcDaoSupport {
 		String sql = "SELECT id, LEFT(content, 80) AS preview, likes, createdtime FROM post "
 				+ "WHERE place_id = ? AND dear_id = ? "
 				+ "ORDER BY createdtime DESC LIMIT ?, 20";
-		
+
 		return jdbcTemplate.queryForList(sql, new Object[] { placeid, dearId, startingRow });
 	}
 
