@@ -10,6 +10,7 @@
 	<meta charset="utf-8">
 	<title>Dear Here</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico" />
 	<link type="text/css" rel="stylesheet" href="/css/index.css">
 	<script defer src="/js/util.js"></script>
 	<script defer src="/js/index.js"></script>

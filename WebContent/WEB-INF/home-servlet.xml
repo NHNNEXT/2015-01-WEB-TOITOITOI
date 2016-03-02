@@ -14,7 +14,7 @@
 
 	<mvc:resources location="/css/" mapping="/css/**" />
 	<mvc:resources location="/js/" mapping="/js/**" />
-	<mvc:resources location="/images/" mapping="/images/**" />
+	<mvc:resources location="/img/" mapping="/img/**" />
 	<!--view를 담당하는 서블릿지정 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
