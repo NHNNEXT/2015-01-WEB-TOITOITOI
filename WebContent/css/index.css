@@ -157,6 +157,7 @@ nav.top-bar + * {
 .info .message {
     color: white;
     background-color: blue;
+    background-color: rgba(0,0,255,0.42);
     text-align: center;
 }
 .info .message:not('.on') {
@@ -164,6 +165,7 @@ nav.top-bar + * {
 }
 .info .message.fail {
     background-color: red;
+    background-color: rgba(255,0,0,0.55);
 }
 
 .the-letter {
@@ -243,7 +245,7 @@ nav.top-bar + * {
     font-size: 14px;
 }
 #new-letter > * > textarea {
-    min-height: calc(100vh - 27em);
+    min-height: 2em;
 }
 #new-letter button.send {
     display: block;
