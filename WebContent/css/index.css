@@ -57,7 +57,7 @@ nav.top-bar #go-back {
     transform: rotate(-45deg) translateY(-66%);
 }
 
-#letters > article:first-of-type button.more {
+#letters article:first-of-type button.more {
     background-color: rgb(234, 230, 216);
     color: black;
 }
@@ -296,31 +296,39 @@ nav.top-bar + * {
     color: red;
 }
 
-#letters > article {
-    margin: -1em 0;/* why this makes his parent also go up? */
-    padding: 1em 1em 2em 1em;
-    border-radius: 0.7em 0.7em 0 0;
+#letters article.dear {
+    border-radius: 0.7em;
     z-index: 2;
     box-sizing: border-box;
-}
-#letters > article {
     background-color: rgb(234, 230, 216);
     border: 1px solid rgba(13,13,13,0.2);
     padding: 1.5em 1.2em;
 }
-#letters > article:first-of-type {
+#letters article.dear.black {
     background-color: rgb(68, 65, 65);
     border: 1px solid rgba(255, 255, 255, 0.64);
     color: white;
     padding: 1.5em 1.2em;
 }
-#letters li {
+
+#letters article.dear > *:last-child {
+    margin-bottom: 0;
+}
+
+#letters article.dear li {
     margin-bottom: 0.7em;
     border-radius: 0.4em;
     font-size: 0.8em;
     position: relative;
+    background-color: rgba(255,255,255,0.52);
+    font-weight: 200;
 }
-#letters ul a {
+#letters article.dear.black li {
+    background-color: rgba(255,255,255,0.22);
+    font-weight: 100;
+}
+
+#letters article.dear li a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -328,22 +336,6 @@ nav.top-bar + * {
     width: calc(100% - 3em);
     padding: 0.4em 1.3em;
     box-sizing: border-box;
-}
-#letters > article li {
-    background-color: rgba(255,255,255,0.52);
-    font-weight: 200;
-}
-#letters > article:first-of-type li {
-    background-color: rgba(255,255,255,0.22);
-    font-weight: 100;
-}
-
-#letters > article:last-of-type {
-    border-radius: 1em;
-    padding-bottom: 1em;
-}
-#letters > article > *:last-child {
-    margin-bottom: 0;
 }
 
 #letters h3 {

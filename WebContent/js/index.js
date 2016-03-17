@@ -1,5 +1,4 @@
-//var ReactDOM = require('react-dom');
-//var React = require('react');
+var cardCarousel;
 
 function Post (postDataObject) {
 	this.postId = postDataObject.id;
@@ -18,15 +17,20 @@ function Dear (dearDataObject, placeId, listElementSelector, moreElementSelector
 	this.posts = [];
 	this.placeId = placeId;
 	this._listElementSelector = listElementSelector;
-	this._moreElementSelector = moreElementSelector;
-	this._newElementSelector = newElementSelector;
+	this._moreElementSelector = moreElementSelector || 'button.more';
+	this._newElementSelector = newElementSelector || 'button.new';
 }
 Dear.prototype.initAfterRender = function () {
-	// 이게 뭐야 ㅜㅜㅜㅜㅜㅜㅜㅜㅜ Model 이랑 View 랑 얼른 나눠야하는데 ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ
-	// 코드 중복 때문에라도 클래스 얼른 나눠야 ㅜㅜㅜㅜㅜㅜㅜㅜ
-	this.listElement = document.querySelector(this._listElementSelector);
-	this.moreElement = this.listElement.querySelector(this._moreElementSelector);
-	this.newElement = this.listElement.parentElement.querySelector(this._newElementSelector);
+	var listElement = document.querySelector(this._listElementSelector);
+	this.listElement = listElement;
+
+	if (listElement) {
+		this.moreElement = listElement.querySelector(this._moreElementSelector);
+		this.newElement = listElement.parentElement.querySelector(this._newElementSelector);
+	} else {
+		this.moreElement = document.querySelector(this._moreElementSelector);
+		this.newElement = document.querySelector(this._newElementSelector);
+	}
 
 	this.registerEvent();
 };
@@ -85,15 +89,12 @@ Dear.prototype.getNextPagePosts = function (e) {
 	httpRequest.send(null);
 };
 
-function DearList (placeId, listElement, moreElement) {
+function DearList (placeId, listElement) {
 	this.placeId = placeId;
 	this.currentPage = 0;
 	this.lastRenderedId = -1;
 	this.dears = []; // which is sorted by postNum DESC
-	this.listElement = listElement; // this file will be executed after parsing DOMs, becauseof 'defer'.
-	this.moreElement = moreElement;
-	this.registerEvent();
-	this.noMore();
+	this.listElement = listElement;
 }
 DearList.prototype.toggleDear = function (e) {
 	var parentElement;
@@ -117,25 +118,33 @@ DearList.prototype.toggleDear = function (e) {
 	}
 };
 DearList.prototype.registerEvent = function () {
-	this.moreElement.addEventListener('click', this.getNextPageDears.bind(this));
+	// this.moreElement.addEventListener('click', this.getNextPageDears.bind(this));
 	this.listElement.addEventListener('click', this.toggleDear.bind(this));
 };
+
 DearList.prototype.noMore = function () {
-	this.moreElement.style.display = "none";
+	// this.moreElement.style.display = "none";
 };
+
 DearList.prototype.render = function () {
-	var codes = '';
+	// var codes = '';
+	var cards = [];
 	var lastRenderedId = this.lastRenderedId;
 	var dataLen = this.dears.length;
 
 	for ( var currentId = lastRenderedId+1; currentId < dataLen; currentId++ ) {
-		codes += '<article data-index="'+currentId+'"><h3>'+this.dears[currentId].name+'<button class="new"></button></h3><ul><button class="more">더 보기</button></ul></article>';
+		var code = '<article class="dear owl-item" data-index="'+currentId+'"><h3>'+this.dears[currentId].name+'<button class="new"></button></h3><ul><button class="more">더 보기</button></ul></article>';
+		cardCarousel.trigger('add.owl.carousel', [$(code)], cardCarousel.length);
 	}
-	this.moreElement.insertAdjacentHTML('beforebegin', codes);
+
+	cardCarousel.trigger('refresh.owl.carousel');
+	
 	for ( var currentId = lastRenderedId+1; currentId < dataLen; currentId++ ) {
 		this.dears[currentId].initAfterRender();
 	}
+	
 	this.lastRenderedId = dataLen - 1;
+	this.registerEvent();
 };
 DearList.prototype.getNextPageDears = function () {
 	var httpRequest = new XMLHttpRequest();
@@ -176,8 +185,8 @@ document.addEventListener("DOMContentLoaded", function() {
 		console.error('why no placeId?!');
 		return;
 	}
-	var dearList = new DearList (placeId, document.querySelector('#letters'), document.querySelector('#letters .more'));
-	dearList.dears.push(new Dear({id:THEID, name:'만든이'}, placeId, 'article[data-index="'+0+'"] ul', 'button.more', 'button.new'));
+	var dearList = new DearList (placeId, document.querySelector('#letters'));
+	dearList.dears.push(new Dear({id:THEID, name:'만든이'}, placeId, 'article[data-index="'+0+'"] ul'));
 	dearList.getNextPageDears();
 
 	function dealMessage (isSuccess, messageHTML, targetElement) {
@@ -282,10 +291,4 @@ document.addEventListener("DOMContentLoaded", function() {
 		textarea.addEventListener('cut', function (e) { window.setTimeout(changeRemainLength, 0); });
 		textarea.addEventListener('drop', function (e) { window.setTimeout(changeRemainLength, 0); });
 	}
-
-	// ReactDOM.render(
-	//   <h1>Hello, world!</h1>,
-	//   document.getElementsByTagName('body')[0]
-	// );
-
 });
