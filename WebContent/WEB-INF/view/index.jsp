@@ -12,7 +12,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico" />
 	<link type="text/css" rel="stylesheet" href="/css/index.css">
-	<script defer src="/js/util.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/2014.01.31/classList.min.js"></script>
 	<script defer src="/js/index.js"></script>
 	<script defer src="/js/elastic.js"></script>
 	<script>
