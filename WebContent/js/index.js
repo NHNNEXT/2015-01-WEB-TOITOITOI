@@ -108,7 +108,7 @@ DearList.prototype.toggleDear = function (e) {
 	var header = parentElement.querySelector('h3');
 	var list = parentElement.querySelector('ul');
 
-	toggleClass(header, 'on');
+	header.classList.toggle('on');
 	var elementIndex = parentElement.getAttribute('data-index'); // .dataset doesn't work for IE10.
 
 	var dear = this.dears[elementIndex];
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	function dealMessage (isSuccess, messageHTML, targetElement) {
 		var messageBar = formElement.querySelector('.message');
 		messageHTML = messageHTML || '무언가 잘못되었어요!';
-		((isSuccess)? removeClass : addClass)(messageBar, 'fail');
+		messageBar.classList[((isSuccess)? 'remove' : 'add')]('fail');
 		messageBar.innerHTML = messageHTML;
 		//TODO: after showing message, focus on targetElement. targetElement might be empty.
 		//TODO: 2초 뒤에 사라지게(fadeIn/Out)는 나중에.
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						var resultMessage = '글쓰기 성공!'+' <a href="'+('/place/'+createdPost.placeId+'/dear/'+createdPost.name+'/post/'+createdPost.id)+'">내가 쓴 글 보러가기 &gt;</a>';
 						dealMessage( true, resultMessage );
 						formElement.reset();
-						addClass(formElement.querySelector('.preview'), 'off');
+						formElement.querySelector('.preview').classList.add('off');
 						return;
 					case 400 :
 						if (httpRequest.response == "Empty input data") {
@@ -262,7 +262,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		fr.onload = function (argument) {
 			var previewElement = formElement.querySelector('img.preview');
 			previewElement.src = fr.result;
-			removeClass(previewElement, 'off');
+			previewElement.classList.remove('off');
 		};
 		fr.readAsDataURL(targetFile);
 	});
@@ -273,7 +273,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	function changeRemainLength () {
 		var remainLength = 20000 - textarea.value.length;
 		remainNotifier.textContent = remainLength;
-		((remainLength < 0) ? addClass : removeClass)(remainNotifier, 'over');
+		remainNotifier.classList[((remainLength < 0) ? 'add' : 'remove')]('over');
 	}
 	if (!textarea.readOnly) {
 		textarea.addEventListener('change', changeRemainLength);
