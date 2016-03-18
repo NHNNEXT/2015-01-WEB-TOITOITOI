@@ -1,0 +1,27 @@
+{
+  "name": "dear-here",
+  "version": "2.0.0",
+  "description": "Write letter to anything here.",
+  "main": "index.js",
+  "dependencies": {
+    "webpack": "^1.12.14"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.2",
+    "babel-loader": "^6.2.4",
+    "webpack": "^1.12.14"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NHNNEXT/2015-01-WEB-TOITOITOI.git"
+  },
+  "author": "toitoitoi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NHNNEXT/2015-01-WEB-TOITOITOI/issues"
+  },
+  "homepage": "https://github.com/NHNNEXT/2015-01-WEB-TOITOITOI#readme"
+}
