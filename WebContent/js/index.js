@@ -1,4 +1,5 @@
 var cardCarousel;
+var headerCarousel;
 
 function Post (postDataObject) {
 	this.postId = postDataObject.id;
@@ -24,13 +25,8 @@ Dear.prototype.initAfterRender = function () {
 	var listElement = document.querySelector(this._listElementSelector);
 	this.listElement = listElement;
 
-	if (listElement) {
-		this.moreElement = listElement.querySelector(this._moreElementSelector);
-		this.newElement = listElement.parentElement.querySelector(this._newElementSelector);
-	} else {
-		this.moreElement = document.querySelector(this._moreElementSelector);
-		this.newElement = document.querySelector(this._newElementSelector);
-	}
+	this.moreElement = listElement.querySelector(this._moreElementSelector);
+	this.newElement = listElement.parentElement.querySelector(this._newElementSelector);
 
 	this.registerEvent();
 	this.getNextPagePosts();
@@ -39,10 +35,10 @@ Dear.prototype.noMore = function () {
 	this.moreElement.style.display = "none";
 };
 Dear.prototype.writeNewPost = function () {
-	// console.log(this.name);
+	headerCarousel.trigger('to.owl.carousel', [1, 250]);
 	var inputElement = document.querySelector('#new-letter input#dear-input');
 	inputElement.value = this.name;
-	inputElement.focus();
+	// inputElement.focus();
 }
 Dear.prototype.registerEvent = function () {
 	this.moreElement.addEventListener('click', this.getNextPagePosts.bind(this));
