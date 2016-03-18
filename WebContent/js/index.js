@@ -33,6 +33,7 @@ Dear.prototype.initAfterRender = function () {
 	}
 
 	this.registerEvent();
+	this.getNextPagePosts();
 };
 Dear.prototype.noMore = function () {
 	this.moreElement.style.display = "none";
@@ -96,30 +97,8 @@ function DearList (placeId, listElement) {
 	this.dears = []; // which is sorted by postNum DESC
 	this.listElement = listElement;
 }
-DearList.prototype.toggleDear = function (e) {
-	var parentElement;
-	if (e.target.matches('h3')) {
-		parentElement = e.target.parentElement;
-	} else if (e.target.matches('article')) {
-		parentElement = e.target;
-	} else {
-		return;
-	}
-
-	var header = parentElement.querySelector('h3');
-	var list = parentElement.querySelector('ul');
-
-	header.classList.toggle('on');
-	var elementIndex = parentElement.getAttribute('data-index'); // .dataset doesn't work for IE10.
-
-	var dear = this.dears[elementIndex];
-	if (dear.posts.length <= 0) {
-		dear.getNextPagePosts();
-	}
-};
 DearList.prototype.registerEvent = function () {
 	// this.moreElement.addEventListener('click', this.getNextPageDears.bind(this));
-	this.listElement.addEventListener('click', this.toggleDear.bind(this));
 };
 
 DearList.prototype.noMore = function () {

@@ -345,12 +345,6 @@ nav.top-bar + * {
 #letters h3::before {
     content: "Dear. ";
 }
-#letters h3.on ~ ul {
-    display: block;
-}
-#letters h3 ~ ul {
-    display: none;
-}
 
 #letters h3 button.new {
     border: 0;
