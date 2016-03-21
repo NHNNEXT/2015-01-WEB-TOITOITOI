@@ -61,10 +61,7 @@
 		</div>
 	</div>
 
-	<section id="letters">
-		<h2 class="hidden">letters</h2>
-		<div class="carousel-card-container"></div>
-	</section>
+	<div id="dear-list-container"></div>
 </body>
 </html>
  

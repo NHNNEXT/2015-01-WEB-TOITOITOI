@@ -1,168 +1,154 @@
 var cardCarousel;
 var headerCarousel;
 
-function Post (postDataObject) {
-	this.postId = postDataObject.id;
-	this.preview = postDataObject.preview;
-	this.likes = postDataObject.likes;
-}
-
-// Post, Dear, PostList, DearList 로 나눠야겠다.
-
-function Dear (dearDataObject, placeId, listElementSelector, moreElementSelector, newElementSelector) {
-	this.dearId = dearDataObject.id;
-	this.name = dearDataObject.name;
-	this.maxPostNum = dearDataObject.totalPostNum; // change property name
-	this.currentPage = 0;
-	this.lastRenderedId = -1;
-	this.posts = [];
-	this.placeId = placeId;
-	this._listElementSelector = listElementSelector;
-	this._moreElementSelector = moreElementSelector || 'button.more';
-	this._newElementSelector = newElementSelector || 'button.new';
-}
-Dear.prototype.initAfterRender = function () {
-	var listElement = document.querySelector(this._listElementSelector);
-	this.listElement = listElement;
-
-	this.moreElement = listElement.querySelector(this._moreElementSelector);
-	this.newElement = listElement.parentElement.querySelector(this._newElementSelector);
-
-	this.registerEvent();
-	this.getNextPagePosts();
-};
-Dear.prototype.noMore = function () {
-	this.moreElement.style.display = "none";
-};
-Dear.prototype.writeNewPost = function () {
-	headerCarousel.trigger('to.owl.carousel', [1, 250]);
-	var inputElement = document.querySelector('#new-letter input#dear-input');
-	inputElement.value = this.name;
-	// inputElement.focus();
-}
-Dear.prototype.registerEvent = function () {
-	this.moreElement.addEventListener('click', this.getNextPagePosts.bind(this));
-	this.newElement.addEventListener('click', this.writeNewPost.bind(this));
-};
-Dear.prototype.render = function () {
-	var codes = '';
-	for ( var dataLen = this.posts.length, currentId = this.lastRenderedId+1; currentId < dataLen; currentId = ++(this.lastRenderedId)+1 ) {
-		var currentPost = this.posts[currentId];
-		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.name+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a><span class="likes"><span class="hidden">좋아요</span>'+currentPost.likes+'</span></li>';
-	}
-	this.moreElement.insertAdjacentHTML('beforebegin', codes);
-
-	for ( var dataLen = this.posts.length, currentId = this.lastRenderedId+1; currentId < dataLen; currentId = ++(this.lastRenderedId)+1 ) {
-		var currentPost = this.posts[currentId];
-		codes += '<li><a href="/place/'+this.placeId+'/dear/'+this.dearId+'/post/'+currentPost.postId+'">'+currentPost.preview+'</a></li>';
-	}
-};
-Dear.prototype.getNextPagePosts = function (e) {
-	var httpRequest = new XMLHttpRequest(); ///api/place/1/dear/1/post?page=1
-	var requestURL = '/api/place/'+this.placeId+'/dear/'+this.dearId+'/post?page='+ (this.currentPage +1);
-	httpRequest.onreadystatechange = function () {
-	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-			var received = JSON.parse(httpRequest.response);
-			if (!received.success) {
-				switch (received.errorMessage) {
-					case "No more data." :
-						console.log('all posts loaded');
-						this.noMore();
-						break;
-					default :
-						console.error('something went wrong @'+requestURL);
-						debugger;
+var DearList = React.createClass({
+	loadDataFromServer: function() {
+		var httpRequest = new XMLHttpRequest();
+		var requestURL = '/api/place/'+this.props.placeId+'/dear?page='+ this.props.page; // page will disappear later, because we don't paginate dearlist.
+		httpRequest.onreadystatechange = function () {
+		    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+				var received = JSON.parse(httpRequest.response);
+				if (!received.success) {
+					switch (received.errorMessage) {
+						default :
+							console.error('something went wrong @'+requestURL);
+							debugger;
+					}
+					return;
 				}
-				return;
-			}
-			this.currentPage++;
-			received.result.forEach(function (item, index, array) {
-				this.posts.push(new Post(item));
-			}.bind(this));
-			this.render();
-	    }
-	}.bind(this);
-	httpRequest.open('GET', requestURL, true);
-	httpRequest.send(null);
-};
-
-function DearList (placeId, listElement) {
-	this.placeId = placeId;
-	this.currentPage = 0;
-	this.lastRenderedId = -1;
-	this.dears = []; // which is sorted by postNum DESC
-	this.listElement = listElement;
-}
-DearList.prototype.registerEvent = function () {
-	// this.moreElement.addEventListener('click', this.getNextPageDears.bind(this));
-};
-
-DearList.prototype.noMore = function () {
-	// this.moreElement.style.display = "none";
-};
-
-DearList.prototype.render = function () {
-	// var codes = '';
-	var cards = [];
-	var lastRenderedId = this.lastRenderedId;
-	var dataLen = this.dears.length;
-
-	for ( var currentId = lastRenderedId+1; currentId < dataLen; currentId++ ) {
-		var code = '<article class="dear owl-item" data-index="'+currentId+'"><h3>'+this.dears[currentId].name+'<button class="new"></button></h3><ul><button class="more">더 보기</button></ul></article>';
-		cardCarousel.trigger('add.owl.carousel', [$(code)], cardCarousel.length);
+				this.setState({dears: received.result});
+		    }
+		}.bind(this);
+		httpRequest.open('GET', requestURL, true);
+		httpRequest.send(null);
+	},
+	getInitialData: function() {
+		return {
+			dears: []	// { createdtime, id, name. totalPostNum }
+		};
+	},
+	componentDidMount: function() {
+		this.loadDataFromServer();
+	},
+	render: function() {
+		var placeId = this.props.placeId;
+		var dears = this.state.dears.map(dear => (
+			<Dear placeId={placeId} createdtime={dear.createdtime} dearId={dear.id} maxPostNum={dear.maxPostNum} pageSize={20}>
+				{dear.name}
+			</Dear>
+		));
+		return (
+			<section id="letters">
+				<h2 className="hidden">letters</h2>
+				<div className="carousel-card-container">
+					{dears}
+				</div>
+			</section>
+		);
 	}
+});
 
-	cardCarousel.trigger('refresh.owl.carousel');
-	
-	for ( var currentId = lastRenderedId+1; currentId < dataLen; currentId++ ) {
-		this.dears[currentId].initAfterRender();
+var Dear = React.createClass({
+	loadMorePostList: function() {
+		// do noMore, with maxPostNum and pageSize.
+	},
+	writeNewPost: function() {
+		headerCarousel.trigger('to.owl.carousel', [1, 250]);
+		var inputElement = document.querySelector('#new-letter input#dear-input');
+		inputElement.value = this.name;
+		// inputElement.focus();
+	},
+	render: function() {
+		var ancestor = {
+			placeId: this.props.placeId,
+			dearId: this.props.dearId,
+			dearName: this.props.children
+		};
+
+		return (
+			<article className="dear owl-item">
+				<h3>{this.props.children}<button className="new" onClick={this.writeNewPost}></button></h3>
+				<PostList ancestor={ancestor} pageSize={this.props.pageSize} />
+				<button className="more" onClick={this.loadMorePostList}>더 보기</button>
+			</article>
+		);
 	}
-	
-	this.lastRenderedId = dataLen - 1;
-	this.registerEvent();
-};
-DearList.prototype.getNextPageDears = function () {
-	var httpRequest = new XMLHttpRequest();
-	var requestURL = '/api/place/'+this.placeId+'/dear?page='+ (this.currentPage +1);
-	httpRequest.onreadystatechange = function () {
-	    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-			var received = JSON.parse(httpRequest.response);
-			if (!received.success) {
-				switch (received.errorMessage) {
-					case "No more data." :
-						console.log('all dears loaded');
-						this.noMore();
-						break;
-					default :
-						console.error('something went wrong @'+requestURL);
-						debugger;
+});
+
+var PostList = React.createClass({
+	loadDataFromServer: function() {
+		var httpRequest = new XMLHttpRequest(); ///api/place/1/dear/1/post?page=1
+		var requestURL = '/api/place/'+this.props.ancestor.placeId+'/dear/'+this.props.ancestor.dearId+'/post?page='+ (this.state.page +1);
+		httpRequest.onreadystatechange = function () {
+		    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+				var received = JSON.parse(httpRequest.response);
+				if (!received.success) {
+					switch (received.errorMessage) {
+						default :
+							console.error('something went wrong @'+requestURL);
+							debugger;
+					}
+					return;
 				}
-				return;
-			}
-			this.currentPage++;
-			received.result.forEach(function (item, index, array) {
-				this.dears.push(new Dear(item, this.placeId, 'article[data-index="'+this.dears.length+'"] ul', 'button.more', 'button.new'));
-			}.bind(this));
-			this.render();
-	    }
-	}.bind(this);
-	httpRequest.open('GET', requestURL, true);
-	httpRequest.send(null);
-};
+				this.setState({posts: received.result});
+		    }
+		}.bind(this);
+		this.setState({page: this.state.page + 1});
+		httpRequest.open('GET', requestURL, true);
+		httpRequest.send(null);
+	},
+	getInitialData: function() {
+		return {
+			posts: []	// { id, preview, likes, createdtime }
+		};
+	},
+	componentDidMount: function() {
+		this.loadDataFromServer();
+	},
+	render: function() {
+		var ancestor = this.props.ancestor;
 
+		var posts = this.state.posts.map(post => (
+			<Post ancestor={ancestor} postId={post.id} createdtime={post.createdtime} likes={post.likes}>
+				{post.preview}
+			</Post>
+		));
+
+		return (
+			<ul>
+				{posts}
+			</ul>
+		);
+	}
+});
+
+var Post = React.createClass({
+	render: function() {
+		<li>
+			<a href="/place/{this.props.ancestor.placeId}/dear/{this.props.ancestor.dearName}/post/{this.props.postId+'">
+				{this.props.children}
+			</a>
+			<span class="likes"><span class="hidden">좋아요</span>
+				{this.props.likes}
+			</span>
+		</li>
+	}
+});
 
 document.addEventListener("DOMContentLoaded", function() {
-	// 임시방편. insert into dear values (91, "만든이");
-	var THEID = 91;
+	// 임시방편. insert into dear values (91, "만든이");, 임시적으로 삭제.
+	// var THEID = 91;
 
 	var placeId = document.querySelector('#place-id').value;
 	if (!placeId) {
 		console.error('why no placeId?!');
 		return;
 	}
-	var dearList = new DearList (placeId, document.querySelector('#letters'));
-	dearList.dears.push(new Dear({id:THEID, name:'만든이'}, placeId, 'article[data-index="'+0+'"] ul'));
-	dearList.getNextPageDears();
+
+	ReactDOM.render(
+		<DearList placeId={placeId} page={0} />,
+		document.getElementById('letters')
+	);
 
 	function dealMessage (isSuccess, messageHTML, targetElement) {
 		var messageBar = formElement.querySelector('.message');
