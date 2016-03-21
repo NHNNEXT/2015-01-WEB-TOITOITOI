@@ -13,8 +13,7 @@
 	<link type="image/x-icon" rel="shortcut icon" href="img/favicon.ico" />
 	<link type="text/css" rel="stylesheet" href="/css/index.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/2014.01.31/classList.min.js"></script>
-	<script defer src="/js/index.js"></script>
-	<script defer src="/js/elastic.js"></script>
+	<script defer src="/js/compiled.js"></script>
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -31,26 +30,8 @@
 		<h1>Dear Here</h1>
 		<p><span class="emphasis">${place.name}</span>의 누군가에게 편지 한 통 써보세요!</p>
 	</header>
-	<section id="new-letter" class="the-letter">
-		<h2 class="hidden">new letter</h2>
-		<form action="/api/place/${place.id}/post">
-			<input id="place-id" type="hidden" name="placeId" value="${place.id}">
-			<label class="dear-label" for="dear-input">Dear.</label>
-			<input id="dear-input" type="text" name="dear" maxlength="25">
-			<textarea id="post-content" name="content"></textarea>
-			<div class="buttons">
-				<button class="file">
-					<input type="file" name="imagefile" accept="image/*">
-				</button>
-				<label class="remain-length" for="post-content">20000</label>
-			</div>
-			<button class="send">SEND</button>
-			<div class="info">
-				<img class="preview off"/>
-				<div class="message"></div>
-			</div>
-		</form>
-	</section>
+	<div id="letter-box"></div>
+
 	<section id="letters">
 		<h2 class="hidden">letters</h2>
 		<button class="more">더 보기</button>
