@@ -231,7 +231,6 @@ var LetterBox = React.createClass({
 		var dearName = this.state.dearName;
 		var content = this.state.content;
 		var attachment = this.state.attachment.file;
-		debugger;
 
 		if (!dearName || !/\S+/.test(dearName)) {
 			this.dealMessage(false, '누구에게 쓰는 편지인가요? 받는 대상을 입력해주세요.');
@@ -289,6 +288,10 @@ var LetterBox = React.createClass({
 		httpRequest.send(data);
 	},
 	dealMessage: function (isSuccess, message="무언가 잘못되었어요!") {
+		if (this._disappearMessage) {
+			clearTimeout(this._disappearMessage);
+			this._disappearMessage = null;
+		}
 		this.setState({
 			message: {
 				show: true,
@@ -296,6 +299,15 @@ var LetterBox = React.createClass({
 				content: message
 			}
 		});
+		this._disappearMessage = setTimeout(() => {
+			this.setState({
+				message: {
+					show: false,
+					isFail: false,
+					content: ''
+				}
+			});
+		}, 2000);
 	},
 	render: function() {
 		var message = this.state.message;
