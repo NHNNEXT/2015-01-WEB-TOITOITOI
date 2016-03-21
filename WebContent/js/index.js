@@ -180,9 +180,19 @@ var LetterBox = React.createClass({
 			attachment: {
 				file: null,
 				src: null
-			},
-			timestamp: new Date()
+			}
 		}
+	},
+	resetForm: function() {
+		this.setState({
+			dearName: '',
+			content: '',
+			remainLength: this.props.maxContentLength,
+			attachment: {
+				file: null,
+				src: null
+			}
+		});
 	},
 	handleDearNameChange: function(event) {
 		var maxLength = this.props.maxDearLength;
@@ -268,9 +278,8 @@ var LetterBox = React.createClass({
 						var createdPost = received.result;
 						var resultMessage = <span>글쓰기 성공!<a href={'/place/'+createdPost.placeId+'/dear/'+createdPost.name+'/post/'+createdPost.id}>내가 쓴 글 보러가기 &gt;</a></span>;
 						this.dealMessage(true, resultMessage);
-						this.setState({
-							timestamp: new Date()
-						});
+						// this.replaceState(this.getInitialState()); // 메세지도 지워져버림 ㅜㅜ
+						this.resetForm();
 						return;
 					case 400 :
 						debugger;
@@ -326,7 +335,7 @@ var LetterBox = React.createClass({
 		}
 
 		return (
-			<section id="new-letter" key={this.state.timestamp} className="the-letter">
+			<section id="new-letter" className="the-letter">
 				<h2 className="hidden">new letter</h2>
 				<form onSubmit={this.handleSubmit}>
 					<input id="place-id" type="hidden" name="placeId" value={this.props.placeId} />
