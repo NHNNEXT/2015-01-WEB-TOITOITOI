@@ -31,7 +31,6 @@ public class APIFileController {
 //	private static final String filePath = "/Users/Songhee/toitoiImage/";
 	
 	public String insertFile(MultipartFile multipartFile) {
-
 		logger.debug("filename : " + multipartFile.getOriginalFilename());
 		logger.debug("filePath:" + filePath);
 		File file = new File(filePath);
