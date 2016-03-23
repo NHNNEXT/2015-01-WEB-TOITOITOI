@@ -20,9 +20,10 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.mysql.jdbc.Statement;
 
+import cafein.file.AbstractDao;
 import cafein.post.Post;
 
-public class ReplyDAO extends JdbcDaoSupport {
+public class ReplyDAO extends AbstractDao {
 	private static final Logger logger = LoggerFactory.getLogger(ReplyDAO.class);
 	@Autowired
 	JdbcTemplate jdbcTemplate;

@@ -8,7 +8,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-public class PlaceDAO extends JdbcDaoSupport {
+import cafein.file.AbstractDao;
+
+public class PlaceDAO extends AbstractDao {
 	private static final Logger logger = LoggerFactory.getLogger(PlaceDAO.class);
 	@Autowired
 	JdbcTemplate jdbcTemplate;

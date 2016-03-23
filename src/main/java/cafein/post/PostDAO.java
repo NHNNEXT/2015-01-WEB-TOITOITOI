@@ -20,7 +20,9 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.mysql.jdbc.Statement;
 
-public class PostDAO extends JdbcDaoSupport {
+import cafein.file.AbstractDao;
+
+public class PostDAO extends AbstractDao {
 	private static final Logger logger = LoggerFactory.getLogger(PostDAO.class);
 	@Autowired
 	JdbcTemplate jdbcTemplate;

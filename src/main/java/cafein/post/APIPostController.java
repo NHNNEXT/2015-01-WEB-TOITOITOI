@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import cafein.cafe.CandidateDAO;
 import cafein.file.APIFileController;
 import cafein.file.FileDAO;
 import cafein.reply.ReplyDAO;
@@ -32,8 +31,6 @@ public class APIPostController {
 	private ReplyDAO replydao;
 	@Autowired
 	private PostDAO postdao;
-	@Autowired
-	private CandidateDAO candidatedao;
 	@Autowired
 	private FileDAO filedao;
 	@Autowired
@@ -129,15 +126,6 @@ public class APIPostController {
 		newPost = postdao.addPost(newPost);
 		newPost.setName(dear);
 		return Result.success(newPost);
-	}
-
-	@RequestMapping(value = "recommend", method = RequestMethod.GET)
-	public Result getRecommendedDear(@PathVariable Integer placeId) {
-
-		if (!Validation.isValidParameter(placeId) || !Validation.isValidParameterType(placeId)) {
-			throw new IllegalAPIPathException();
-		}
-		return Result.success(candidatedao.getRecommendedDears(placeId));
 	}
 
 }

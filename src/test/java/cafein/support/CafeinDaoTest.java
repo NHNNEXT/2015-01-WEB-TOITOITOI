@@ -3,7 +3,6 @@ package cafein.support;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
-import cafein.cafe.CandidateDAO;
-import cafein.cafe.Place;
 import cafein.cafe.PlaceDAO;
 import cafein.file.FileDAO;
 import cafein.file.ImageFile;
@@ -38,10 +34,7 @@ public class CafeinDaoTest {
 	
 	@Autowired
 	private PlaceDAO placedao;
-	
-	@Autowired
-	private CandidateDAO candidatedao;
-	
+		
 	@Autowired
 	private FileDAO filedao;
 	
@@ -54,7 +47,7 @@ public class CafeinDaoTest {
 	
 	@Test
 	public void getPlaceById() {
-		placedao.getPlaceById(1);	
+		logger.debug(placedao.getPlaceById(1).toString());	
 		
 	}
 	@Test
@@ -107,13 +100,7 @@ public class CafeinDaoTest {
 	 	logger.debug("test");
 		}
 	}
-	
-	@Test
-	public void getRecommend() {
-		Integer test = 1;
-		logger.debug(candidatedao.getRecommendedDears(test).toString());
-	}
-	
+		
 	@Test
 	public void plusLike() {
 		Integer postid = 3;
