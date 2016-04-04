@@ -1,8 +1,8 @@
 ## Dear Here
 ### 서비스 소개 
 #### 특정 오프라인 공간의 사람/사물에게 편지를 쓸 수 있는 웹 서비스 
-서비스 시연 동영상
-[![시연 동영상](https://cloud.githubusercontent.com/assets/12539719/14252970/a2c00c4e-fac4-11e5-8733-7b50c3c73c10.png)](http://www.youtube.com/watch?v=T-D1KVIuvjA)
+####서비스 시연 유튜브 링크  
+[![시연 동영상](https://cloud.githubusercontent.com/assets/12539719/14252970/a2c00c4e-fac4-11e5-8733-7b50c3c73c10.png)](https://www.youtube.com/watch?v=xvy9nDpVMeE)
 
 ### Technologies 
 - Languages : Java, JavaScript
