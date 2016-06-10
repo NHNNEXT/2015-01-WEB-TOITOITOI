@@ -6,7 +6,7 @@
 
 ### Technologies 
 - Languages : Java, JavaScript
-- FrameWork : Spring
+- Framework : Spring
 - Build Tool : Maven
 - Libraries : jQuery, lucy-xss-servlet-filter
 - Unit test : junit
