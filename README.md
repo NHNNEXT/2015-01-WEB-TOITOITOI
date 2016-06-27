@@ -5,7 +5,7 @@
 [![시연 동영상](https://cloud.githubusercontent.com/assets/12539719/14252970/a2c00c4e-fac4-11e5-8733-7b50c3c73c10.png)](https://www.youtube.com/watch?v=xvy9nDpVMeE)
 
 ### Technologies 
-##### Project duration : 1개월     
+##### Project duration : 7개월     
 ##### Languages : Java, JavaScript
 ##### Framework : Spring
 ##### Build Tool : Maven
